@@ -1,0 +1,41 @@
+{
+  "name": "toeic-practice-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sieusaosieungo/toeic-practice-website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sieusaosieungo/toeic-practice-website/issues"
+  },
+  "homepage": "https://github.com/Sieusaosieungo/toeic-practice-website#readme",
+  "devDependencies": {
+    "eslint": "6.6.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-config-prettier": "6.5.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-prettier": "3.1.1",
+    "prettier": "1.19.1",
+    "prettier-eslint-cli": "5.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "4.17.1",
+    "jsonwebtoken": "8.5.1",
+    "mongoose": "5.7.7",
+    "nodemon": "1.19.4",
+    "path": "^0.12.7",
+    "snakecase-keys": "3.1.0",
+    "validator": "^12.0.0"
+  }
+}
