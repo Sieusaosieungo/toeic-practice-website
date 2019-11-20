@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import './styles.scss';
+import './style.scss';
 
 function App({ children }) {
   return <Fragment>{children}</Fragment>;
