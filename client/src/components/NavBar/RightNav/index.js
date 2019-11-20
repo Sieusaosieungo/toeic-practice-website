@@ -102,7 +102,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
           <Link
             to={location => ({
               ...location,
-              pathname: '/account/sign-in',
+              pathname: '/login',
               state: { prevPath: location.pathname },
             })}
           >
@@ -112,7 +112,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="sign-up">
-          <Link to="/account/sign-up">Signup</Link>
+          <Link to="/register">Signup</Link>
         </Menu.Item>
       )}
     </Menu>

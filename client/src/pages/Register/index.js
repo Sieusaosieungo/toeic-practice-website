@@ -110,6 +110,7 @@ class RegistrationForm extends React.Component {
         onSubmit={this.handleSubmit}
         style={{ margin: 'auto' }}
       >
+        <h1 style={{marginTop : "1em", textAlign : "center"}}>Đăng kí</h1>
         <Form.Item label="E-mail">
           {getFieldDecorator('email', {
             rules: [

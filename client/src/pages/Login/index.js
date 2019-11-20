@@ -21,8 +21,9 @@ class NormalLoginForm extends React.Component {
       <Form
         onSubmit={this.handleSubmit}
         className="login-form"
-        style={{ margin: 'auto' }}
+        style={{ margin: '0 auto auto auto' }}
       >
+        <h1 style={{marginTop : "1em"}}>Đăng nhập</h1>
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
