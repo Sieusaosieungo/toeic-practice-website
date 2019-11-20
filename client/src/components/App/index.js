@@ -1,9 +1,20 @@
 import React, { Fragment } from 'react';
 
-import './styles.scss';
+import './style.scss';
+
+import NavBar from '../NavBar';
+import Footer from '../Footer';
 
 function App({ children }) {
-  return <Fragment>{children}</Fragment>;
+  return (
+    <Fragment>
+      <Fragment>
+        <NavBar />
+        {children}
+        <Footer />
+      </Fragment>
+    </Fragment>
+  );
 }
 
 export default App;
