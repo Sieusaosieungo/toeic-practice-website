@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import {Link} from 'react-router-dom';
-import 'antd/dist/antd.css';
-import './index.css';
+import { Link } from 'react-router-dom';
+import './style.scss';
+
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
@@ -14,10 +14,15 @@ class NormalLoginForm extends React.Component {
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     const { getFieldDecorator } = this.props.form;
+
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form" style={{margin : "auto"}}>
+      <Form
+        onSubmit={this.handleSubmit}
+        className="login-form"
+        style={{ margin: 'auto' }}
+      >
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
@@ -47,7 +52,11 @@ class NormalLoginForm extends React.Component {
           <Link className="login-form-forgot" to="">
             Forgot password
           </Link>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
             Log in
           </Button>
           Or <Link to="/register">register now!</Link>
@@ -57,5 +66,4 @@ class NormalLoginForm extends React.Component {
   }
 }
 
-export const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
-
+export default Form.create({ name: 'normal_login' })(NormalLoginForm);

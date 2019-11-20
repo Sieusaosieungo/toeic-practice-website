@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Form,
   Input,
@@ -58,7 +58,9 @@ class RegistrationForm extends React.Component {
     if (!value) {
       autoCompleteResult = [];
     } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
+      autoCompleteResult = ['.com', '.org', '.net'].map(
+        domain => `${value}${domain}`,
+      );
     }
     this.setState({ autoCompleteResult });
   };
@@ -103,7 +105,11 @@ class RegistrationForm extends React.Component {
     ));
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit} style={{margin : "auto"}}>
+      <Form
+        {...formItemLayout}
+        onSubmit={this.handleSubmit}
+        style={{ margin: 'auto' }}
+      >
         <Form.Item label="E-mail">
           {getFieldDecorator('email', {
             rules: [
@@ -155,12 +161,20 @@ class RegistrationForm extends React.Component {
           }
         >
           {getFieldDecorator('nickname', {
-            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+            rules: [
+              {
+                required: true,
+                message: 'Please input your nickname!',
+                whitespace: true,
+              },
+            ],
           })(<Input />)}
         </Form.Item>
         <Form.Item label="Phone Number">
           {getFieldDecorator('phone', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
+            rules: [
+              { required: true, message: 'Please input your phone number!' },
+            ],
           })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
@@ -182,5 +196,4 @@ class RegistrationForm extends React.Component {
   }
 }
 
-export const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationForm);
-
+export default Form.create({ name: 'register' })(RegistrationForm);
