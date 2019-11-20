@@ -12,7 +12,7 @@ const errorHandler = require('./middlewares/errorHanlder');
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => res.send('Successfuully'));
+app.use('/api/users', require('./routes/user.route'));
 
 app.use(express.static(path.join(__dirname, '../static')));
 app.use(errorHandler);
