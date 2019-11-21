@@ -2,26 +2,26 @@ const mongoose = require('mongoose');
 
 const subQuestionSchema = new mongoose.Schema({
   question: {
-    type: String
+    type: String,
   },
   A: {
-    type: String
+    type: String,
   },
   B: {
-    type: String
+    type: String,
   },
   C: {
-    type: String
+    type: String,
   },
   D: {
-    type: String
+    type: String,
   },
   answer: {
-    type: String
+    type: String,
   },
   tips: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 const subQuestionModel = mongoose.model('SubQuestion', subQuestionSchema);
