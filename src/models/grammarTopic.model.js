@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const grammarSchema = new mongoose.Schema({
   title: {
-    type: String
-  }
+    type: String,
+    required: true,
+  },
 });
 
 const grammarModel = mongoose.model('GrammarTopic', grammarSchema);

@@ -1,39 +1,40 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
+
+const { ObjectId } = mongoose.Schema.Types;
 
 const questionSchema = new mongoose.Schema({
   image: {
     type: String,
-    trim: true
+    trim: true,
   },
   audio: {
     type: String,
-    trim: true
+    trim: true,
   },
   scripts: {
-    type: String
+    type: String,
   },
   paragraph: {
-    type: String
+    type: String,
   },
   level: {
-    type: Number
+    type: Number,
   },
   subQuestions: [
     {
       type: ObjectId,
-      ref: 'SubQuestion'
-    }
+      ref: 'SubQuestion',
+    },
   ],
   part: {
     partNumber: {
-      type: Number
+      type: Number,
     },
     idPart: {
       type: ObjectId,
-      ref: 'Part'
-    }
-  }
+      ref: 'Part',
+    },
+  },
 });
 
 const questionModel = mongoose.model('Question', questionSchema);
