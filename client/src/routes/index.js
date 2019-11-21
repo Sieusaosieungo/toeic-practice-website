@@ -23,6 +23,11 @@ const Exam = Loadable({
   loading : Loading
 })
 
+const Intro = Loadable({
+  loader : () => import ('../pages/Exam/Intro'),
+  loading : Loading
+})
+
 const routes = [
   {
     path: '/',
@@ -39,6 +44,10 @@ const routes = [
   {
     path: '/exam',
     component: Exam,
+  },
+  {
+    path: '/exam/intro',
+    component: Intro,
   },
   {
     path: '*',

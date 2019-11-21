@@ -3,7 +3,7 @@ import {Row, Col} from 'antd';
 import './style.scss'
 const prefixCls = 'home';
 
-const Home = ({}) => {
+const Exam = (props) => {
   return <div className={`${prefixCls}`}> 
     <div className="" style={{marginTop : "1.5em"}}>
       <Row>
@@ -18,10 +18,17 @@ const Home = ({}) => {
       <Row>
         <Col span={8} offset={4}>Reading: 75 phút</Col>
       </Row>
-      <div style={{textAlign : "center"}}><button className="ant-btn-primary ant-card-hoverable" >Bắt đầu</button></div>
+      <div style={{textAlign : "center"}}>
+        <button 
+          onClick={() => props.history.push('/exam/intro')}
+          className="ant-btn-primary ant-card-hoverable" 
+        >
+          Bắt đầu
+        </button>
+      </div>
       
     </div>
   </div>;
 };
 
-export default Home;
+export default Exam;

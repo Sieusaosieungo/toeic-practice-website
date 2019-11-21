@@ -4,10 +4,10 @@ import './style.scss';
 
 const prefixCls = 'home';
 
-const Home = ({}) => {
+const Home = (props) => {
   return <div className={`${prefixCls}`}> 
     <Row>
-      <img width={window.screen.width} src="./banner-1.jpg" style={{marginTop : "0.5em"}}/>
+      <img width="100%" src="./banner-1.jpg"/>
     </Row>
     <div className="" style={{marginTop : "1.5em"}}>
       <div className="text-align-center"><h1>Tại sao chọn chúng tôi</h1></div>
@@ -28,7 +28,11 @@ const Home = ({}) => {
           <p>Làm bài thi có chọn lọc và chất lượng</p>
         </Col>
       </Row>
-      <div className="text-align-center"><button className="ant-btn-primary ant-card-hoverable" >Thi thử nào</button></div>
+      <div className="text-align-center">
+        <button 
+          onClick={()=> props.history.push('/exam')} 
+          className="ant-btn-primary ant-card-hoverable" >Thi thử nào</button>
+      </div>
       
     </div>
   </div>;
