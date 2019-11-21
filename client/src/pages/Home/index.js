@@ -7,7 +7,7 @@ const prefixCls = 'home';
 const Home = (props) => {
   return <div className={`${prefixCls}`}> 
     <Row>
-      <img width={window.screen.width} src="./banner-1.jpg" style={{marginTop : "0.5em"}}/>
+      <img width="100%" src="./banner-1.jpg"/>
     </Row>
     <div className="" style={{marginTop : "1.5em"}}>
       <div className="text-align-center"><h1>Tại sao chọn chúng tôi</h1></div>
