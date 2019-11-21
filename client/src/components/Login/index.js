@@ -23,7 +23,6 @@ class NormalLoginForm extends React.Component {
         className="login-form"
         style={{ margin: '0 auto auto auto' }}
       >
-        <h1 style={{marginTop : "1em"}}>Đăng nhập</h1>
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
@@ -49,18 +48,18 @@ class NormalLoginForm extends React.Component {
           {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
-          })(<Checkbox>Remember me</Checkbox>)}
+          })(<Checkbox>Lưu mật khẩu</Checkbox>)}
           <Link className="login-form-forgot" to="">
-            Forgot password
+            Quên mật khẩu
           </Link>
           <Button
             type="primary"
             htmlType="submit"
             className="login-form-button"
           >
-            Log in
+            Đăng nhập
           </Button>
-          Or <Link to="/register">register now!</Link>
+          hoặc <Link to="/register">Đăng ký!</Link>
         </Form.Item>
       </Form>
     );

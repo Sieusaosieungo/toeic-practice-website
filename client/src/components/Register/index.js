@@ -108,9 +108,8 @@ class RegistrationForm extends React.Component {
       <Form
         {...formItemLayout}
         onSubmit={this.handleSubmit}
-        style={{ margin: 'auto' }}
+        style={{ margin: '0 auto' }}
       >
-        <h1 style={{marginTop : "1em", textAlign : "center"}}>Đăng kí</h1>
         <Form.Item label="E-mail">
           {getFieldDecorator('email', {
             rules: [
@@ -123,7 +122,11 @@ class RegistrationForm extends React.Component {
                 message: 'Please input your E-mail!',
               },
             ],
-          })(<Input />)}
+          })(
+            <Col xs={24} sm={24} md={24} lg={20} xl={20}>
+              <Input />
+            </Col>,
+          )}
         </Form.Item>
         <Form.Item label="Password" hasFeedback>
           {getFieldDecorator('password', {
@@ -136,7 +139,11 @@ class RegistrationForm extends React.Component {
                 validator: this.validateToNextPassword,
               },
             ],
-          })(<Input.Password />)}
+          })(
+            <Col xs={24} sm={24} md={24} lg={20} xl={20}>
+              <Input.Password className="abcdef" />
+            </Col>,
+          )}
         </Form.Item>
         <Form.Item label="Confirm" hasFeedback>
           {getFieldDecorator('confirm', {
@@ -149,7 +156,11 @@ class RegistrationForm extends React.Component {
                 validator: this.compareToFirstPassword,
               },
             ],
-          })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+          })(
+            <Col xs={24} sm={24} md={24} xl={20} lg={20}>
+              <Input.Password onBlur={this.handleConfirmBlur} />
+            </Col>,
+          )}
         </Form.Item>
         <Form.Item
           label={
@@ -169,27 +180,38 @@ class RegistrationForm extends React.Component {
                 whitespace: true,
               },
             ],
-          })(<Input />)}
+          })(
+            <Col xs={24} sm={24} md={24} xl={20} lg={20}>
+              <Input />
+            </Col>,
+          )}
         </Form.Item>
         <Form.Item label="Phone Number">
           {getFieldDecorator('phone', {
             rules: [
-              { required: true, message: 'Please input your phone number!' },
+              {
+                required: true,
+                message: 'Please input your phone number!',
+              },
             ],
-          })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
+          })(
+            <Col xs={24} sm={24} md={24} xl={20} lg={20}>
+              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+            </Col>,
+          )}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator('agreement', {
             valuePropName: 'checked',
           })(
             <Checkbox>
-              I have read the <a href="">agreement</a>
+              Tôi đồng ý với <a href="">chính sách</a> của toeic.com
             </Checkbox>,
           )}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Register
+            Đăng ký
           </Button>
         </Form.Item>
       </Form>
