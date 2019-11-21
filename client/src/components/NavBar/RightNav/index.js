@@ -26,9 +26,9 @@ const Submenu = logOut => {
   );
 };
 
-const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
+const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
   console.log('mode: ', mode);
-
+  // console.log(history)
   const [cookies, setCookie, removeCookie] = useCookies('cookies');
 
   const accessToken = accessTokenStore || cookies.accessToken;
@@ -55,6 +55,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   const logOut = () => {
     removeCookie('accessToken');
     dispatch({type : DELETE_USER});
+    setVisibleLoginForm(false);
     // toastr.success("Đăng xuất thành công")
     // dispatch(signOut());
     // window.location.reload();
