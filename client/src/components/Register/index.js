@@ -11,7 +11,8 @@ import {
   Checkbox,
   Button,
   AutoComplete,
-  Spin
+  Spin,
+  message
 } from 'antd';
 import {services} from '../../services'
 import {SIGN_IN} from '../../constants/ActionTypes'
@@ -32,10 +33,9 @@ class RegistrationForm extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.setState({loading : true})
-        services.signup(values)
+        services.signUp(values)
           .then(
             res => { 
-              console.log(res);
               const {dispatch} = this.props;
               dispatch({type : SIGN_IN, data : res})
               this.props.signup(res)
@@ -44,9 +44,9 @@ class RegistrationForm extends React.Component {
             }
           )
           .catch(err => {
-            console.log(1)
             this.setState({loading : false})
             // toastr.error("Đăng nhập thất bại")
+            message.error("Đăng kí thất bại")
             throw err;
           })
       }
