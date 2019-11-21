@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { withCookies, useCookies } from 'react-cookie';
-import { Menu, Avatar, Icon, Dropdown, message } from 'antd';
+import { Menu, Avatar, Icon, Dropdown, Modal, message } from 'antd';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Register from '../../Register';
+import Login from '../../Login';
 
 import './style.scss';
 
@@ -40,6 +42,25 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   const [cookies, setCookie, removeCookie] = useCookies('cookies');
 
   const accessToken = accessTokenStore || cookies.accessToken;
+
+  const [visibleRegForm, setVisibleRegForm] = useState(false);
+  const [visibleLoginForm, setVisibleLoginForm] = useState(false);
+
+  const showModalRegister = () => {
+    setVisibleRegForm(true);
+  };
+
+  const showModalLogin = () => {
+    setVisibleLoginForm(true);
+  };
+
+  const handleCancelRegForm = e => {
+    setVisibleRegForm(false);
+  };
+
+  const handleCancelLoginForm = e => {
+    setVisibleLoginForm(false);
+  };
 
   // if (accessToken === accessTokenStore) {
   //   console.log('match accessTokenStore');
@@ -100,25 +121,40 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="sign-in">
           <Link
-            to={location => ({
-              ...location,
-              pathname: '/login',
-              state: { prevPath: location.pathname },
-            })}
+            // to={location => ({
+            //   ...location,
+            //   pathname: '/login',
+            //   state: { prevPath: location.pathname },
+            // })}
             className="auth-button"
+            onClick={showModalLogin}
           >
             Đăng nhập
           </Link>
+          <Modal
+            title="Đăng nhập"
+            visible={visibleLoginForm}
+            footer={null}
+            onCancel={handleCancelLoginForm}
+          >
+            <Login />
+          </Modal>
         </Menu.Item>
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="sign-up">
-          <Link
-            to="/register"
-            className="auth-button"
-          >
+          <Link className="auth-button" onClick={showModalRegister}>
             Đăng ký
           </Link>
+          <Modal
+            title="Đăng ký"
+            visible={visibleRegForm}
+            footer={null}
+            onCancel={handleCancelRegForm}
+            width={'50vw'}
+          >
+            <Register />
+          </Modal>
         </Menu.Item>
       )}
     </Menu>
