@@ -15,11 +15,22 @@
   text-transform: capitalize;
   display: flex;
   justify-content: flex-end;
+  margin-right: 2rem;
+}
+.search-input {
+  float: left;
+  padding: 19px 20px;
+  margin-left: 5rem;
+
+  .ant-input-search {
+    .ant-input {
+    }
+  }
 }
 .menuCon {
   width: calc(100% - 150px);
   float: left;
-  display: flex;
+  max-height: 5rem;
 }
 .menuCon .ant-menu-item {
   padding: 0px 5px;
@@ -36,9 +47,9 @@
 }
 .menuCon .leftMenu {
   float: left;
-  flex-grow: 1;
   display: flex;
   align-items: center;
+  margin-left: 4rem;
 
   .ant-input-group-wrapper {
     max-width: 500px;

@@ -4,13 +4,22 @@ import { Link } from 'react-router-dom';
 
 import './styles.scss';
 
-const SearchInput = ({ mode = 'horizontal' }) => {
+const LeftNav = ({ mode = 'horizontal' }) => {
   return (
-    <Menu mode={mode} selectedKeys={[]}>
+    <Menu mode={mode} defaultSelectedKeys={['trang-chu']}>
+      <Menu.Item key={'trang-chu'}>
+        <Link to="/">Trang chủ</Link>
+      </Menu.Item>
       <Menu.Item key={'hoc-tu-moi'}>
         <Link to="/hoc-tu-moi">Học từ mới</Link>
+      </Menu.Item>
+      <Menu.Item key={'hoc-ngu-phap'}>
+        <Link to="/">Học ngữ pháp</Link>
+      </Menu.Item>
+      <Menu.Item key={'thi-thu'}>
+        <Link to="/exam">Thi thử</Link>
       </Menu.Item>
     </Menu>
   );
 };
-export default SearchInput;
+export default LeftNav;

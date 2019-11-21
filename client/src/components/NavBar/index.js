@@ -5,6 +5,7 @@ import { withPlatform } from '../../context/platform';
 
 import LeftNav from './LeftNav';
 import RightNav from './RightNav';
+import SearchInput from './SearchInput';
 
 import './style.scss';
 
@@ -17,13 +18,24 @@ const Navbar = ({ platform }) => {
   const onClose = () => setVisible(false);
 
   return (
-    <nav className="menuBar" style={{position : 'sticky', top : '0', zIndex : '10', backgroundColor : '#fff'}}>
+    <nav
+      className="menuBar"
+      style={{
+        position: 'sticky',
+        top: '0',
+        zIndex: '10',
+        backgroundColor: '#fff',
+      }}
+    >
       <div className="logo">
         <Link to="/">Logo</Link>
       </div>
       <div className="menuCon">
         <div className="leftMenu">
           <LeftNav />
+        </div>
+        <div className="search-input">
+          <SearchInput />
         </div>
         <div className="rightMenu">
           <RightNav mode={mode} />
