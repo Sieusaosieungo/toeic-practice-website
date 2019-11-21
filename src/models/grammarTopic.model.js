@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const grammarSchema = new mongoose.Schema({
   title: {
     type: String,
+    required: true,
   },
 });
 

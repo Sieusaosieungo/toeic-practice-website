@@ -5,6 +5,7 @@ const { ObjectId } = mongoose.Schema.Types.ObjectId;
 const exerciseSchema = new mongoose.Schema({
   level: {
     type: Number,
+    required: true,
   },
   idQuestion: {
     type: ObjectId,
