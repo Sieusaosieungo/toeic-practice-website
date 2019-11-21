@@ -1,24 +1,40 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox , Spin} from 'antd';
 import { Link } from 'react-router-dom';
 import './style.scss';
 import {services} from '../../services'
 import {SIGN_IN} from '../../constants/ActionTypes'
 import { connect } from 'react-redux';
+import toastr from '../../common/toastr'
 
 class NormalLoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading : false
+    }
+  }
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.setState({loading : true})
         services.login(values.email, values.password)
           .then(
             res => { 
               console.log(res);
               const {dispatch} = this.props;
               dispatch({type : SIGN_IN, data : res})
+              this.setState({loading : false})
+              toastr.success("Đăng nhập thành công")
             }
           )
+          .catch(err => {
+            console.log(1)
+            this.setState({loading : false})
+            toastr.error("Đăng nhập thất bại")
+            throw err;
+          })
       }
     });
   };
@@ -28,6 +44,7 @@ class NormalLoginForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
 
     return (
+      <Spin spinning={this.state.loading} tip="Loading...">
       <Form
         onSubmit={this.handleSubmit}
         className="login-form"
@@ -72,6 +89,7 @@ class NormalLoginForm extends React.Component {
           hoặc <Link to="/register">Đăng ký!</Link>
         </Form.Item>
       </Form>
+      </Spin>
     );
   }
 }
