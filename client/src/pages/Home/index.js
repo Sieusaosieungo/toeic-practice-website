@@ -36,6 +36,7 @@ const Home = props => {
             type="primary"
             onClick={() => props.history.push('/exam')}
             className="ant-btn-primary ant-card-hoverable"
+            style={{marginBottom : "30px"}}
           >
             Thi thử nào
           </Button>
