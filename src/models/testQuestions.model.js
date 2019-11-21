@@ -1,16 +1,21 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
+
+const { ObjectId } = mongoose.Schema.Types;
 
 const testQuestionsSchema = new mongoose.Schema({
   questions: [
     {
       question: {
         type: ObjectId,
-        ref: 'Question'
+        ref: 'Question',
       },
       userAnswer: {
-        type: String
-      }
-    }
-  ]
-})
+        type: String,
+      },
+    },
+  ],
+});
+
+const testQuestionModel = mongoose.model('TestQuestion', testQuestionsSchema);
+
+module.exports = testQuestionModel;

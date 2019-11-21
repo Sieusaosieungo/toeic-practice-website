@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { Drawer, Button } from 'antd';
 import { withPlatform } from '../../context/platform';
 
-import SearchInput from './SearchInput';
+import LeftNav from './LeftNav';
 import RightNav from './RightNav';
+import SearchInput from './SearchInput';
 
 import './style.scss';
 
@@ -17,12 +18,23 @@ const Navbar = ({ platform }) => {
   const onClose = () => setVisible(false);
 
   return (
-    <nav className="menuBar" style={{position : 'sticky', top : '0', zIndex : '10', backgroundColor : '#fff'}}>
+    <nav
+      className="menuBar"
+      style={{
+        position: 'sticky',
+        top: '0',
+        zIndex: '10',
+        backgroundColor: '#fff',
+      }}
+    >
       <div className="logo">
-        <Link to="/">logo</Link>
+        <Link to="/">Logo</Link>
       </div>
       <div className="menuCon">
         <div className="leftMenu">
+          <LeftNav />
+        </div>
+        <div className="search-input">
           <SearchInput />
         </div>
         <div className="rightMenu">
@@ -38,7 +50,7 @@ const Navbar = ({ platform }) => {
           onClose={onClose}
           visible={visible}
         >
-          <SearchInput />
+          <LeftNav />
           <RightNav mode={mode} />
         </Drawer>
       </div>

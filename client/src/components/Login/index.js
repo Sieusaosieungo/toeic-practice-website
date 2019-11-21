@@ -2,13 +2,23 @@ import React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import './style.scss';
+import {services} from '../../services'
+import {SIGN_IN} from '../../constants/ActionTypes'
+import { connect } from 'react-redux';
 
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        services.login(values.email, values.password)
+          .then(
+            res => { 
+              console.log(res);
+              const {dispatch} = this.props;
+              dispatch({type : SIGN_IN, data : res})
+            }
+          )
       }
     });
   };
@@ -24,12 +34,12 @@ class NormalLoginForm extends React.Component {
         style={{ margin: '0 auto auto auto' }}
       >
         <Form.Item>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your username!' }],
+          {getFieldDecorator('email', {
+            rules: [{ required: true, message: 'Please input your email!' }],
           })(
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Username"
+              placeholder="Email"
             />,
           )}
         </Form.Item>
@@ -66,4 +76,17 @@ class NormalLoginForm extends React.Component {
   }
 }
 
-export default Form.create({ name: 'normal_login' })(NormalLoginForm);
+const mapStateToProps = ({ user, auth }) => {
+  return {
+    user,
+    accessTokenStore: auth.accessToken,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'normal_login' })(NormalLoginForm));
