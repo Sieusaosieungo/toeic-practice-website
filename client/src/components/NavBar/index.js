@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Drawer, Button } from 'antd';
 import { withPlatform } from '../../context/platform';
 
-import SearchInput from './SearchInput';
+import LeftNav from './LeftNav';
 import RightNav from './RightNav';
 
 import './style.scss';
@@ -19,11 +19,11 @@ const Navbar = ({ platform }) => {
   return (
     <nav className="menuBar">
       <div className="logo">
-        <Link to="/">Trang chủ</Link>
+        <Link to="/">Logo</Link>
       </div>
       <div className="menuCon">
         <div className="leftMenu">
-          <SearchInput />
+          <LeftNav />
         </div>
         <div className="rightMenu">
           <RightNav mode={mode} />
@@ -38,7 +38,7 @@ const Navbar = ({ platform }) => {
           onClose={onClose}
           visible={visible}
         >
-          <SearchInput />
+          <LeftNav />
           <RightNav mode={mode} />
         </Drawer>
       </div>
