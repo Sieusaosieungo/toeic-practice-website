@@ -18,6 +18,11 @@ const Home = Loadable({
   loading: Loading,
 });
 
+const Grammar = Loadable({
+  loader : () => import ('../pages/Grammar'),
+  loading : Loading
+})
+
 const Exam = Loadable({
   loader : () => import ('../pages/Exam'),
   loading : Loading
@@ -40,6 +45,10 @@ const routes = [
   {
     path: '/register',
     component: RegistrationForm,
+  },
+  {
+    path: '/grammar',
+    component: Grammar,
   },
   {
     path: '/exam',
