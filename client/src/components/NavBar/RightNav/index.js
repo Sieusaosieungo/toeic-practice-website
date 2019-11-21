@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Register from '../../Register';
 import Login from '../../Login';
 import { DELETE_USER, SIGN_IN } from '../../../constants/ActionTypes';
+// import toastr from '../../../common/toastr'
 
 import './style.scss';
 
@@ -54,6 +55,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   const logOut = () => {
     removeCookie('accessToken');
     dispatch({type : DELETE_USER});
+    // toastr.success("Đăng xuất thành công")
     // dispatch(signOut());
     // window.location.reload();
   };
