@@ -2,6 +2,7 @@ require('dotenv').config();
 require('./db/mongoose');
 
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const path = require('path');
 
@@ -10,8 +11,10 @@ const port = process.env.PORT;
 const errorHandler = require('./middlewares/errorHanlder');
 
 app.use(express.json());
+
 app.use(cors());
 
+app.use(fileUpload({ parseNested: true }));
 app.use('/api/users', require('./routes/user.route'));
 
 app.use(express.static(path.join(__dirname, '../static')));
