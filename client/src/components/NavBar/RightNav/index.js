@@ -62,14 +62,6 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     setVisibleLoginForm(false);
   };
 
-  // if (accessToken === accessTokenStore) {
-  //   console.log('match accessTokenStore');
-  // } else {
-  //   console.log('match cookies.accessToken');
-  // }
-
-  // console.log('Right nav: ', accessToken);
-
   const logOut = () => {
     removeCookie('accessToken');
     dispatch(deleteUser());

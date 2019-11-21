@@ -18,8 +18,9 @@
 }
 .search-input {
   float: left;
-  padding: 19px 20px;
+  padding: 20px 20px 15px;
   margin-left: 5rem;
+  min-width: 50rem;
 
   .ant-input-search {
     .ant-input {
@@ -29,7 +30,7 @@
 .menuCon {
   width: calc(100% - 150px);
   float: left;
-  max-height: 5rem;
+  min-height: 7rem;
 }
 .menuCon .ant-menu-item {
   padding: 0px 5px;
@@ -39,7 +40,7 @@
 }
 .menuCon .ant-menu-item a,
 .menuCon .ant-menu-submenu-title a {
-  padding: 10px 15px;
+  padding: 11.5px 15px;
 }
 .menuCon .ant-menu-horizontal {
   border-bottom: none;

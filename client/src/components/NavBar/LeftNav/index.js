@@ -6,7 +6,7 @@ import './styles.scss';
 
 const LeftNav = ({ mode = 'horizontal' }) => {
   return (
-    <Menu mode={mode} defaultSelectedKeys={['trang-chu']}>
+    <Menu mode={mode} defaultSelectedKeys={['hoc-ngu-phap']}>
       <Menu.Item key={'trang-chu'}>
         <Link to="/">Trang chủ</Link>
       </Menu.Item>
@@ -14,7 +14,7 @@ const LeftNav = ({ mode = 'horizontal' }) => {
         <Link to="/hoc-tu-moi">Học từ mới</Link>
       </Menu.Item>
       <Menu.Item key={'hoc-ngu-phap'}>
-        <Link to="/">Học ngữ pháp</Link>
+        <Link to="/grammar">Học ngữ pháp</Link>
       </Menu.Item>
       <Menu.Item key={'thi-thu'}>
         <Link to="/exam">Thi thử</Link>
