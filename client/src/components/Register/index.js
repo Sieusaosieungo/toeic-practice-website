@@ -11,6 +11,7 @@ import {
   Checkbox,
   Button,
   AutoComplete,
+  Spin
 } from 'antd';
 import {services} from '../../services'
 import {SIGN_IN} from '../../constants/ActionTypes'
@@ -23,6 +24,7 @@ class RegistrationForm extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
+    loading : false
   };
 
   handleSubmit = e => {
@@ -36,6 +38,7 @@ class RegistrationForm extends React.Component {
               console.log(res);
               const {dispatch} = this.props;
               dispatch({type : SIGN_IN, data : res})
+              this.props.signup(res)
               this.setState({loading : false})
               // toastr.success("Đăng nhập thành công")
             }
@@ -116,6 +119,7 @@ class RegistrationForm extends React.Component {
     ));
 
     return (
+      <Spin spinning={this.state.loading} tip="Loading...">
       <Form
         {...formItemLayout}
         onSubmit={this.handleSubmit}
@@ -222,6 +226,7 @@ class RegistrationForm extends React.Component {
           </Button>
         </Form.Item>
       </Form>
+      </Spin>
     );
   }
 }

@@ -70,6 +70,13 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
     // window.location.reload();
   };
 
+  const onSignup = (res) => {
+    // console.log(data)
+    setCookie('accessToken', res.data.results.token);
+    setCookie('isAuth', true);
+    message.success('Đăng kí thành công !');
+  }
+
   useEffect(() => {
     if (accessToken && Object.keys(user).length === 0) {
       axios({
@@ -147,7 +154,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
             onCancel={handleCancelRegForm}
             width={'50vw'}
           >
-            <Register />
+            <Register signup={onSignup}/>
           </Modal>
         </Menu.Item>
       )}
