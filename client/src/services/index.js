@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const services = {
 	login,
-  signup
+  signUp
 }
 
 function login(email, password) {
@@ -15,7 +15,7 @@ function login(email, password) {
   .catch(err=> {throw err})
 }
 
-function signup(value) {
+function signUp(value) {
   console.log(value)
   return axios({
     method : "POST",
