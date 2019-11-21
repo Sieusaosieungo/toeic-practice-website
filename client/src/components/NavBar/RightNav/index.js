@@ -105,14 +105,20 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
               pathname: '/login',
               state: { prevPath: location.pathname },
             })}
+            className="auth-button"
           >
-            Signin
+            Đăng nhập
           </Link>
         </Menu.Item>
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="sign-up">
-          <Link to="/register">Signup</Link>
+          <Link
+            to="/register"
+            className="auth-button"
+          >
+            Đăng ký
+          </Link>
         </Menu.Item>
       )}
     </Menu>

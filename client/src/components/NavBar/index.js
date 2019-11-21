@@ -19,7 +19,7 @@ const Navbar = ({ platform }) => {
   return (
     <nav className="menuBar" style={{position : 'sticky', top : '0', zIndex : '10', backgroundColor : '#fff'}}>
       <div className="logo">
-        <Link to="/">Trang chủ</Link>
+        <Link to="/">logo</Link>
       </div>
       <div className="menuCon">
         <div className="leftMenu">
