@@ -1,48 +1,45 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
+
+const { ObjectId } = mongoose.Schema.Types;
 
 const testSchema = new mongoose.Schema({
   level: {
-    type: String
+    type: String,
   },
   dateCreated: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   idUser: {
     type: ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
   overallPoint: {
-    type: Number
+    type: Number,
   },
   partResults: [
     {
       idPart: {
         type: ObjectId,
-        ref: 'Part'
+        ref: 'Part',
       },
       partPoint: {
-        type: Number
-      }
-    }
+        type: Number,
+      },
+    },
   ],
   grammarResults: [
     {
       idGrammer: {
         type: ObjectId,
-        ref: 'Grammar'
-      }
-    }
+        ref: 'Grammar',
+      },
+    },
   ],
   idTestQuestions: {
     type: ObjectId,
-    ref: 'TestQuestions'
+    ref: 'TestQuestions',
   },
-  idUser: {
-    type: ObjectId,
-    ref: 'User'
-  }
 });
 
 const TestModel = mongoose.model('Test', testSchema);
