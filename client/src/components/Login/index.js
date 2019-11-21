@@ -5,7 +5,7 @@ import './style.scss';
 import {services} from '../../services'
 import {SIGN_IN} from '../../constants/ActionTypes'
 import { connect } from 'react-redux';
-import toastr from '../../common/toastr'
+// import toastr from '../../common/toastr'
 
 class NormalLoginForm extends React.Component {
   constructor(props) {
@@ -26,13 +26,13 @@ class NormalLoginForm extends React.Component {
               const {dispatch} = this.props;
               dispatch({type : SIGN_IN, data : res})
               this.setState({loading : false})
-              toastr.success("Đăng nhập thành công")
+              // toastr.success("Đăng nhập thành công")
             }
           )
           .catch(err => {
             console.log(1)
             this.setState({loading : false})
-            toastr.error("Đăng nhập thất bại")
+            // toastr.error("Đăng nhập thất bại")
             throw err;
           })
       }
