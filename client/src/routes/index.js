@@ -18,6 +18,16 @@ const Home = Loadable({
   loading: Loading,
 });
 
+const Exam = Loadable({
+  loader : () => import ('../pages/Exam'),
+  loading : Loading
+})
+
+const Intro = Loadable({
+  loader : () => import ('../pages/Exam/Intro'),
+  loading : Loading
+})
+
 const routes = [
   {
     path: '/',
@@ -30,6 +40,14 @@ const routes = [
   {
     path: '/register',
     component: RegistrationForm,
+  },
+  {
+    path: '/exam',
+    component: Exam,
+  },
+  {
+    path: '/exam/intro',
+    component: Intro,
   },
   {
     path: '*',

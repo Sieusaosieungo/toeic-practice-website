@@ -17,7 +17,7 @@ const Navbar = ({ platform }) => {
   const onClose = () => setVisible(false);
 
   return (
-    <nav className="menuBar">
+    <nav className="menuBar" style={{position : 'sticky', top : '0', zIndex : '10', backgroundColor : '#fff'}}>
       <div className="logo">
         <Link to="/">Logo</Link>
       </div>
