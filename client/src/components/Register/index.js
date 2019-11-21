@@ -11,7 +11,11 @@ import {
   Checkbox,
   Button,
   AutoComplete,
+  Spin
 } from 'antd';
+import {services} from '../../services'
+import {SIGN_IN} from '../../constants/ActionTypes'
+import { connect } from 'react-redux';
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -20,13 +24,31 @@ class RegistrationForm extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
+    loading : false
   };
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.setState({loading : true})
+        services.signup(values)
+          .then(
+            res => { 
+              console.log(res);
+              const {dispatch} = this.props;
+              dispatch({type : SIGN_IN, data : res})
+              this.props.signup(res)
+              this.setState({loading : false})
+              // toastr.success("Đăng nhập thành công")
+            }
+          )
+          .catch(err => {
+            console.log(1)
+            this.setState({loading : false})
+            // toastr.error("Đăng nhập thất bại")
+            throw err;
+          })
       }
     });
   };
@@ -91,20 +113,13 @@ class RegistrationForm extends React.Component {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>,
-    );
 
     const websiteOptions = autoCompleteResult.map(website => (
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
     ));
 
     return (
+      <Spin spinning={this.state.loading} tip="Loading...">
       <Form
         {...formItemLayout}
         onSubmit={this.handleSubmit}
@@ -165,18 +180,18 @@ class RegistrationForm extends React.Component {
         <Form.Item
           label={
             <span>
-              Nickname&nbsp;
+              Name&nbsp;
               <Tooltip title="What do you want others to call you?">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
           }
         >
-          {getFieldDecorator('nickname', {
+          {getFieldDecorator('name', {
             rules: [
               {
                 required: true,
-                message: 'Please input your nickname!',
+                message: 'Please input your name!',
                 whitespace: true,
               },
             ],
@@ -186,18 +201,14 @@ class RegistrationForm extends React.Component {
             </Col>,
           )}
         </Form.Item>
-        <Form.Item label="Phone Number">
-          {getFieldDecorator('phone', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your phone number!',
-              },
-            ],
+        <Form.Item label="Gender" hasFeedback>
+          {getFieldDecorator('gender', {
+            rules: [{ required: true, message: 'Please select your country!' }],
           })(
-            <Col xs={24} sm={24} md={24} xl={20} lg={20}>
-              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-            </Col>,
+            <Select className="ant-col" style={{width : "83.33%"}} placeholder="Please select gender...">
+              <Option value="male">Male</Option>
+              <Option value="female">Female</Option>
+            </Select>
           )}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
@@ -205,7 +216,7 @@ class RegistrationForm extends React.Component {
             valuePropName: 'checked',
           })(
             <Checkbox>
-              Tôi đồng ý với <a href="">chính sách</a> của toeic.com
+              Tôi đồng ý với <a href="">chính sách</a> của MHHD
             </Checkbox>,
           )}
         </Form.Item>
@@ -215,8 +226,22 @@ class RegistrationForm extends React.Component {
           </Button>
         </Form.Item>
       </Form>
+      </Spin>
     );
   }
 }
 
-export default Form.create({ name: 'register' })(RegistrationForm);
+const mapStateToProps = ({ user, auth }) => {
+  return {
+    user,
+    accessTokenStore: auth.accessToken,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'register' })(RegistrationForm));
