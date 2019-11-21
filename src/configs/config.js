@@ -3,6 +3,9 @@ const pagination = {
   recordNumber: 10,
 };
 
+const staticFilePath = `${__dirname}/../static`;
+
 module.exports = {
   pagination,
+  staticFilePath,
 };

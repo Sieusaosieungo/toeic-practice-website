@@ -31,10 +31,12 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "4.17.1",
+    "express-fileupload": "^1.1.6",
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.7.7",
     "nodemon": "1.19.4",
     "path": "^0.12.7",
+    "shortid": "^2.2.15",
     "snakecase-keys": "3.1.0",
     "validator": "^12.0.0"
   }

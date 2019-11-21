@@ -1,10 +1,14 @@
 const NewWordTopic = require('../models/newWordTopic.model');
 const { pagination } = require('../configs/config');
 
-const getAllNewWordTopicsDb = async (
-  page = pagination.pageNumber,
-  records = pagination.recordNumber,
-) => {
+const getAllNewWordTopicsDb = async query => {
+  let { page, records } = query;
+  if (page === null) {
+    page = pagination.pageNumber;
+  }
+  if (records === null) {
+    records = pagination.recordNumber;
+  }
   page = Number.parseInt(page, 10);
   records = Number.parseInt(records, 10);
 
@@ -20,6 +24,16 @@ const getAllNewWordTopicsDb = async (
   };
 };
 
+const addNewWordTopicDb = async topic => {
+  const newWordTopic = new NewWordTopic({
+    title: topic.title,
+    image: topic.image,
+  });
+
+  await newWordTopic.save();
+};
+
 module.exports = {
   getAllNewWordTopicsDb,
+  addNewWordTopicDb,
 };
