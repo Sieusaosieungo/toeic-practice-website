@@ -81,7 +81,7 @@ const Grammar = ({ location }) => {
 
   return (
     <div className={`${prefixCls}`}>
-      <BreadcrumbCus />
+      <BreadcrumbCus location={location} />
       <div className={`${prefixCls}-content`}>
         <Row>
           <Col span={16} offset={4}>

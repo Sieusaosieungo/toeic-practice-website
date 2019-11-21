@@ -6,17 +6,17 @@ import './styles.scss';
 
 const LeftNav = ({ mode = 'horizontal' }) => {
   return (
-    <Menu mode={mode} defaultSelectedKeys={['hoc-ngu-phap']}>
-      <Menu.Item key={'trang-chu'}>
+    <Menu mode={mode} defaultSelectedKeys={['trang-chu']}>
+      <Menu.Item key={'1'}>
         <Link to="/">Trang chủ</Link>
       </Menu.Item>
-      <Menu.Item key={'hoc-tu-moi'}>
+      <Menu.Item key={'2'}>
         <Link to="/hoc-tu-moi">Học từ mới</Link>
       </Menu.Item>
-      <Menu.Item key={'hoc-ngu-phap'}>
+      <Menu.Item key={'3'}>
         <Link to="/grammar">Học ngữ pháp</Link>
       </Menu.Item>
-      <Menu.Item key={'thi-thu'}>
+      <Menu.Item key={'4'}>
         <Link to="/exam">Thi thử</Link>
       </Menu.Item>
     </Menu>
