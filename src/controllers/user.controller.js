@@ -1,5 +1,7 @@
 const validator = require('validator');
 const userService = require('../services/user.service');
+const CustomError = require('../errors/CustomError');
+const errorCode = require('../errors/errorCode');
 
 async function signup(req, res) {
   const { email } = req.body;
@@ -64,6 +66,25 @@ async function updateInfoUser(req, res) {
   });
 }
 
+async function uploadAvatar(req, res) {
+  const { avatar } = req.files;
+  if (!avatar.name.match(/\.(jpg|png|jpeg)$/)) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      'Làm ơn upload đúng định dạng ảnh',
+    );
+  }
+
+  const userUpdated = await userService.uploadAvatar(req.user, avatar);
+
+  res.send({
+    status: 1,
+    results: {
+      user: userUpdated,
+    },
+  });
+}
+
 module.exports = {
   signup,
   login,
@@ -71,4 +92,5 @@ module.exports = {
   logoutAllDevice,
   getInfoUser,
   updateInfoUser,
+  uploadAvatar,
 };
