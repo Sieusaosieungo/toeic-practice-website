@@ -6,6 +6,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Register from '../../Register';
 import Login from '../../Login';
+import { DELETE_USER, SIGN_IN } from '../../../constants/ActionTypes';
 
 import './style.scss';
 
@@ -15,18 +16,6 @@ import { storeUser, signIn, deleteUser, signOut } from '../../../actions';
 const Submenu = logOut => {
   return (
     <Menu>
-      <Menu.Item key="0">
-        <Link to="/user/profile">Trang cá nhân</Link>
-      </Menu.Item>
-      <Menu.Item key="1">
-        <Link to="/user/post-product">Đăng bài</Link>
-      </Menu.Item>
-      <Menu.Item key="2">
-        <Link to="/user/cart">Giỏ hàng</Link>
-      </Menu.Item>
-      <Menu.Item key="3">
-        <Link to="/user/my-posts">Bài đăng của tôi</Link>
-      </Menu.Item>
       <Menu.Item key="4">
         <Link to="" onClick={logOut}>
           Đăng xuất
@@ -64,9 +53,9 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
 
   const logOut = () => {
     removeCookie('accessToken');
-    dispatch(deleteUser());
+    dispatch({type : DELETE_USER});
     // dispatch(signOut());
-    window.location.reload();
+    // window.location.reload();
   };
 
   useEffect(() => {
@@ -92,7 +81,6 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
       // window.location.reload();
     }
   }, [accessToken]);
-
   return (
     <Menu mode={mode} selectedKeys={[]}>
       {Object.keys(user).length > 0 && (
@@ -104,7 +92,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             }
           />
           <Dropdown overlay={() => Submenu(logOut)}>
-            <Link className="ant-dropdown-link" to="/user/profile">
+            <Link className="ant-dropdown-link" to="">
               {user.full_name} <Icon type="down" />
             </Link>
           </Dropdown>
