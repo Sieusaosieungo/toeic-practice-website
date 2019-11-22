@@ -27,7 +27,7 @@ const Submenu = logOut => {
   );
 };
 
-const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
+const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   console.log('mode: ', mode);
   // console.log(history)
   const [cookies, setCookie, removeCookie] = useCookies('cookies');
@@ -54,30 +54,30 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
     setVisibleLoginForm(false);
   };
 
-  const onLogin = (res) => {
+  const onLogin = res => {
     // console.log(data)
     setCookie('accessToken', res.data.results.token);
     setCookie('isAuth', true);
     message.success('Đăng nhập thành công !');
-  }
+  };
 
   const logOut = () => {
     removeCookie('accessToken');
-    removeCookie('isAuth')
-    dispatch({type : DELETE_USER});
+    removeCookie('isAuth');
+    dispatch({ type: DELETE_USER });
     setVisibleLoginForm(false);
-    message.success("Đăng xuất thành công");
+    message.success('Đăng xuất thành công');
     // toastr.success("Đăng xuất thành công")
     // dispatch(signOut());
     // window.location.reload();
   };
 
-  const onSignup = (res) => {
+  const onSignup = res => {
     // console.log(data)
     setCookie('accessToken', res.data.results.token);
     setCookie('isAuth', true);
     message.success('Đăng kí thành công !');
-  }
+  };
 
   useEffect(() => {
     if (accessToken && Object.keys(user).length === 0) {
@@ -108,10 +108,12 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
         <Menu.Item key="sign-out" className="avatar">
           <Avatar
             src={
-              (user.data.results.user.avatar && "https://toeic-practice.herokuapp.com" + user.data.results.user.avatar) ||
+              (user.data.results.user.avatar &&
+                'https://toeic-practice.herokuapp.com' +
+                  user.data.results.user.avatar) ||
               'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
             }
-            style={{marginRight : "10px"}}
+            style={{ marginRight: '10px' }}
           />
           {user.data.results.user.name}
           <Dropdown overlay={() => Submenu(logOut)}>
@@ -123,15 +125,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="log-in">
-          <Link
-            // to={location => ({
-            //   ...location,
-            //   pathname: '/login',
-            //   state: { prevPath: location.pathname },
-            // })}
-            className="auth-button"
-            onClick={showModalLogin}
-          >
+          <Link to="" className="auth-button" onClick={showModalLogin}>
             Đăng nhập
           </Link>
           <Modal
@@ -140,13 +134,13 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
             footer={null}
             onCancel={handleCancelLoginForm}
           >
-            <Login login={onLogin}/>
+            <Login login={onLogin} />
           </Modal>
         </Menu.Item>
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="sign-up">
-          <Link className="auth-button" onClick={showModalRegister}>
+          <Link to="" className="auth-button" onClick={showModalRegister}>
             Đăng ký
           </Link>
           <Modal
@@ -156,7 +150,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
             onCancel={handleCancelRegForm}
             width={'50vw'}
           >
-            <Register signup={onSignup}/>
+            <Register signup={onSignup} />
           </Modal>
         </Menu.Item>
       )}

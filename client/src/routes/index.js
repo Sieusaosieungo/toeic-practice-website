@@ -5,47 +5,38 @@ import Loadable from 'react-loadable';
 
 import Loading from '../components/Loading';
 
-// const NormalLoginForm = Loadable({
-//   loader: () => import('../pages/Login'),
-//   loading: Loading,
-// });
-// const RegistrationForm = Loadable({
-//   loader: () => import('../pages/Register/index.js'),
-//   loading: Loading,
-// });
 const Home = Loadable({
   loader: () => import('../pages/Home'),
   loading: Loading,
 });
 
 const Grammar = Loadable({
-  loader : () => import ('../pages/Grammar'),
-  loading : Loading
-})
+  loader: () => import('../pages/Grammar'),
+  loading: Loading,
+});
 
 const Exam = Loadable({
-  loader : () => import ('../pages/Exam'),
-  loading : Loading
-})
-
+  loader: () => import('../pages/Exam'),
+  loading: Loading,
+});
 const Intro = Loadable({
-  loader : () => import ('../pages/Exam/Intro'),
-  loading : Loading
-})
+  loader: () => import('../pages/Exam/Intro'),
+  loading: Loading,
+});
+const Topics = Loadable({
+  loader: () => import('../pages/Topics'),
+  loading: Loading,
+});
+const Flashcard = Loadable({
+  loader: () => import('../pages/Flashcard'),
+  loading: Loading,
+});
 
 const routes = [
   {
     path: '/',
     component: Home,
   },
-  // {
-  //   path: '/login',
-  //   component: NormalLoginForm,
-  // },
-  // {
-  //   path: '/register',
-  //   component: RegistrationForm,
-  // },
   {
     path: '/grammar',
     component: Grammar,
@@ -57,6 +48,14 @@ const routes = [
   {
     path: '/exam/intro',
     component: Intro,
+  },
+  {
+    path: '/new-word',
+    component: Topics,
+  },
+  {
+    path: '/new-word/:topic',
+    component: Flashcard,
   },
   {
     path: '*',

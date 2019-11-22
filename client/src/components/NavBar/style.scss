@@ -24,6 +24,7 @@
   display: flex;
   justify-content: flex-end;
   margin-right: 2rem;
+  color: #33abe5;
 }
 .search-input {
   float: left;
@@ -49,6 +50,7 @@
 .menuCon .ant-menu-item a,
 .menuCon .ant-menu-submenu-title a {
   padding: 11.5px 15px;
+  font-weight: 500;
 }
 .menuCon .ant-menu-horizontal {
   border-bottom: none;
