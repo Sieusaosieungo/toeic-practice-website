@@ -28,7 +28,7 @@ const Submenu = logOut => {
 
 const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   console.log('mode: ', mode);
-
+  // console.log(history)
   const [cookies, setCookie, removeCookie] = useCookies('cookies');
 
   const accessToken = accessTokenStore || cookies.accessToken;
@@ -52,12 +52,29 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     setVisibleLoginForm(false);
   };
 
+  const onLogin = res => {
+    // console.log(data)
+    setCookie('accessToken', res.data.results.token);
+    setCookie('isAuth', true);
+    message.success('Đăng nhập thành công !');
+  };
+
   const logOut = () => {
     removeCookie('accessToken');
+    removeCookie('isAuth');
     dispatch({ type: DELETE_USER });
+    setVisibleLoginForm(false);
+    message.success('Đăng xuất thành công');
     // toastr.success("Đăng xuất thành công")
     // dispatch(signOut());
     // window.location.reload();
+  };
+
+  const onSignup = res => {
+    // console.log(data)
+    setCookie('accessToken', res.data.results.token);
+    setCookie('isAuth', true);
+    message.success('Đăng kí thành công !');
   };
 
   useEffect(() => {
@@ -89,10 +106,14 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
         <Menu.Item key="sign-out" className="avatar">
           <Avatar
             src={
-              user.images ||
+              (user.data.results.user.avatar &&
+                'https://toeic-practice.herokuapp.com' +
+                  user.data.results.user.avatar) ||
               'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
             }
+            style={{ marginRight: '10px' }}
           />
+          {user.data.results.user.name}
           <Dropdown overlay={() => Submenu(logOut)}>
             <Link className="ant-dropdown-link" to="">
               {user.full_name} <Icon type="down" />
@@ -111,7 +132,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             footer={null}
             onCancel={handleCancelLoginForm}
           >
-            <Login />
+            <Login login={onLogin} />
           </Modal>
         </Menu.Item>
       )}
@@ -127,7 +148,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             onCancel={handleCancelRegForm}
             width={'50vw'}
           >
-            <Register />
+            <Register signup={onSignup} />
           </Modal>
         </Menu.Item>
       )}

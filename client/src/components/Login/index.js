@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox , Spin} from 'antd';
+import { Form, Icon, Input, Button, Checkbox , Spin, message} from 'antd';
 import { Link } from 'react-router-dom';
 import './style.scss';
 import {services} from '../../services'
@@ -25,6 +25,7 @@ class NormalLoginForm extends React.Component {
               console.log(res);
               const {dispatch} = this.props;
               dispatch({type : SIGN_IN, data : res})
+              this.props.login(res)
               this.setState({loading : false})
               // toastr.success("Đăng nhập thành công")
             }
@@ -32,6 +33,7 @@ class NormalLoginForm extends React.Component {
           .catch(err => {
             console.log(1)
             this.setState({loading : false})
+            message.error("Đăng nhập thất bại")
             // toastr.error("Đăng nhập thất bại")
             throw err;
           })
