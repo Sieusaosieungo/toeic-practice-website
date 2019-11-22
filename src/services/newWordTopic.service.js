@@ -17,7 +17,7 @@ const addNewWordTopic = async (body, files) => {
   const { title } = body;
   const { image } = files;
 
-  const imageLink = await uploadImage(image, '/image/topic');
+  const imageLink = await uploadImage(image, '/images/topics');
 
   const topic = {
     title,
