@@ -17,6 +17,7 @@ import {
 import {services} from '../../services'
 import {SIGN_IN} from '../../constants/ActionTypes'
 import { connect } from 'react-redux';
+import './index.scss'
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
