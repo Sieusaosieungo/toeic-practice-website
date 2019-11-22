@@ -11,7 +11,7 @@ const LeftNav = ({ mode = 'horizontal' }) => {
         <Link to="/">Trang chủ</Link>
       </Menu.Item>
       <Menu.Item key={'2'}>
-        <Link to="/hoc-tu-moi">Học từ mới</Link>
+        <Link to="/new-word">Học từ mới</Link>
       </Menu.Item>
       <Menu.Item key={'3'}>
         <Link to="/grammar">Học ngữ pháp</Link>
