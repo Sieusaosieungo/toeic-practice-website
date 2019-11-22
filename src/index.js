@@ -5,10 +5,11 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const path = require('path');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const port = process.env.PORT;
-const errorHandler = require('./middlewares/errorHanlder');
+const errorHandler = require('./middlewares/errorHandler');
 
 app.use(express.json());
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use(fileUpload({ parseNested: true }));
 app.use('/api/users', require('./routes/user.route'));
+app.use('/api/new-word-topics', require('./routes/newWordTopic.route'));
 
 app.use(express.static(path.join(__dirname, '../static')));
 app.use(errorHandler);
