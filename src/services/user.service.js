@@ -1,10 +1,8 @@
-const fs = require('fs');
 const bcrypt = require('bcryptjs');
-const uuid = require('uuid');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
 const User = require('../models/user.model');
-const { STATIC_PATH } = require('../constant');
+const uploadImage = require('../utils/uploadImage');
 
 async function signup(userInfo) {
   const { email } = userInfo;
@@ -79,26 +77,9 @@ async function updateInfoUser(user, infoUpdates) {
 }
 
 async function uploadAvatar(user, avatar) {
-  const random = uuid.v4();
-  const directoryPath = `/images/avatar/${random}`;
-  const directoryFullPath = `${STATIC_PATH}/images/avatar/${random}`;
+  const avatarLink = await uploadImage(avatar, '/images/avatar');
 
-  // create folder to contain avatar
-  fs.mkdirSync(directoryFullPath, {
-    recursive: true,
-  });
-
-  const fileName = avatar.name;
-  const filePath = `${directoryFullPath}/${fileName}`;
-
-  // upload file zip
-  const errUpload = await avatar.mv(filePath);
-
-  if (errUpload) {
-    console.log(errUpload);
-  }
-
-  user.avatar = `${directoryPath}/${fileName}`;
+  user.avatar = avatarLink;
   await user.save();
 
   return user;
