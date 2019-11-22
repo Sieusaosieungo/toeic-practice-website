@@ -1,8 +1,8 @@
-.new-word {
+.topics {
   flex-grow: 1;
   background-color: #ebebeb;
 
-  .new-word-content {
+  .topics-content {
     width: 70%;
     margin: auto;
 
@@ -16,7 +16,7 @@
       font-size: 3rem;
     }
 
-    .new-word-topics {
+    .topics-wrapped-list {
       background-color: #fff;
       padding-top: 2rem;
       display: grid;
