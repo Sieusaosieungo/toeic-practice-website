@@ -36,6 +36,9 @@ const userSchema = new mongoose.Schema(
     gender: {
       type: String,
     },
+    avatar: {
+      type: String,
+    },
     recentWords: [
       {
         word: {

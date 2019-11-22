@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 import './style.scss';
 const prefixCls = 'exam';
 
@@ -28,12 +28,12 @@ const Exam = props => {
           </Col>
         </Row>
         <div style={{ textAlign: 'center' }}>
-          <button
+          <Button
             onClick={() => props.history.push('/exam/intro')}
             className="ant-btn-primary ant-card-hoverable"
           >
             Bắt đầu
-          </button>
+          </Button>
         </div>
       </div>
     </div>
