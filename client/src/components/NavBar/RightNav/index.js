@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { withCookies, useCookies } from 'react-cookie';
-import { Menu, Avatar, Icon, Dropdown, Modal, message } from 'antd';
+import { Menu, Avatar, Icon, Dropdown, Modal, message, Spin } from 'antd';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Register from '../../Register';
 import Login from '../../Login';
+import {services} from '../../../services'
 import { DELETE_USER, SIGN_IN } from '../../../constants/ActionTypes';
 // import toastr from '../../../common/toastr'
 
@@ -35,6 +36,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
 
   const [visibleRegForm, setVisibleRegForm] = useState(false);
   const [visibleLoginForm, setVisibleLoginForm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const showModalRegister = () => {
     setVisibleRegForm(true);
@@ -79,28 +81,28 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
 
   useEffect(() => {
     if (accessToken && Object.keys(user).length === 0) {
-      axios({
-        method: 'GET',
-        url: `${config.API_URL}/users/`,
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+      setLoading(true);
+      services.getUser(accessToken)
         .then(res => {
+          console.log(res)
           if (res.data.results.user) {
             // console.log('user info after call axios: ', res.data.results.user);
-            dispatch(storeUser(res.data.results.user));
+            dispatch({type : SIGN_IN, data : res});
+            setLoading(false);
             // dispatch(signIn(accessToken));
           }
         })
         .catch(() => {
+          setLoading(false);
           logOut();
         });
 
       // window.location.reload();
     }
   }, [accessToken]);
+  // console.log(user.data.results.user.avatar)
   return (
+      <Spin spinning={loading} size="small">
     <Menu mode={mode} selectedKeys={[]}>
       {Object.keys(user).length > 0 && (
         <Menu.Item key="sign-out" className="avatar">
@@ -151,6 +153,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
         </Menu.Item>
       )}
     </Menu>
+    </Spin>
   );
 };
 
