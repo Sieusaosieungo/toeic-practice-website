@@ -4,20 +4,20 @@ import './style.scss';
 
 import Topic from '../../components/Topic';
 
-const prefixCls = 'new-word';
+const prefixCls = 'topics';
 
-const renderTopic = topics => {
+const renderTopic = lstTopics => {
   let result = null;
 
-  if (topics && topics.length > 0) {
-    result = topics.map((topic, index) => <Topic key={index} {...topic} />);
+  if (lstTopics && lstTopics.length > 0) {
+    result = lstTopics.map((topic, index) => <Topic key={index} {...topic} />);
   }
 
   return result;
 };
 
-const Newwword = ({}) => {
-  const topics = [
+const Topics = ({}) => {
+  const lstTopics = [
     {
       title: 'Accounting',
       image:
@@ -99,10 +99,10 @@ const Newwword = ({}) => {
     <div className={`${prefixCls}`}>
       <div className={`${prefixCls}-content`}>
         <h1>Hôm nay bạn muốn học chủ đề nào?</h1>
-        <div className={`${prefixCls}-topics`}>{renderTopic(topics)}</div>
+        <div className={`${prefixCls}-wrapped-list`}>{renderTopic(lstTopics)}</div>
       </div>
     </div>
   );
 };
 
-export default Newwword;
+export default Topics;

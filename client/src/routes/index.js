@@ -23,8 +23,8 @@ const Intro = Loadable({
   loader: () => import('../pages/Exam/Intro'),
   loading: Loading,
 });
-const Newword = Loadable({
-  loader: () => import('../pages/Newword'),
+const Topics = Loadable({
+  loader: () => import('../pages/Topics'),
   loading: Loading,
 });
 const Flashcard = Loadable({
@@ -51,7 +51,7 @@ const routes = [
   },
   {
     path: '/new-word',
-    component: Newword,
+    component: Topics,
   },
   {
     path: '/new-word/:topic',
