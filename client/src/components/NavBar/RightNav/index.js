@@ -121,15 +121,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="log-in">
-          <Link
-            // to={location => ({
-            //   ...location,
-            //   pathname: '/login',
-            //   state: { prevPath: location.pathname },
-            // })}
-            className="auth-button"
-            onClick={showModalLogin}
-          >
+          <Link to="" className="auth-button" onClick={showModalLogin}>
             Đăng nhập
           </Link>
           <Modal
@@ -144,7 +136,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="sign-up">
-          <Link className="auth-button" onClick={showModalRegister}>
+          <Link to="" className="auth-button" onClick={showModalRegister}>
             Đăng ký
           </Link>
           <Modal
