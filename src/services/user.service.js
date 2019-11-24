@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
 const User = require('../models/user.model');
+const uploadImage = require('../utils/uploadImage');
 
 async function signup(userInfo) {
   const { email } = userInfo;
@@ -75,10 +76,20 @@ async function updateInfoUser(user, infoUpdates) {
   return user;
 }
 
+async function uploadAvatar(user, avatar) {
+  const avatarLink = await uploadImage(avatar, '/images/avatar');
+
+  user.avatar = avatarLink;
+  await user.save();
+
+  return user;
+}
+
 module.exports = {
   signup,
   login,
   logout,
   logoutAllDevice,
   updateInfoUser,
+  uploadAvatar,
 };
