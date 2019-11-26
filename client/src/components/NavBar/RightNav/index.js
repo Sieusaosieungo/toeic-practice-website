@@ -6,6 +6,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Register from '../../Register';
 import Login from '../../Login';
+import Update from '../../Update';
 import {services} from '../../../services'
 import { DELETE_USER, SIGN_IN } from '../../../constants/ActionTypes';
 // import toastr from '../../../common/toastr'
@@ -15,17 +16,7 @@ import './style.scss';
 import config from '../../../utils/config';
 import { storeUser, signIn, deleteUser, signOut } from '../../../actions';
 
-const Submenu = logOut => {
-  return (
-    <Menu>
-      <Menu.Item key="4">
-        <Link to="" onClick={logOut}>
-          Đăng xuất
-        </Link>
-      </Menu.Item>
-    </Menu>
-  );
-};
+
 
 const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   console.log('mode: ', mode);
@@ -36,7 +27,25 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
 
   const [visibleRegForm, setVisibleRegForm] = useState(false);
   const [visibleLoginForm, setVisibleLoginForm] = useState(false);
+  const [visibleUpdateForm, setVisibleUpdateForm] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const Submenu = logOut => {
+    return (
+      <Menu>
+        <Menu.Item key="1">
+          <div onClick={showModalUpdate}>
+            Cập nhật thông tin
+          </div>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <div onClick={logOut}>
+            Đăng xuất
+          </div>
+        </Menu.Item>
+      </Menu>
+    );
+  };
 
   const showModalRegister = () => {
     setVisibleRegForm(true);
@@ -46,12 +55,20 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     setVisibleLoginForm(true);
   };
 
+  const showModalUpdate = () => {
+    setVisibleUpdateForm(true);
+  };
+
   const handleCancelRegForm = e => {
     setVisibleRegForm(false);
   };
 
   const handleCancelLoginForm = e => {
     setVisibleLoginForm(false);
+  };
+
+  const handleCancelUpdateForm = e => {
+    setVisibleUpdateForm(false);
   };
 
   const onLogin = res => {
@@ -154,6 +171,15 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
           </Modal>
         </Menu.Item>
       )}
+      <Modal
+        title="Cập nhật thông tin"
+        visible={visibleUpdateForm}
+        footer={null}
+        onCancel={handleCancelUpdateForm}
+        width={'50vw'}
+      >
+        <Update signup={onSignup} />
+      </Modal>
     </Menu>
     </Spin>
   );

@@ -1,0 +1,241 @@
+import React from 'react';
+import {
+  Form,
+  Input,
+  Tooltip,
+  Icon,
+  Cascader,
+  Select,
+  Row,
+  Col,
+  Checkbox,
+  Button,
+  AutoComplete,
+  Spin,
+  message
+} from 'antd';
+import {services} from '../../services'
+import {SIGN_IN} from '../../constants/ActionTypes'
+import { connect } from 'react-redux';
+import './index.scss'
+
+const { Option } = Select;
+const AutoCompleteOption = AutoComplete.Option;
+
+class UpdateForm extends React.Component {
+  state = {
+    confirmDirty: false,
+    autoCompleteResult: [],
+    loading : false
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.setState({loading : true})
+        services.signUp(values)
+          .then(
+            res => { 
+              const {dispatch} = this.props;
+              dispatch({type : SIGN_IN, data : res})
+              this.props.signup(res)
+              this.setState({loading : false})
+              // toastr.success("Đăng nhập thành công")
+            }
+          )
+          .catch(err => {
+            this.setState({loading : false})
+            // toastr.error("Đăng nhập thất bại")
+            message.error("Đăng kí thất bại")
+            throw err;
+          })
+      }
+    });
+  };
+
+  handleConfirmBlur = e => {
+    const { value } = e.target;
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+  };
+
+  compareToFirstPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('Hai mật khẩu không nhất quán!');
+    } else {
+      callback();
+    }
+  };
+
+  validateToNextPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['confirm'], { force: true });
+    }
+    callback();
+  };
+
+  handleWebsiteChange = value => {
+    let autoCompleteResult;
+    if (!value) {
+      autoCompleteResult = [];
+    } else {
+      autoCompleteResult = ['.com', '.org', '.net'].map(
+        domain => `${value}${domain}`,
+      );
+    }
+    this.setState({ autoCompleteResult });
+  };
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const { autoCompleteResult } = this.state;
+
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    };
+    const tailFormItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0,
+        },
+        sm: {
+          span: 16,
+          offset: 8,
+        },
+      },
+    };
+
+    const websiteOptions = autoCompleteResult.map(website => (
+      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
+    ));
+
+    return (
+      <Spin spinning={this.state.loading} tip="Loading...">
+      <Form
+        {...formItemLayout}
+        onSubmit={this.handleSubmit}
+        style={{ margin: '0 auto' }}
+      >
+        <Form.Item label="E-mail">
+          {getFieldDecorator('email', {
+            rules: [
+              {
+                type: 'email',
+                message: 'Email không đúng dạng!',
+              },
+              {
+                required: true,
+                message: 'Vui lòng nhập Email!',
+              },
+            ],
+          })(
+            <Col xs={24} sm={24} md={24} lg={20} xl={20}>
+              <Input />
+            </Col>,
+          )}
+        </Form.Item>
+        <Form.Item label="Mật khẩu cũ" hasFeedback>
+          {getFieldDecorator('password', {
+            rules: [
+              {
+                required: true,
+                message: 'Vui lòng nhập mật khẩu!',
+              },
+              {
+                validator: this.validateToNextPassword,
+              },
+            ],
+          })(
+            <Col xs={24} sm={24} md={24} lg={20} xl={20}>
+              <Input.Password className="abcdef" />
+            </Col>,
+          )}
+        </Form.Item>
+        <Form.Item label="Mật khẩu mới" hasFeedback>
+          {getFieldDecorator('confirm', {
+            rules: [
+              {
+                required: true,
+                message: 'Vui lòng xác nhận mật khẩu!',
+              },
+              {
+                validator: this.compareToFirstPassword,
+              },
+            ],
+          })(
+            <Col xs={24} sm={24} md={24} xl={20} lg={20}>
+              <Input.Password onBlur={this.handleConfirmBlur} />
+            </Col>,
+          )}
+        </Form.Item>
+        <Form.Item
+          label="Tên"
+        >
+          {getFieldDecorator('name', {
+            rules: [
+              {
+                required: true,
+                message: 'Vui lòng nhập tên!',
+                whitespace: true,
+              },
+            ],
+          })(
+            <Col xs={24} sm={24} md={24} xl={20} lg={20}>
+              <Input />
+            </Col>,
+          )}
+        </Form.Item>
+        <Form.Item label="Giới tính" hasFeedback>
+          {getFieldDecorator('gender', {
+            rules: [{ required: true, message: 'Vui lòng chọn giới tính!' }],
+          })(
+            <Select className="ant-col" style={{width : "83.33%"}} placeholder="Please select gender...">
+              <Option value="male">Male</Option>
+              <Option value="female">Female</Option>
+            </Select>
+          )}
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          {getFieldDecorator('agreement', {
+            valuePropName: 'checked',
+          })(
+            <Checkbox>
+              Tôi đồng ý với <a href="">chính sách</a> của MHHD
+            </Checkbox>,
+          )}
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            Đăng ký
+          </Button>
+        </Form.Item>
+      </Form>
+      </Spin>
+    );
+  }
+}
+
+const mapStateToProps = ({ user, auth }) => {
+  return {
+    user,
+    accessTokenStore: auth.accessToken,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'update' })(UpdateForm));
