@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 require('dotenv').config();
 require('./db/mongoose');
 
@@ -22,20 +23,20 @@ app.use('/api/users', require('./routes/user.route'));
 app.use('/api/new-word-topics', require('./routes/newWordTopic.route'));
 
 // trick request
-app.get('/', (req, res) => res.send('wake up'))
+app.get('/', (req, res) => res.send('wake up'));
 
-cron.schedule('*/5 * * * *', function() {
+cron.schedule('*/5 * * * *', () => {
   axios
     .get('https://toeic-practice.herokuapp.com/')
-    .then(function(response) {
+    .then(response => {
       // handle success
       console.log(response.data);
     })
-    .catch(function(error) {
+    .catch(error => {
       // handle error
       console.log(error);
     })
-    .finally(function() {
+    .finally(() => {
       // always executed
     });
 });
