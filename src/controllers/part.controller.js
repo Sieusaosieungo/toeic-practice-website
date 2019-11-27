@@ -28,6 +28,13 @@ const addPart = async (req, res) => {
   res.send(rs);
 };
 
+const getAllParts = async (req, res) => {
+  const rs = await partService.getAllParts();
+
+  res.send(rs);
+};
+
 module.exports = {
   addPart,
+  getAllParts,
 };

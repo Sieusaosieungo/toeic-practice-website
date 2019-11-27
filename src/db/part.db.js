@@ -9,6 +9,12 @@ const addPartDb = async body => {
   return data;
 };
 
+const getAllPartsDb = async () => {
+  const parts = await Part.find({});
+  return parts;
+};
+
 module.exports = {
   addPartDb,
+  getAllPartsDb,
 };
