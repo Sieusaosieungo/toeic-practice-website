@@ -1,3 +1,5 @@
+const validator = require('validator');
+
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
 const newWordService = require('../services/newWord.service');
@@ -23,6 +25,29 @@ const addNewWord = async (req, res) => {
   res.send(rs);
 };
 
+const getAllNewWordsInTopic = async (req, res) => {
+  const { query } = req;
+  const { idTopic, page, records } = query;
+
+  if (!idTopic) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'idTopic là bắt buộc');
+  }
+  if (page) {
+    if (!validator.isNumeric(page)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'page phải là môt số');
+    }
+  }
+  if (records) {
+    if (!validator.isNumeric(records)) {
+      throw new CustomError(errorCode.BAD_REQUEST, 'records phải là một số');
+    }
+  }
+
+  const rs = await newWordService.getAllNewWordsInTopic(query);
+  res.send(rs);
+};
+
 module.exports = {
   addNewWord,
+  getAllNewWordsInTopic,
 };
