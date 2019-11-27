@@ -47,8 +47,18 @@ async function logoutAllDevice(user) {
 async function updateInfoUser(user, infoUpdates) {
   const { name, gender, oldPassword, newPassword } = infoUpdates;
 
-  if (oldPassword && newPassword) {
+  console.log('old', oldPassword);
+  console.log('password', user.password);
+
+  if (oldPassword) {
+    if (!newPassword) {
+      throw new CustomError(
+        errorCode.BAD_REQUEST,
+        'Bạn chưa nhập mật khẩu mới',
+      );
+    }
     const isMatch = await bcrypt.compare(oldPassword, user.password);
+
     if (!isMatch) {
       throw new CustomError(errorCode.FORBIDDEN, 'Mật khẫu cũ không chính xác');
     }
