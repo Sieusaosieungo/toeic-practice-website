@@ -1,0 +1,33 @@
+.card {
+  .react-card-flip {
+    height: 30rem;
+
+    .react-card-flipper {
+      .card-front {
+        cursor: pointer;
+      }
+
+      .card-back {
+        cursor: pointer;
+        height: 30rem;
+        border: 1px solid #888;
+        padding-top: 2rem;
+
+        .card-new-word {
+          font-size: 3rem;
+          color: #0247b8;
+        }
+
+        .card-meaning {
+          font-size: 2.5rem;
+          color: #bb0e01;
+        }
+
+        .card-example {
+          font-size: 2rem;
+          color: #333;
+        }
+      }
+    }
+  }
+}

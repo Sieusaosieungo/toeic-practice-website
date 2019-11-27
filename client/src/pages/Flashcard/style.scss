@@ -1,12 +1,11 @@
 @mixin navigation {
   position: absolute;
   font-size: 7rem;
-  color: yellow;
+  color: #ccc;
   z-index: 1;
   height: 100%;
   display: flex;
   align-items: center;
-  margin-top: -2rem;
   cursor: pointer;
 }
 
@@ -15,35 +14,48 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -8rem;
+  margin-top: -6rem;
 
   .flash-card-content {
-    width: 30%;
+    // background-color: red;
+    width: 50%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    /* For demo */
-    .ant-carousel .slick-slide {
-      text-align: center;
-      overflow: hidden;
-      background-color: red;
-      display: flex;
-      justify-content: center;
+    .ant-carousel {
+      width: 40rem;
+      height: 40rem;
 
-      img {
-        width: 30rem;
-        height: 30rem;
-        margin-bottom: 2rem;
+      /* For demo */
+      .slick-slide {
+        text-align: center;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+
+        img {
+          width: 40rem;
+          height: 40rem;
+        }
+
+        > div {
+          width: 100%;
+          // height: 30rem;
+        }
       }
     }
 
     .flash-card-pre {
       @include navigation;
-      left: 0;
+
+      left: 4rem;
     }
 
     .flash-card-next {
       @include navigation;
-      right: 0;
+      right: 4rem;
     }
   }
 }
