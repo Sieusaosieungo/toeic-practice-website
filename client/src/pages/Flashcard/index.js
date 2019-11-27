@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Carousel, Icon } from 'antd';
 
 import './style.scss';
+
+import Card from '../../components/Card';
 
 const prefixCls = 'flash-card';
 
@@ -9,10 +11,8 @@ const renderNewWords = newWords => {
   let result = null;
 
   if (newWords && newWords.length > 0) {
-    result = newWords.map(({ newWord, meaning, image, example }, index) => (
-      <div key={index}>
-        <img src={image} alt={newWord} />
-      </div>
+    result = newWords.map((newWord, index) => (
+      <Card key={index} {...newWord} />
     ));
   }
 
@@ -46,12 +46,10 @@ const Flashcard = ({ match, location }) => {
     },
   ];
 
-  const onChange = current => {
-    console.log(current.pre());
-  };
+  const carouselRef = useRef(null);
 
-  const handlePreviousSlide = () => {};
-  const handleNextSlide = () => {};
+  const handlePreviousSlide = () => carouselRef.current.slick.slickPrev();
+  const handleNextSlide = () => carouselRef.current.slick.slickNext();
 
   return (
     <div className={`${prefixCls}`}>
@@ -66,7 +64,7 @@ const Flashcard = ({ match, location }) => {
           className={`${prefixCls}-next`}
           onClick={handleNextSlide}
         />
-        <Carousel afterChange={onChange}>{renderNewWords(newWords)}</Carousel>
+        <Carousel ref={carouselRef}>{renderNewWords(newWords)}</Carousel>
       </div>
     </div>
   );
