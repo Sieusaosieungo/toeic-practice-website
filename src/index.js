@@ -17,6 +17,7 @@ app.use(cors());
 app.use(fileUpload({ parseNested: true }));
 app.use('/api/users', require('./routes/user.route'));
 app.use('/api/new-word-topics', require('./routes/newWordTopic.route'));
+app.use('/api/new-words', require('./routes/newWord.route'));
 
 app.use(express.static(path.join(__dirname, '../static')));
 app.use(errorHandler);
