@@ -26,7 +26,7 @@
 
     .ant-carousel {
       width: 40rem;
-      height: 40rem;
+      height: auto;
 
       /* For demo */
       .slick-slide {
@@ -34,11 +34,6 @@
         overflow: hidden;
         display: flex;
         justify-content: center;
-
-        img {
-          width: 40rem;
-          height: 40rem;
-        }
 
         > div {
           width: 100%;

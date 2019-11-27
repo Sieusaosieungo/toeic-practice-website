@@ -6,7 +6,7 @@ import './style.scss';
 const prefixCls = 'card';
 
 const Card = ({ newWord, meaning, image, example }) => {
-  const [isFlipped, setIsFlipped] = useState(true);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = () => setIsFlipped(!isFlipped);
 
