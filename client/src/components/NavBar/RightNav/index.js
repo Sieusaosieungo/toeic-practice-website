@@ -19,6 +19,7 @@ import { storeUser, signIn, deleteUser, signOut } from '../../../actions';
 
 
 const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
+  console.log(user)
   console.log('mode: ', mode);
   // console.log(history)
   const [cookies, setCookie, removeCookie] = useCookies('cookies');
@@ -178,7 +179,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
         onCancel={handleCancelUpdateForm}
         width={'50vw'}
       >
-        <Update signup={onSignup} />
+        <Update accessToken={accessToken} signup={onSignup} />
       </Modal>
     </Menu>
     </Spin>

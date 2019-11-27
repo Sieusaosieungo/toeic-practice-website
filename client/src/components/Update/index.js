@@ -12,7 +12,9 @@ import {
   Button,
   AutoComplete,
   Spin,
-  message
+  message,
+  Avatar,
+  Upload
 } from 'antd';
 import {services} from '../../services'
 import {SIGN_IN} from '../../constants/ActionTypes'
@@ -23,35 +25,59 @@ const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
 class UpdateForm extends React.Component {
-  state = {
-    confirmDirty: false,
-    autoCompleteResult: [],
-    loading : false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      confirmDirty: false,
+      autoCompleteResult: [],
+      loading : false,
+      newPassword : null,
+      oldPassword : null
+    };
+  }
+
+  componentDidMount() {
+    this.setState({loading : true})
+    services.getUser(this.props.accessToken)
+      .then(res => {
+        console.log(res)
+        var data = res.data.results.user;
+        this.setState({
+          email : data.email,
+          avatar : data.avatar,
+          name : data.name,
+          gender : data.gender,
+          loading : false
+        })
+      })
+      .catch(err => {
+        this.setState({loading : false})
+        throw err
+      });
+  }
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
+    const objectQuery = {};
+    objectQuery.oldPassword = this.state.oldPassword;
+    objectQuery.newPassword = this.state.newPassword;
+    objectQuery.name = this.state.name;
+    objectQuery.gender = this.state.gender;
         this.setState({loading : true})
-        services.signUp(values)
+        services.updateUser(objectQuery)
           .then(
             res => { 
               const {dispatch} = this.props;
               dispatch({type : SIGN_IN, data : res})
-              this.props.signup(res)
               this.setState({loading : false})
-              // toastr.success("Đăng nhập thành công")
+              message.success("Thay đổi thông tin thành công")
             }
           )
           .catch(err => {
             this.setState({loading : false})
-            // toastr.error("Đăng nhập thất bại")
             message.error("Đăng kí thất bại")
             throw err;
           })
-      }
-    });
   };
 
   handleConfirmBlur = e => {
@@ -89,6 +115,7 @@ class UpdateForm extends React.Component {
   };
 
   render() {
+    console.log(this.state.gender)
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
 
@@ -121,82 +148,59 @@ class UpdateForm extends React.Component {
 
     return (
       <Spin spinning={this.state.loading} tip="Loading...">
+      <Row>
+      <Col span={8} style={{borderRight : "1px solid rgb(238, 238, 238)", paddingRight : "20px"}}>
+        <div style={{width :  '100%', paddingTop : "100%", borderRadius : "50%", position : "relative"}}>
+          <Avatar
+            src={
+              (this.props.user.data.results.user.avatar &&
+                'https://toeic-practice.herokuapp.com' +
+                  this.props.user.data.results.user.avatar) ||
+              'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
+            }
+            // width="100%"
+            style={{position : 'absolute', top : 0, left : 0, bottom : 0, right : 0, width : "100%", height : "100%"}}
+          />
+        </div>
+        <div style={{ marginTop: "3em", textAlign: "center"}}>
+          <Upload>
+          <Button type="primary">
+            <Icon type="upload" />Thay avatar
+          </Button>
+          </Upload>
+        </div>  
+      </Col>
+      <Col span={16}>
       <Form
         {...formItemLayout}
         onSubmit={this.handleSubmit}
-        style={{ margin: '0 auto' }}
+        style={{ margin: '0 auto', marginLeft : "-20px" }}
       >
         <Form.Item label="E-mail">
-          {getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'Email không đúng dạng!',
-              },
-              {
-                required: true,
-                message: 'Vui lòng nhập Email!',
-              },
-            ],
-          })(
             <Col xs={24} sm={24} md={24} lg={20} xl={20}>
-              <Input />
+              <Input value={this.state.email} disabled />
             </Col>,
-          )}
         </Form.Item>
-        <Form.Item label="Mật khẩu cũ" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Vui lòng nhập mật khẩu!',
-              },
-              {
-                validator: this.validateToNextPassword,
-              },
-            ],
-          })(
+        <Form.Item label="Mật khẩu cũ">
             <Col xs={24} sm={24} md={24} lg={20} xl={20}>
-              <Input.Password className="abcdef" />
+              <Input.Password value={this.state.oldPassword} onChange={(e) => this.setState({oldPassword : e.target.value})}/>
             </Col>,
-          )}
         </Form.Item>
-        <Form.Item label="Mật khẩu mới" hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Vui lòng xác nhận mật khẩu!',
-              },
-              {
-                validator: this.compareToFirstPassword,
-              },
-            ],
-          })(
+        <Form.Item label="Mật khẩu mới">
             <Col xs={24} sm={24} md={24} xl={20} lg={20}>
-              <Input.Password onBlur={this.handleConfirmBlur} />
+              <Input.Password value={this.state.newPassword} onChange={(e) => this.setState({newPassword : e.target.value})}/>
             </Col>,
-          )}
         </Form.Item>
         <Form.Item
           label="Tên"
         >
-          {getFieldDecorator('name', {
-            rules: [
-              {
-                required: true,
-                message: 'Vui lòng nhập tên!',
-                whitespace: true,
-              },
-            ],
-          })(
             <Col xs={24} sm={24} md={24} xl={20} lg={20}>
-              <Input />
+              <Input value={this.state.name} onChange={(e)=> this.setState({name : e.target.value})}/>
             </Col>,
-          )}
         </Form.Item>
-        <Form.Item label="Giới tính" hasFeedback>
+        <Form.Item label="Giới tính">
           {getFieldDecorator('gender', {
+            initialValue: this.state.gender,
             rules: [{ required: true, message: 'Vui lòng chọn giới tính!' }],
           })(
             <Select className="ant-col" style={{width : "83.33%"}} placeholder="Please select gender...">
@@ -206,20 +210,13 @@ class UpdateForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
-            valuePropName: 'checked',
-          })(
-            <Checkbox>
-              Tôi đồng ý với <a href="">chính sách</a> của MHHD
-            </Checkbox>,
-          )}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Đăng ký
+            Cập nhật
           </Button>
         </Form.Item>
       </Form>
+      </Col>
+      </Row>
       </Spin>
     );
   }

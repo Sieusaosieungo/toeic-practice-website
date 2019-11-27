@@ -1,9 +1,11 @@
 import axios from 'axios';
+import {authHeader} from '../utils/authHeader'
 
 export const services = {
 	login,
   signUp,
-  getUser
+  getUser,
+  updateUser
 }
 
 function login(email, password) {
@@ -28,12 +30,22 @@ function signUp(value) {
 }
 
 function getUser(accessToken) {
+  console.log(authHeader())
   return axios({
     method: 'GET',
     url: `https://toeic-practice.herokuapp.com/api/users/`,
-    headers: {
-      authorization: `Bearer ${accessToken}`,
-    },
+    headers: authHeader(),
+  }).then(res => res)
+  .catch(err=> {throw err})
+}
+
+function updateUser(object) {
+  console.log(object)
+  return axios({
+    method : "PATCH",
+    headers : authHeader(),
+    url : "https://toeic-practice.herokuapp.com/api/users",
+    data : object
   }).then(res => res)
   .catch(err=> {throw err})
 }
