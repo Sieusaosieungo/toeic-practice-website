@@ -7,6 +7,9 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
+const axios = require('axios');
+const cron = require('node-cron');
+
 const port = process.env.PORT;
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -17,6 +20,25 @@ app.use(cors());
 app.use(fileUpload({ parseNested: true }));
 app.use('/api/users', require('./routes/user.route'));
 app.use('/api/new-word-topics', require('./routes/newWordTopic.route'));
+
+// trick request
+app.get('/', (req, res) => res.send('wake up'))
+
+cron.schedule('*/5 * * * *', function() {
+  axios
+    .get('https://toeic-practice.herokuapp.com/')
+    .then(function(response) {
+      // handle success
+      console.log(response.data);
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function() {
+      // always executed
+    });
+});
 
 app.use(express.static(path.join(__dirname, '../static')));
 app.use(errorHandler);
