@@ -8,14 +8,14 @@ import config from '../../utils/config';
 
 const prefixCls = 'topic';
 
-const Topic = ({ image, title }) => {
+const Topic = ({ _id, image, title }) => {
   return (
     <Link
       className={`${prefixCls}`}
       to={{
         pathname: `/new-word/${changeToSlug(title)}`,
         state: {
-          topic: title,
+          topicId: _id,
         },
       }}
     >
