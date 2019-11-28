@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const partSchema = new mongoose.Schema({
-  title: {
-    type: String,
+  partNumber: {
+    type: Number,
     required: true,
   },
   numberQuestion: {

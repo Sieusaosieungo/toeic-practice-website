@@ -6,10 +6,13 @@ const partService = require('../services/part.service');
 
 const addPart = async (req, res) => {
   const { body } = req;
-  const { title, numberQuestion } = body;
+  const { partNumber, numberQuestion } = body;
 
-  if (!title) {
+  if (!partNumber) {
     throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm tên part');
+  }
+  if (!validator.isNumeric(partNumber.toString())) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Tên part phải là một số');
   }
   if (!numberQuestion) {
     throw new CustomError(
