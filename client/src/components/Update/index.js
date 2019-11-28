@@ -78,7 +78,7 @@ class UpdateForm extends React.Component {
       })
       .catch(err => {
         this.setState({ loading: false });
-        message.error('Đăng kí thất bại');
+        message.error('Thay đổi thất bại');
         throw err;
       });
   };
@@ -118,39 +118,35 @@ class UpdateForm extends React.Component {
   };
 
   onChange = e => {
-    this.setState({ loadAvatar: true });
+    this.setState({ loading: true });
 
     e.preventDefault();
     const formData = new FormData();
     formData.append('avatar', e.target.files[0]);
 
-    // for (let [key, value] of formData.entries()) {
-    //   console.log('key:', key, '\nvalue:', value);
-    // }
-
     services
       .uploadAvatar(formData)
       .then(res => {
+        console.log(res)
         const { dispatch } = this.props;
 
-        dispatch({ type: 'STORE_USER', user: { ...res.data.results.user } });
+        dispatch({ type: SIGN_IN, data: res });
         this.setState({
-          loadAvatar: false,
+          loading: false,
           avatar: res.data.results.user.avatar,
         });
         message.success('Cập nhật ảnh thành công');
         // window.location.reload();
       })
       .catch(err => {
-        this.setState({ loadAvatar: false });
+        this.setState({ loading: false });
         message.error('Cập nhật ảnh thất bại');
         throw err;
       });
-    this.setState({ ...this.state });
   };
 
   render() {
-    console.log(this.state.gender);
+    console.log(this.state.loadAvatar);
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
 
@@ -184,7 +180,6 @@ class UpdateForm extends React.Component {
     return (
       <Spin spinning={this.state.loading} tip="Loading...">
         <Row>
-          <Spin spinning={this.state.loadAvatar}>
             <Col
               span={8}
               style={{
@@ -231,7 +226,6 @@ class UpdateForm extends React.Component {
                 </label>
               </div>
             </Col>
-          </Spin>
           <Col span={16}>
             <Form
               {...formItemLayout}
