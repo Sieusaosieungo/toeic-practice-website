@@ -1,105 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import './style.scss';
 
 import Topic from '../../components/Topic';
+import config from '../../utils/config';
 
 const prefixCls = 'topics';
 
-const renderTopic = lstTopics => {
+const renderTopic = topics => {
   let result = null;
 
-  if (lstTopics && lstTopics.length > 0) {
-    result = lstTopics.map((topic, index) => <Topic key={index} {...topic} />);
+  if (topics && topics.length > 0) {
+    result = topics.map((topic, index) => <Topic key={index} {...topic} />);
   }
 
   return result;
 };
 
 const Topics = ({}) => {
-  const lstTopics = [
-    {
-      title: 'Accounting',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/accounting.png',
-    },
-    {
-      title: 'Airlines',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/airlines.png',
-    },
-    {
-      title: 'Applying & Interviewing',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/applying.png ',
-    },
-    {
-      title: 'Banking',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/banking.png',
-    },
-    {
-      title: 'Board Meetings & Committees',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/board_meeting.png',
-    },
-    {
-      title: 'Car Rentals',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/car_rentals.png',
-    },
-    {
-      title: 'Computers',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/computers.png',
-    },
-    {
-      title: 'Contracts',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/contracts.png',
-    },
-    {
-      title: 'Cooking As A Career',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/cooking.png',
-    },
-    {
-      title: 'Correspondence',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/correspondence.png',
-    },
-    {
-      title: 'Dentists Office',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/dentist.png',
-    },
-    {
-      title: 'Doctors Office',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/doctor.png',
-    },
-    {
-      title: 'Eating Out',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/eating_out.png',
-    },
-    {
-      title: 'Events',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/events.png',
-    },
-    {
-      title: 'Financial Statements',
-      image:
-        'https://tienganhmoingay.com/static/Vocabulary/images/topic_images/financial_statements.png',
-    },
-  ];
+  const [topics, setTopics] = useState([]);
+
+  useEffect(() => {
+    if (topics.length <= 0) {
+      axios({
+        method: 'GET',
+        url: `${config.API_URL}/api/new-word-topics`,
+      })
+        .then(res => {
+          setTopics(res.data.results.topics);
+        })
+        .catch(err => console.log(err));
+    }
+  }, []);
 
   return (
     <div className={`${prefixCls}`}>
       <div className={`${prefixCls}-content`}>
         <h1>Hôm nay bạn muốn học chủ đề nào?</h1>
-        <div className={`${prefixCls}-wrapped-list`}>{renderTopic(lstTopics)}</div>
+        <div className={`${prefixCls}-wrapped-list`}>{renderTopic(topics)}</div>
       </div>
     </div>
   );

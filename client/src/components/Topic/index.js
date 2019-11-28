@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './style.scss';
 
 import changeToSlug from '../../utils/changeToSlug';
+import config from '../../utils/config';
 
 const prefixCls = 'topic';
 
@@ -19,7 +20,7 @@ const Topic = ({ image, title }) => {
       }}
     >
       <div className={`${prefixCls}-wrap-image`}>
-        <img src={image} alt={title} />
+        <img src={`${config.API_URL}${image}`} alt={title} />
       </div>
       <h4>{title}</h4>
     </Link>
