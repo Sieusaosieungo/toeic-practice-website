@@ -47,7 +47,7 @@ const Flashcard = ({
     })
       .then(res => {
         setNewWords(res.data.results.newWords);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch(err => console.log(err));
   }, []);
