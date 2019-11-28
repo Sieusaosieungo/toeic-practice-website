@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-
-const { ObjectId } = mongoose.Schema.Types;
+const { questionLevel } = require('../configs/config');
 
 const questionSchema = new mongoose.Schema({
   image: {
@@ -19,21 +18,37 @@ const questionSchema = new mongoose.Schema({
   },
   level: {
     type: Number,
+    default: questionLevel.ELEMENTARY,
   },
   subQuestions: [
     {
-      type: ObjectId,
-      ref: 'SubQuestion',
+      question: {
+        type: String,
+      },
+      A: {
+        type: String,
+      },
+      B: {
+        type: String,
+      },
+      C: {
+        type: String,
+      },
+      D: {
+        type: String,
+      },
+      answer: {
+        type: String,
+        lowercase: true,
+      },
+      tips: {
+        type: String,
+      },
     },
   ],
   part: {
-    partNumber: {
-      type: Number,
-    },
-    idPart: {
-      type: ObjectId,
-      ref: 'Part',
-    },
+    type: Number,
+    required: true,
   },
 });
 
