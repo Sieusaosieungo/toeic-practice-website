@@ -5,19 +5,22 @@ import './style.scss';
 
 import NavBar from '../NavBar';
 import Footer from '../Footer';
+import Admin from '../../pages/Admin';
 
 function App({ children, user }) {
-  console.log('user from App.js', user);
+  const { role } = user.data ? user.data.results.user : { role: 1 };
 
-  return (
-    <Fragment>
+  if (!role) {
+    return (
       <Fragment>
         <NavBar />
         {children}
         <Footer />
       </Fragment>
-    </Fragment>
-  );
+    );
+  } else {
+    return <Admin />;
+  }
 }
 
 const mapStateToProps = ({ user }) => {

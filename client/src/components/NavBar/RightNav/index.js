@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Register from '../../Register';
 import Login from '../../Login';
 import Update from '../../Update';
-import {services} from '../../../services'
+import { services } from '../../../services';
 import { DELETE_USER, SIGN_IN } from '../../../constants/ActionTypes';
 // import toastr from '../../../common/toastr'
 
@@ -16,11 +16,9 @@ import './style.scss';
 import config from '../../../utils/config';
 import { storeUser, signIn, deleteUser, signOut } from '../../../actions';
 
-
-
 const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
-  console.log(user)
-  console.log('mode: ', mode);
+  // console.log(user)
+  // console.log('mode: ', mode);
   // console.log(history)
   const [cookies, setCookie, removeCookie] = useCookies('cookies');
 
@@ -35,14 +33,10 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     return (
       <Menu>
         <Menu.Item key="1">
-          <div onClick={showModalUpdate}>
-            Cập nhật thông tin
-          </div>
+          <div onClick={showModalUpdate}>Cập nhật thông tin</div>
         </Menu.Item>
         <Menu.Item key="4">
-          <div onClick={logOut}>
-            Đăng xuất
-          </div>
+          <div onClick={logOut}>Đăng xuất</div>
         </Menu.Item>
       </Menu>
     );
@@ -100,12 +94,12 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   useEffect(() => {
     if (accessToken && Object.keys(user).length === 0) {
       setLoading(true);
-      services.getUser(accessToken)
+      services
+        .getUser(accessToken)
         .then(res => {
-          console.log(res)
           if (res.data.results.user) {
             // console.log('user info after call axios: ', res.data.results.user);
-            dispatch({type : SIGN_IN, data : res});
+            dispatch({ type: SIGN_IN, data: res });
             setLoading(false);
             // dispatch(signIn(accessToken));
           }
@@ -120,68 +114,68 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   }, [accessToken]);
   // console.log(user.data.results.user.avatar)
   return (
-      <Spin spinning={loading} size="small">
-    <Menu mode={mode} selectedKeys={[]}>
-      {Object.keys(user).length > 0 && (
-        <Menu.Item key="sign-out" className="avatar">
-          <Avatar
-            src={
-              (user.data.results.user.avatar &&
-                'https://toeic-practice.herokuapp.com' +
-                  user.data.results.user.avatar) ||
-              'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
-            }
-            style={{ marginRight: '10px' }}
-          />
-          {user.data.results.user.name}
-          <Dropdown overlay={() => Submenu(logOut)}>
-            <Link className="ant-dropdown-link" to="">
-              {user.full_name} <Icon type="down" />
+    <Spin spinning={loading} size="small">
+      <Menu mode={mode} selectedKeys={[]}>
+        {Object.keys(user).length > 0 && (
+          <Menu.Item key="sign-out" className="avatar">
+            <Avatar
+              src={
+                (user.data.results.user.avatar &&
+                  'https://toeic-practice.herokuapp.com' +
+                    user.data.results.user.avatar) ||
+                'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
+              }
+              style={{ marginRight: '10px' }}
+            />
+            {user.data.results.user.name}
+            <Dropdown overlay={() => Submenu(logOut)}>
+              <Link className="ant-dropdown-link" to="">
+                {user.full_name} <Icon type="down" />
+              </Link>
+            </Dropdown>
+          </Menu.Item>
+        )}
+        {!(Object.keys(user).length > 0) && (
+          <Menu.Item key="log-in">
+            <Link to="" className="auth-button" onClick={showModalLogin}>
+              Đăng nhập
             </Link>
-          </Dropdown>
-        </Menu.Item>
-      )}
-      {!(Object.keys(user).length > 0) && (
-        <Menu.Item key="log-in">
-          <Link to="" className="auth-button" onClick={showModalLogin}>
-            Đăng nhập
-          </Link>
-          <Modal
-            title="Đăng nhập"
-            visible={visibleLoginForm}
-            footer={null}
-            onCancel={handleCancelLoginForm}
-          >
-            <Login login={onLogin} />
-          </Modal>
-        </Menu.Item>
-      )}
-      {!(Object.keys(user).length > 0) && (
-        <Menu.Item key="sign-up">
-          <Link to="" className="auth-button" onClick={showModalRegister}>
-            Đăng ký
-          </Link>
-          <Modal
-            title="Đăng ký"
-            visible={visibleRegForm}
-            footer={null}
-            onCancel={handleCancelRegForm}
-            width={'50vw'}
-          >
-            <Register signup={onSignup} />
-          </Modal>
-        </Menu.Item>
-      )}
-      <Modal
-        title="Cập nhật thông tin"
-        visible={visibleUpdateForm}
-        footer={null}
-        onCancel={handleCancelUpdateForm}
-        width={'50vw'}
-      >
-        <Update accessToken={accessToken} signup={onSignup} />
-      </Modal>
-    </Menu>
+            <Modal
+              title="Đăng nhập"
+              visible={visibleLoginForm}
+              footer={null}
+              onCancel={handleCancelLoginForm}
+            >
+              <Login login={onLogin} />
+            </Modal>
+          </Menu.Item>
+        )}
+        {!(Object.keys(user).length > 0) && (
+          <Menu.Item key="sign-up">
+            <Link to="" className="auth-button" onClick={showModalRegister}>
+              Đăng ký
+            </Link>
+            <Modal
+              title="Đăng ký"
+              visible={visibleRegForm}
+              footer={null}
+              onCancel={handleCancelRegForm}
+              width={'50vw'}
+            >
+              <Register signup={onSignup} />
+            </Modal>
+          </Menu.Item>
+        )}
+        <Modal
+          title="Cập nhật thông tin"
+          visible={visibleUpdateForm}
+          footer={null}
+          onCancel={handleCancelUpdateForm}
+          width={'50vw'}
+        >
+          <Update accessToken={accessToken} signup={onSignup} />
+        </Modal>
+      </Menu>
     </Spin>
   );
 };
