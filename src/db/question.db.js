@@ -1,4 +1,4 @@
-const Question = require('../models/Question.model');
+const Question = require('../models/question.model');
 
 const getQuestionById = async id => {
   const question = Question.findById(id);
