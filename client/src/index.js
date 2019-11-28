@@ -7,7 +7,9 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import { PlatformProvider } from './context/platform';
+import { Switch, Route } from 'react-router-dom';
 import App from './components/App';
+import Admin from './components/Admin';
 import rootReducer from './reducers';
 import router from './routes';
 import thunk from 'redux-thunk';
@@ -22,7 +24,13 @@ const render = () => {
       <Provider store={store}>
         <CookiesProvider>
           <PlatformProvider userAgent={userAgent}>
-            <App>{router()}</App>
+            {
+              true ?
+              // nếu là admin 
+              <Admin>{"Admin"}</Admin> :
+              //nếu là client
+              <App>{router()}</App>
+            }
           </PlatformProvider>
         </CookiesProvider>
       </Provider>

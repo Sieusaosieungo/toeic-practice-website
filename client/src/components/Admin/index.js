@@ -5,17 +5,13 @@ import './style.scss';
 import NavBar from '../NavBar';
 import Footer from '../Footer';
 
-function App({ children }) {
+function Admin({ children }) {
 	console.log(children)
   return (
     <Fragment>
-      <Fragment>
-        <NavBar />
         {children}
-        <Footer />
-      </Fragment>
     </Fragment>
   );
 }
 
-export default App;
+export default Admin;
