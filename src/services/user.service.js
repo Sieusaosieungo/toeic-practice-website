@@ -1,4 +1,7 @@
 const bcrypt = require('bcryptjs');
+const axios = require('axios');
+const FormData = require('form-data');
+const fs = require('fs');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
 const User = require('../models/user.model');
@@ -47,9 +50,6 @@ async function logoutAllDevice(user) {
 async function updateInfoUser(user, infoUpdates) {
   const { name, gender, oldPassword, newPassword } = infoUpdates;
 
-  console.log('old', oldPassword);
-  console.log('password', user.password);
-
   if (oldPassword) {
     if (!newPassword) {
       throw new CustomError(
@@ -89,7 +89,21 @@ async function updateInfoUser(user, infoUpdates) {
 async function uploadAvatar(user, avatar) {
   const avatarLink = await uploadImage(avatar, '/images/avatar');
 
-  user.avatar = avatarLink;
+  const bodyFormData = new FormData();
+  bodyFormData.append('relativePath', 'images/avatar');
+  bodyFormData.append('file', fs.createReadStream(avatarLink));
+
+  const config = {
+    headers: bodyFormData.getHeaders(),
+  };
+
+  const res = await axios.post(
+    'http://123.30.235.196:5221/api/files',
+    bodyFormData,
+    config,
+  );
+
+  user.avatar = res.data.link;
   await user.save();
 
   return user;
