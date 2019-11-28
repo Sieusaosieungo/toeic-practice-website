@@ -34,6 +34,7 @@ class UpdateForm extends React.Component {
       newPassword: null,
       oldPassword: null,
       avatar: this.props.user.data.results.user.avatar || null,
+      loadAvatar: false,
     };
   }
 
@@ -117,6 +118,9 @@ class UpdateForm extends React.Component {
   };
 
   onChange = e => {
+    this.setState({ loadAvatar: true });
+
+    e.preventDefault();
     const formData = new FormData();
     formData.append('avatar', e.target.files[0]);
 
@@ -130,12 +134,15 @@ class UpdateForm extends React.Component {
         const { dispatch } = this.props;
 
         dispatch({ type: 'STORE_USER', user: { ...res.data.results.user } });
-        this.setState({ loading: false, avatar: res.data.results.user.avatar });
+        this.setState({
+          loadAvatar: false,
+          avatar: res.data.results.user.avatar,
+        });
         message.success('Cập nhật ảnh thành công');
-        window.location.reload();
+        // window.location.reload();
       })
       .catch(err => {
-        this.setState({ loading: false });
+        this.setState({ loadAvatar: false });
         message.error('Cập nhật ảnh thất bại');
         throw err;
       });
@@ -177,52 +184,54 @@ class UpdateForm extends React.Component {
     return (
       <Spin spinning={this.state.loading} tip="Loading...">
         <Row>
-          <Col
-            span={8}
-            style={{
-              borderRight: '1px solid rgb(238, 238, 238)',
-              paddingRight: '20px',
-            }}
-          >
-            <div
+          <Spin spinning={this.state.loadAvatar}>
+            <Col
+              span={8}
               style={{
-                width: '100%',
-                paddingTop: '100%',
-                borderRadius: '50%',
-                position: 'relative',
+                borderRight: '1px solid rgb(238, 238, 238)',
+                paddingRight: '20px',
               }}
             >
-              <Avatar
-                src={
-                  (this.state.avatar &&
-                    'https://toeic-practice.herokuapp.com' +
-                      this.state.avatar) ||
-                  'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
-                }
-                // width="100%"
+              <div
                 style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  bottom: 0,
-                  right: 0,
                   width: '100%',
-                  height: '100%',
+                  paddingTop: '100%',
+                  borderRadius: '50%',
+                  position: 'relative',
                 }}
-              />
-            </div>
-            <div style={{ marginTop: '3em', textAlign: 'center' }}>
-              <label className="upload-btn-wrapper">
-                <input
-                  type="file"
-                  required
-                  onChange={this.onChange}
-                  name="productAttachImages"
+              >
+                <Avatar
+                  src={
+                    (this.state.avatar &&
+                      'https://toeic-practice.herokuapp.com' +
+                        this.state.avatar) ||
+                    'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
+                  }
+                  // width="100%"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    width: '100%',
+                    height: '100%',
+                  }}
                 />
-                <span>Tải lên file .zip</span>
-              </label>
-            </div>
-          </Col>
+              </div>
+              <div style={{ marginTop: '3em', textAlign: 'center' }}>
+                <label className="upload-btn-wrapper">
+                  <input
+                    type="file"
+                    required
+                    onChange={this.onChange}
+                    name="productAttachImages"
+                  />
+                  <span>Chọn ảnh</span>
+                </label>
+              </div>
+            </Col>
+          </Spin>
           <Col span={16}>
             <Form
               {...formItemLayout}
@@ -233,7 +242,6 @@ class UpdateForm extends React.Component {
                 <Col xs={24} sm={24} md={24} lg={20} xl={20}>
                   <Input value={this.state.email} disabled />
                 </Col>
-                ,
               </Form.Item>
               <Form.Item label="Mật khẩu cũ">
                 <Col xs={24} sm={24} md={24} lg={20} xl={20}>
@@ -244,7 +252,6 @@ class UpdateForm extends React.Component {
                     }
                   />
                 </Col>
-                ,
               </Form.Item>
               <Form.Item label="Mật khẩu mới">
                 <Col xs={24} sm={24} md={24} xl={20} lg={20}>
@@ -255,7 +262,6 @@ class UpdateForm extends React.Component {
                     }
                   />
                 </Col>
-                ,
               </Form.Item>
               <Form.Item label="Tên">
                 <Col xs={24} sm={24} md={24} xl={20} lg={20}>
@@ -264,7 +270,6 @@ class UpdateForm extends React.Component {
                     onChange={e => this.setState({ name: e.target.value })}
                   />
                 </Col>
-                ,
               </Form.Item>
               <Form.Item label="Giới tính">
                 {getFieldDecorator('gender', {
@@ -277,9 +282,13 @@ class UpdateForm extends React.Component {
                     className="ant-col"
                     style={{ width: '83.33%' }}
                     placeholder="Please select gender..."
+                    onChange={e => {
+                      console.log(e);
+                      this.setState({ gender: e });
+                    }}
                   >
-                    <Option value="male">Male</Option>
-                    <Option value="female">Female</Option>
+                    <Option value="male">Nam</Option>
+                    <Option value="female">Nữ</Option>
                   </Select>,
                 )}
               </Form.Item>
