@@ -1,11 +1,14 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import './style.scss';
 
 import NavBar from '../NavBar';
 import Footer from '../Footer';
 
-function App({ children }) {
+function App({ children, user }) {
+  console.log('user from App.js', user);
+
   return (
     <Fragment>
       <Fragment>
@@ -17,4 +20,8 @@ function App({ children }) {
   );
 }
 
-export default App;
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+export default connect(mapStateToProps)(App);
