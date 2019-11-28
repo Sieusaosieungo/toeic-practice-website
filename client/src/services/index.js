@@ -23,7 +23,6 @@ function login(email, password) {
 }
 
 function signUp(value) {
-  console.log(value);
   return axios({
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -37,7 +36,6 @@ function signUp(value) {
 }
 
 function getUser(accessToken) {
-  console.log(authHeader());
   return axios({
     method: 'GET',
     url: `https://toeic-practice.herokuapp.com/api/users/`,
@@ -50,7 +48,6 @@ function getUser(accessToken) {
 }
 
 function updateUser(object) {
-  console.log(object);
   return axios({
     method: 'PATCH',
     headers: authHeader(),
