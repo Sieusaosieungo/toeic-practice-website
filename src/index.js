@@ -8,8 +8,6 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const axios = require('axios');
-const cron = require('node-cron');
 
 const port = process.env.PORT;
 const errorHandler = require('./middlewares/errorHandler');
@@ -27,24 +25,24 @@ app.use('/api/parts', require('./routes/part.route'));
 app.use('/api/grammar-topics', require('./routes/grammarTopic.route'));
 app.use('/api/grammar', require('./routes/grammar.route'));
 
-// trick request
-app.get('/', (req, res) => res.send('wake up'));
+// // trick request
+// app.get('/', (req, res) => res.send('wake up'));
 
-cron.schedule('*/5 * * * *', () => {
-  axios
-    .get('https://toeic-practice.herokuapp.com/')
-    .then(response => {
-      // handle success
-      console.log(response.data);
-    })
-    .catch(error => {
-      // handle error
-      console.log(error);
-    })
-    .finally(() => {
-      // always executed
-    });
-});
+// cron.schedule('*/5 * * * *', () => {
+//   axios
+//     .get('https://toeic-practice.herokuapp.com/')
+//     .then(response => {
+//       // handle success
+//       console.log(response.data);
+//     })
+//     .catch(error => {
+//       // handle error
+//       console.log(error);
+//     })
+//     .finally(() => {
+//       // always executed
+//     });
+// });
 
 app.use(express.static(path.join(__dirname, '../static')));
 app.use(errorHandler);
