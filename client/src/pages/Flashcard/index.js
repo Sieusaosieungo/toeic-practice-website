@@ -1,9 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Carousel, Icon } from 'antd';
+import axios from 'axios';
 
 import './style.scss';
 
 import Card from '../../components/Card';
+import config from '../../utils/config';
 
 const prefixCls = 'flash-card';
 
@@ -19,37 +21,36 @@ const renderNewWords = newWords => {
   return result;
 };
 
-const Flashcard = ({ match, location }) => {
-  console.log('Flashcard match:', match);
-  console.log('Flashcard location:', location);
+const Flashcard = ({
+  match,
+  location: {
+    state: { topicId },
+  },
+}) => {
+  // console.log('Flashcard match:', match);
+  // console.log('Flashcard location:', location);
 
-  const newWords = [
-    {
-      newWord: 'Apple',
-      meaning: 'Quả táo',
-      image: 'https://img.lovepik.com/element/40020/7618.png_860.png',
-      example: 'This is an apple',
-    },
-    {
-      newWord: 'Apple',
-      meaning: 'Quả táo',
-      image:
-        'https://image.thanhnien.vn/660/uploaded/minhnguyet/2019_11_09/bonbon_aqgt.jpg',
-      example: 'This is an apple',
-    },
-    {
-      newWord: 'Apple',
-      meaning: 'Quả táo',
-      image:
-        'https://sohanews.sohacdn.com/thumb_w/660/2016/vu-sua-nguon-cung-cap-nhieu-dinh-duong-thai-ky-1422-1477710235569-71-52-311-438-crop-1477710284092.png',
-      example: 'This is an apple',
-    },
-  ];
+  const [newWords, setNewWords] = useState([]);
 
   const carouselRef = useRef(null);
 
   const handlePreviousSlide = () => carouselRef.current.slick.slickPrev();
   const handleNextSlide = () => carouselRef.current.slick.slickNext();
+
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: `${config.API_URL}/api/new-words`,
+      params: {
+        idTopic: topicId,
+      },
+    })
+      .then(res => {
+        setNewWords(res.data.results.newWords);
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   return (
     <div className={`${prefixCls}`}>

@@ -8,7 +8,7 @@ import Footer from '../Footer';
 import Admin from '../../pages/Admin';
 
 function App({ children, user }) {
-  const { role } = user.data ? user.data.results.user : { role: 1 };
+  const { role } = user.data ? user.data.results.user : {};
 
   if (!role) {
     return (
