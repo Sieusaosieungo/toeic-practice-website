@@ -207,8 +207,8 @@ class RegistrationForm extends React.Component {
             rules: [{ required: true, message: 'Please select your country!' }],
           })(
             <Select className="ant-col" style={{width : "83.33%"}} placeholder="Please select gender...">
-              <Option value="male">Male</Option>
-              <Option value="female">Female</Option>
+              <Option value="male">Nam</Option>
+              <Option value="female">Nữ</Option>
             </Select>
           )}
         </Form.Item>
