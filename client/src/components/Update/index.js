@@ -127,7 +127,7 @@ class UpdateForm extends React.Component {
     services
       .uploadAvatar(formData)
       .then(res => {
-        console.log(res)
+        console.log(res);
         const { dispatch } = this.props;
 
         dispatch({ type: SIGN_IN, data: res });
@@ -180,52 +180,51 @@ class UpdateForm extends React.Component {
     return (
       <Spin spinning={this.state.loading} tip="Loading...">
         <Row>
-            <Col
-              span={8}
+          <Col
+            span={8}
+            style={{
+              borderRight: '1px solid rgb(238, 238, 238)',
+              paddingRight: '20px',
+            }}
+          >
+            <div
               style={{
-                borderRight: '1px solid rgb(238, 238, 238)',
-                paddingRight: '20px',
+                width: '100%',
+                paddingTop: '100%',
+                borderRadius: '50%',
+                position: 'relative',
               }}
             >
-              <div
+              <Avatar
+                src={
+                  (this.state.avatar &&
+                    'http://123.30.235.196:5221/' + this.state.avatar) ||
+                  'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
+                }
+                // width="100%"
                 style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
                   width: '100%',
-                  paddingTop: '100%',
-                  borderRadius: '50%',
-                  position: 'relative',
+                  height: '100%',
                 }}
-              >
-                <Avatar
-                  src={
-                    (this.state.avatar &&
-                      'https://toeic-practice.herokuapp.com' +
-                        this.state.avatar) ||
-                    'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
-                  }
-                  // width="100%"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                    width: '100%',
-                    height: '100%',
-                  }}
+              />
+            </div>
+            <div style={{ marginTop: '3em', textAlign: 'center' }}>
+              <label className="upload-btn-wrapper">
+                <input
+                  type="file"
+                  required
+                  onChange={this.onChange}
+                  name="productAttachImages"
                 />
-              </div>
-              <div style={{ marginTop: '3em', textAlign: 'center' }}>
-                <label className="upload-btn-wrapper">
-                  <input
-                    type="file"
-                    required
-                    onChange={this.onChange}
-                    name="productAttachImages"
-                  />
-                  <span>Chọn ảnh</span>
-                </label>
-              </div>
-            </Col>
+                <span>Chọn ảnh</span>
+              </label>
+            </div>
+          </Col>
           <Col span={16}>
             <Form
               {...formItemLayout}
