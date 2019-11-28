@@ -13,6 +13,7 @@ const newWordSchema = new mongoose.Schema({
   },
   image: {
     type: String,
+    required: true,
   },
   example: {
     type: String,
@@ -20,6 +21,7 @@ const newWordSchema = new mongoose.Schema({
   idNewWordTopic: {
     type: ObjectId,
     ref: 'NewWordTopic',
+    require: true,
   },
 });
 

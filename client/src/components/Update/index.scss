@@ -1,0 +1,45 @@
+.login-form {
+  max-width: 300px;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}
+
+.ant-form-item-children-icon {
+  position: absolute !important;
+  top: 19px !important;
+  color: #52c41a;
+}
+
+/***** Example custom styling upload image *****/
+.upload-btn-wrapper input[type='file'] {
+  position: absolute;
+  top: -1000px;
+}
+
+.upload-btn-wrapper {
+  cursor: pointer;
+  border: 1px dashed rgb(217, 217, 217);
+  border-radius: 15px;
+  padding: 0px 0px;
+  margin: 2px;
+  display: inline-block;
+  width: 50%;
+
+  &:hover {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+  &:active {
+    background: #ccf;
+  }
+  & :invalid + span {
+    color: #a44;
+  }
+  & :valid + span {
+    color: #4a4;
+  }
+}
