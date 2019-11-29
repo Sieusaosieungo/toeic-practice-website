@@ -8,7 +8,8 @@ import './style.scss';
 import PostGrammar from '../PostGrammar';
 import MyPostsGrammar from '../MyPostsGrammar';
 import PostTopicGrammar from '../PostTopicGrammar';
-import Part1 from '../Part1';
+import UploadPart7 from '../UploadPart7';
+import UploadPart1 from '../UploadPart1';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -126,7 +127,11 @@ const Admin = ({}) => {
                   component={PostTopicGrammar}
                   exact={true}
                 />
-                <Route path="/part/:idPart" component={Part1} exact={true} />
+                <Route
+                  path="/part/7"
+                  component={UploadPart7}
+                  exact={true}
+                />
               </Switch>
             </div>
           </Content>
