@@ -8,9 +8,9 @@ import Footer from '../Footer';
 import Admin from '../../pages/Admin';
 
 function App({ children, user }) {
-  const { role } = user.data ? user.data.results.user : {};
+  const { id } = user.data ? user.data.results.user.role : { id: 0 };
 
-  if (!role) {
+  if (!id) {
     return (
       <Fragment>
         <NavBar />
