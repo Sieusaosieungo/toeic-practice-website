@@ -3,8 +3,8 @@ require('dotenv').config();
 require('./db/mongoose');
 
 const express = require('express');
-const fileUpload = require('express-fileupload');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 
 const app = express();
