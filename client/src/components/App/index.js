@@ -9,7 +9,7 @@ import Admin from '../../pages/Admin';
 
 function App({ children, user }) {
   const { id } = user.data ? user.data.results.user.role : { id: 0 };
-
+  
   if (!id) {
     return (
       <Fragment>
@@ -19,7 +19,7 @@ function App({ children, user }) {
       </Fragment>
     );
   } else {
-    return <Admin />;
+    return <Admin>{children}</Admin>;
   }
 }
 

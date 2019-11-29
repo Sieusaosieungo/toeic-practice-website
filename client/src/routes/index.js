@@ -9,12 +9,14 @@ const Home = Loadable({
   loader: () => import('../pages/Home'),
   loading: Loading,
 });
-
+const Admin = Loadable({
+  loader: () => import('../pages/Admin'),
+  loading: Loading,
+});
 const Grammar = Loadable({
   loader: () => import('../pages/Grammar'),
   loading: Loading,
 });
-
 const Exam = Loadable({
   loader: () => import('../pages/Exam'),
   loading: Loading,
@@ -31,11 +33,19 @@ const Flashcard = Loadable({
   loader: () => import('../pages/Flashcard'),
   loading: Loading,
 });
+const PostGrammar = Loadable({
+  loader: () => import('../pages/PostGrammar'),
+  loading: Loading,
+});
 
 const routes = [
   {
     path: '/',
     component: Home,
+  },
+  {
+    path: '/part/:idPart',
+    component: PostGrammar,
   },
   {
     path: '/grammar',
