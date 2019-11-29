@@ -106,7 +106,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
         })
         .catch(() => {
           setLoading(false);
-          logOut();
+          // logOut();
         });
 
       // window.location.reload();
