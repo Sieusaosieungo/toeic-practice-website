@@ -9,12 +9,10 @@ const Home = Loadable({
   loader: () => import('../pages/Home'),
   loading: Loading,
 });
-
 const Grammar = Loadable({
   loader: () => import('../pages/Grammar'),
   loading: Loading,
 });
-
 const Exam = Loadable({
   loader: () => import('../pages/Exam'),
   loading: Loading,
@@ -31,11 +29,19 @@ const Flashcard = Loadable({
   loader: () => import('../pages/Flashcard'),
   loading: Loading,
 });
+const Part1 = Loadable({
+  loader: () => import('../pages/Flashcard'),
+  loading: Loading,
+})
 
 const routes = [
   {
     path: '/',
     component: Home,
+  },
+  {
+    path: '/part/:idPart',
+    component:
   },
   {
     path: '/grammar',

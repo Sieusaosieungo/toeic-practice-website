@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Link } from 'react-router-dom';
 import RightNav from '../../components/NavBar/RightNav';
 import './style.scss';
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 const prefixCls = 'admin';
 
-const Admin = () => {
+const Admin = (
+  {
+    // match: {
+    //   params: { idPart },
+    // },
+  },
+) => {
+  // console.log('idPart: ', idPart);
+
   // const mode = platform.isMobile ? 'vertical' : 'horizontal';
   const mode = 'horizontal';
   const [collapsed, setCollapsed] = useState(false);
@@ -17,27 +26,57 @@ const Admin = () => {
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logoAdmin" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1">
+            <Menu.Item key="0">
               <Icon type="user" />
-              <span>User</span>
+              <span>
+                <Link to="/" style={{ color: '#fff' }}>
+                  User
+                </Link>
+              </span>
             </Menu.Item>
             <SubMenu
               key="sub1"
               title={
                 <span>
                   <Icon type="question" />
-                  <span>Question</span>
+                  <span>
+                    <Link to="/part/1" style={{ color: '#fff' }}>
+                      Question
+                    </Link>
+                  </span>
                 </span>
               }
             >
-              <Menu.Item key="1">Part 1</Menu.Item>
-              <Menu.Item key="2">Part 2</Menu.Item>
-              <Menu.Item key="3">Part 3</Menu.Item>
-              <Menu.Item key="4">Part 4</Menu.Item>
-              <Menu.Item key="5">Part 5</Menu.Item>
-              <Menu.Item key="6">Part 6</Menu.Item>
-              <Menu.Item key="7">Part 7</Menu.Item>
+              <Menu.Item key="1">
+                <Link to="/part/1">Part 1</Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to="/part/2">Part 2</Link>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Link to="/part/3">Part 3</Link>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <Link to="/part/4">Part 4</Link>
+              </Menu.Item>
+              <Menu.Item key="5">
+                <Link to="/part/5">Part 5</Link>
+              </Menu.Item>
+              <Menu.Item key="6">
+                <Link to="/part/6">Part 6</Link>
+              </Menu.Item>
+              <Menu.Item key="7">
+                <Link to="/part/7">Part 7</Link>
+              </Menu.Item>
             </SubMenu>
+            <Menu.Item key="8">
+              <Icon type="grammar" />
+              <span>
+                <Link to="/post-grammar" style={{ color: '#fff' }}>
+                  User
+                </Link>
+              </span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -56,7 +95,7 @@ const Admin = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
-            Ant Design ©2018 Created by Ant UED
+            NW ©2018 Created by Ant UED
           </Footer>
         </Layout>
       </Layout>
