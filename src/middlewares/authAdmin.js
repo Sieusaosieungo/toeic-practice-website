@@ -9,7 +9,7 @@ async function auth(req, res, next) {
     const user = await User.findOne({
       _id: decode._id,
       'tokens.token': token,
-      'role.id': 0,
+      'role.id': 1,
     });
 
     if (!user) {
