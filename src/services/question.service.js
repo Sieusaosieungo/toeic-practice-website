@@ -40,7 +40,7 @@ const addBasicQuestionInfo = async (body, files) => {
 const addSubQuestions = async body => {
   const { subQuestions } = body;
   const { length } = subQuestions;
-  const keys = ['answer'];
+  const keys = ['idGrammarTopic', 'answer'];
 
   for (let i = 0; i < length; i += 1) {
     const subQuestion = subQuestions[i];
