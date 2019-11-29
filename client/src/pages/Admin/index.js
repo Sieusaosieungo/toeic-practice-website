@@ -66,6 +66,18 @@ const Admin = ({}) => {
                 <Link to="/part/7">Part 7</Link>
               </Menu.Item>
             </SubMenu>
+            <SubMenu
+              key="sub2"
+              title={
+                <span>
+                  <Icon type="grammar" />
+                  <span>Grammar</span>
+                </span>
+              }
+            >
+              <Menu.Item key="1">Topic</Menu.Item>
+              <Menu.Item key="2">Grammar</Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
         <Layout>
