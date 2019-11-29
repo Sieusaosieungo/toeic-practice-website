@@ -71,12 +71,20 @@ const Admin = ({}) => {
               title={
                 <span>
                   <Icon type="grammar" />
-                  <span>Grammar</span>
+                  <span>
+                    <Link to="/topic" style={{ color: '#fff' }}>
+                      Grammar
+                    </Link>
+                  </span>
                 </span>
               }
             >
-              <Menu.Item key="1">Topic</Menu.Item>
-              <Menu.Item key="2">Grammar</Menu.Item>
+              <Menu.Item key="topic">
+                <Link to="/topic">Topic</Link>
+              </Menu.Item>
+              <Menu.Item key="post-grammar">
+                <Link to="/post-grammar">Grammar</Link>
+              </Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>
@@ -93,8 +101,12 @@ const Admin = ({}) => {
             <Breadcrumb style={{ margin: '16px 0' }}></Breadcrumb>
             <div style={{ padding: 24, background: '#fff', minHeight: '100%' }}>
               <Switch>
-                <Route path="/part/1" component={PostGrammar} exact={true} />
-                <Route path="/part/2" component={Part1} exact={true} />
+                <Route
+                  path="/post-grammar"
+                  component={PostGrammar}
+                  exact={true}
+                />
+                <Route path="/part/:idPart" component={Part1} exact={true} />
               </Switch>
             </div>
           </Content>
