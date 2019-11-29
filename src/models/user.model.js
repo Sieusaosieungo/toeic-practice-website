@@ -40,12 +40,17 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
     },
-    recentWords: [
+    tenRecentWords: [
       {
-        word: {
+        _id: false,
+        newWord: {
           type: String,
           lowercase: true,
           trim: true,
+        },
+        meaning: {
+          type: String,
+          required: true,
         },
       },
     ],

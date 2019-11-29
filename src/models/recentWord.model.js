@@ -9,6 +9,10 @@ const recentWordSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  userId: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+  },
 });
 
 const recentWordModel = mongoose.model('RecentWord', recentWordSchema);
