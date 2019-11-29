@@ -121,7 +121,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             <Avatar
               src={
                 (user.data.results.user.avatar &&
-                  'https://toeic-practice.herokuapp.com' +
+                  'http://123.30.235.196:5221/' +
                     user.data.results.user.avatar) ||
                 'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
               }
