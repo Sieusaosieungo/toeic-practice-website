@@ -1,0 +1,31 @@
+.post-grammar {
+  .post-grammar-title {
+    display: flex;
+    flex-direction: column;
+
+    .post-grammar-row {
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+
+      > div {
+        grid-column: 1/3;
+      }
+
+      .post-grammar-input {
+        grid-column: 3/13;
+      }
+    }
+  }
+
+  .post-grammar-btn {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+
+    > button {
+      width: 10rem;
+      margin-right: 3rem;
+    }
+  }
+}
