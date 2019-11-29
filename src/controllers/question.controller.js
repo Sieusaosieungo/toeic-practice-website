@@ -30,6 +30,12 @@ const addBasicQuestionInfo = async (req, res) => {
           'Hãy thêm ảnh cho câu hỏi',
         );
       }
+      if (!files || !files.audio) {
+        throw new CustomError(
+          errorCode.BAD_REQUEST,
+          'Hãy thêm audio cho câu hỏi',
+        );
+      }
       break;
     case 2:
     case 3:
