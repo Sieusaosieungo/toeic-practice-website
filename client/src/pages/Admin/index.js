@@ -7,6 +7,7 @@ import './style.scss';
 
 import PostGrammar from '../PostGrammar';
 import MyPostsGrammar from '../MyPostsGrammar';
+import PostTopicGrammar from '../PostTopicGrammar';
 import Part1 from '../Part1';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -81,7 +82,7 @@ const Admin = ({}) => {
               }
             >
               <Menu.Item key="topic">
-                <Link to="/topic">Topic</Link>
+                <Link to="/upload-topic-grammar">Topic</Link>
               </Menu.Item>
               <Menu.Item key="post-grammar">
                 <Link to="/post-grammar">Grammar</Link>
@@ -118,6 +119,11 @@ const Admin = ({}) => {
                 <Route
                   path="/my-posts-grammar"
                   component={MyPostsGrammar}
+                  exact={true}
+                />
+                <Route
+                  path="/upload-topic-grammar"
+                  component={PostTopicGrammar}
                   exact={true}
                 />
                 <Route path="/part/:idPart" component={Part1} exact={true} />
