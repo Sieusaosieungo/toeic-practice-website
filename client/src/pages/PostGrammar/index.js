@@ -42,7 +42,7 @@ const PostGrammar = ({
     })
       .then(res => {
         message.success('Đăng bài thành công.');
-        // setGrammarTopics(res.data.results.topics);
+        setGrammarTopics({ title: '', content: '', idGrammarTopic: '' });
       })
       .catch(err => console.log(err));
   };
@@ -56,6 +56,7 @@ const PostGrammar = ({
       },
     })
       .then(res => {
+        // console.log(res.data.results.topics);
         setGrammarTopics(res.data.results.topics);
       })
       .catch(err => console.log(err));

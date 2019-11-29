@@ -6,6 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import './style.scss';
 
 import PostGrammar from '../PostGrammar';
+import MyPostsGrammar from '../MyPostsGrammar';
 import Part1 from '../Part1';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -86,6 +87,14 @@ const Admin = ({}) => {
                 <Link to="/post-grammar">Grammar</Link>
               </Menu.Item>
             </SubMenu>
+            <Menu.Item key="my-posts-grammar">
+              <Icon type="table" />
+              <span>
+                <Link to="/my-posts-grammar" style={{ color: '#fff' }}>
+                  My grammar post
+                </Link>
+              </span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -104,6 +113,11 @@ const Admin = ({}) => {
                 <Route
                   path="/post-grammar"
                   component={PostGrammar}
+                  exact={true}
+                />
+                <Route
+                  path="/my-posts-grammar"
+                  component={MyPostsGrammar}
                   exact={true}
                 />
                 <Route path="/part/:idPart" component={Part1} exact={true} />
