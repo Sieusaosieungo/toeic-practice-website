@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { questionLevel } = require('../configs/config');
 
+const { ObjectId } = mongoose.Schema.Types;
+
 const questionSchema = new mongoose.Schema({
   image: {
     type: String,
@@ -20,8 +22,16 @@ const questionSchema = new mongoose.Schema({
     type: Number,
     default: questionLevel.ELEMENTARY,
   },
+  part: {
+    type: Number,
+    required: true,
+  },
   subQuestions: [
     {
+      idGrammarTopic: {
+        type: ObjectId,
+        ref: 'GrammarTopic',
+      },
       question: {
         type: String,
       },
@@ -46,10 +56,6 @@ const questionSchema = new mongoose.Schema({
       },
     },
   ],
-  part: {
-    type: Number,
-    required: true,
-  },
 });
 
 const questionModel = mongoose.model('Question', questionSchema);
