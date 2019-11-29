@@ -10,7 +10,7 @@ async function getAllGrammarTopicDb(query) {
     page = pagination.pageNumber;
   }
   if (records === null) {
-    records = pagination.recordNumber;
+    records = 100;
   }
   page = Number.parseInt(page, 10);
   records = Number.parseInt(records, 10);
