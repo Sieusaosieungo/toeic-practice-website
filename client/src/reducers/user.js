@@ -9,7 +9,6 @@ const user = (state = initialState, action) => {
     case SIGN_IN:
       return action.data;
     case STORE_USER:
-      console.log('xxx cha bo may: ', user);
       state = { ...state, ...user };
       return state;
     case DELETE_USER:

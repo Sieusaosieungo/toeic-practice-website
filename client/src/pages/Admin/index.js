@@ -127,11 +127,7 @@ const Admin = ({}) => {
                   component={PostTopicGrammar}
                   exact={true}
                 />
-                <Route
-                  path="/part/7"
-                  component={UploadPart7}
-                  exact={true}
-                />
+                <Route path="/part/7" component={UploadPart7} exact={true} />
               </Switch>
             </div>
           </Content>
