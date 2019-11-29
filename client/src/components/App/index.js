@@ -7,11 +7,9 @@ import NavBar from '../NavBar';
 import Footer from '../Footer';
 import Admin from '../../pages/Admin';
 
-function App({ children, user, match }) {
+function App({ children, user }) {
   const { id } = user.data ? user.data.results.user.role : { id: 0 };
-
-  console.log('match: ', match);
-
+  
   if (!id) {
     return (
       <Fragment>
@@ -21,7 +19,7 @@ function App({ children, user, match }) {
       </Fragment>
     );
   } else {
-    return <Admin match={match} />;
+    return <Admin>{children}</Admin>;
   }
 }
 

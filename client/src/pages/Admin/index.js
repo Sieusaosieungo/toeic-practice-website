@@ -2,21 +2,18 @@ import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import RightNav from '../../components/NavBar/RightNav';
+import { Switch, Route } from 'react-router-dom';
 import './style.scss';
+
+import PostGrammar from '../PostGrammar';
+import Part1 from '../Part1';
+
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+
 const prefixCls = 'admin';
 
-const Admin = (
-  {
-    // match: {
-    //   params: { idPart },
-    // },
-  },
-) => {
-  // console.log('idPart: ', idPart);
-
-  // const mode = platform.isMobile ? 'vertical' : 'horizontal';
+const Admin = ({}) => {
   const mode = 'horizontal';
   const [collapsed, setCollapsed] = useState(false);
   const onCollapse = collapsed => setCollapsed(collapsed);
@@ -69,14 +66,6 @@ const Admin = (
                 <Link to="/part/7">Part 7</Link>
               </Menu.Item>
             </SubMenu>
-            <Menu.Item key="8">
-              <Icon type="grammar" />
-              <span>
-                <Link to="/post-grammar" style={{ color: '#fff' }}>
-                  User
-                </Link>
-              </span>
-            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -91,7 +80,10 @@ const Admin = (
           <Content style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}></Breadcrumb>
             <div style={{ padding: 24, background: '#fff', minHeight: '100%' }}>
-              Bill is a cat.
+              <Switch>
+                <Route path="/part/1" component={PostGrammar} exact={true} />
+                <Route path="/part/2" component={Part1} exact={true} />
+              </Switch>
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
