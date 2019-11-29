@@ -10,8 +10,6 @@ import Admin from '../../pages/Admin';
 function App({ children, user }) {
   const { id } = user.data ? user.data.results.user.role : { id: 0 };
 
-  console.log('role: ', user.data && user.data.results.user);
-
   if (!id) {
     return (
       <Fragment>
