@@ -38,6 +38,18 @@ const Admin = () => {
               <Menu.Item key="6">Part 6</Menu.Item>
               <Menu.Item key="7">Part 7</Menu.Item>
             </SubMenu>
+            <SubMenu
+              key="sub2"
+              title={
+                <span>
+                  <Icon type="grammar" />
+                  <span>Grammar</span>
+                </span>
+              }
+            >
+              <Menu.Item key="1">Topic</Menu.Item>
+              <Menu.Item key="2">Grammar</Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
         <Layout>
