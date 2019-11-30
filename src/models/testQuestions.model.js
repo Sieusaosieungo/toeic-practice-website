@@ -9,9 +9,19 @@ const testQuestionsSchema = new mongoose.Schema({
         type: ObjectId,
         ref: 'Question',
       },
-      userAnswer: {
-        type: String,
-      },
+      userAnswer: [
+        {
+          idSubQuestion: {
+            type: String,
+            trim: true,
+          },
+          answer: {
+            type: String,
+            trim: true,
+            lowercase: true,
+          },
+        },
+      ],
     },
   ],
 });
