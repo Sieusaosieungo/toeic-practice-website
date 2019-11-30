@@ -11,6 +11,5 @@ const {
 router.post('/basic-info', asyncWrap(addBasicQuestionInfo));
 // Add subQuestion after added basic question
 router.post('/sub-questions', asyncWrap(addSubQuestions));
-router.post('/random', asyncWrap(addSubQuestions));
 
 module.exports = router;
