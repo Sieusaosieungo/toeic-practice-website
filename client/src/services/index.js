@@ -7,6 +7,8 @@ export const services = {
   getUser,
   updateUser,
   uploadAvatar,
+  getGrammarTopics,
+  getGrammarById,
 };
 
 function login(email, password) {
@@ -69,6 +71,32 @@ function uploadAvatar(formData) {
     },
     url: 'https://toeic-practice.herokuapp.com/api/users/upload-avatar',
     data: formData,
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function getGrammarTopics(object) {
+  return axios({
+    method: 'GET',
+    url: `https://toeic-practice.herokuapp.com/api/grammar-topics`,
+    headers: authHeader(),
+    params : object,
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function getGrammarById(object) {
+  return axios({
+    method: 'GET',
+    url: `https://toeic-practice.herokuapp.com/api/grammar`,
+    headers: authHeader(),
+    params : object,
   })
     .then(res => res)
     .catch(err => {

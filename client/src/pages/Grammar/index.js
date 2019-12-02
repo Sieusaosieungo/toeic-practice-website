@@ -1,10 +1,11 @@
 import React from 'react';
-import { Row, Col, List, Tag, Table, Tabs } from 'antd';
+import { Row, Col, List, Tag, Table, Tabs , Spin} from 'antd';
 import { Link } from 'react-router-dom';
 import './style.scss';
 
 import BreadcrumbCus from '../../components/BreadcrumbCus';
 
+import { services } from '../../services' 
 const prefixCls = 'grammar';
 const { TabPane } = Tabs;
 
@@ -76,99 +77,120 @@ const data_grammar_01 = [
   },
 ];
 
-const Grammar = ({ location }) => {
-  console.log('location grammar page: ', location);
+class Grammar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading : false
+    }
+  }
 
-  return (
-    <div className={`${prefixCls}`}>
-      <BreadcrumbCus location={location} />
-      <div className={`${prefixCls}-content`}>
-        <Row>
-          <Col span={16} offset={4}>
-            <Tabs
-              defaultActiveKey="1"
-              // onChange={callback}
-              tabPosition="left"
-            >
-              <TabPane tab="Hiện tại đơn. Hiện tại tiếp diễn" key="1">
-                <Row id="">
-                  <h1>Hiện tại đơn. Hiện tại tiếp diễn</h1>
-                </Row>
-                <Row>
-                  <Tag color="blue" style={{ marginBottom: '20px' }}>
-                    Cấu trúc
-                  </Tag>
-                </Row>
-                <Row>
-                  <Table
-                    columns={columns_grammar_01}
-                    dataSource={data_grammar_01}
-                    pagination={false}
-                  />
-                </Row>
-              </TabPane>
-              <TabPane tab="Hiện tại hoàn thành" key="2">
-                <Row id="">
-                  <h1>Hiện tại hoàn thành</h1>
-                </Row>
-                <Row>
-                  <Tag color="blue" style={{ marginBottom: '20px' }}>
-                    Cấu trúc
-                  </Tag>
-                </Row>
-                <Row>
-                  <b>
-                    (+) S + has/have + PII.
-                    <br />
-                    (–) S + has/have + not + PII.
-                    <br />
-                    (?) Has/Have + S + PII?
-                    <br />
-                    Yes, S + has/have.
-                    <br />
-                    No, S + has/have + not.
-                  </b>
-                </Row>
-              </TabPane>
-              <TabPane tab="Quá khứ đơn" key="3">
-                Content of Tab Pane 3
-              </TabPane>
-              <TabPane tab="Quá khứ tiếp diễn" key="4">
-                Content of Tab Pane 4
-              </TabPane>
-              <TabPane tab="Tương lai đơn" key="5">
-                Content of Tab Pane 5
-              </TabPane>
-            </Tabs>
-          </Col>
-        </Row>
-        {
-          // <Row>
-          //   <Col span={6} offset={2}>
-          //   	<Row style= {{paddingRight : "30px"}}>
-          //   		<List
-          //    bordered
-          //    dataSource={data}
-          //    renderItem={item => (
-          //      <List.Item>
-          //         <Link to="#">{item}</Link>
-          //      </List.Item>
-          //    )}
-          //  />
-          //   	</Row>
-          //   </Col>
-          //   <Col span={12}>
-          //   	<Row id=""><h1>Hiện tại đơn. Hiện tại tiếp diễn</h1></Row>
-          //   	<Row><Tag color="blue" style={{marginBottom : "20px"}}>Cấu trúc</Tag></Row>
-          //   	<Row>
-          //   		<Table columns={columns_grammar_01} dataSource={data_grammar_01} pagination={false}/>
-          //   	</Row>
-          //   </Col>
-          // </Row>
-        }
+  componentDidMount() {
+    // this.setState({loading : true})
+    // console.log(this.props)
+    // services.getGrammarTopics()
+    //   .then(res => {
+    //     console.log(res)
+    //   })
+  }
+  render() {
+    return (
+    <Spin spinning={this.state.loading}>
+      <div className={`${prefixCls}`}>
+        <BreadcrumbCus location={this.props.location} />
+        <div className={`${prefixCls}-content`}>
+          <Row>
+            <Col span={16} offset={4}>
+              <Tabs
+                defaultActiveKey="1"
+                // onChange={callback}
+                tabPosition="left"
+              >
+                {
+
+                }
+                <TabPane tab="Hiện tại đơn. Hiện tại tiếp diễn" key="1">
+                  <Row id="">
+                    <h1>Hiện tại đơn. Hiện tại tiếp diễn</h1>
+                  </Row>
+                  <Row>
+                    <Tag color="blue" style={{ marginBottom: '20px' }}>
+                      Cấu trúc
+                    </Tag>
+                  </Row>
+                  <Row>
+                    <Table
+                      columns={columns_grammar_01}
+                      dataSource={data_grammar_01}
+                      pagination={false}
+                    />
+                  </Row>
+                </TabPane>
+                <TabPane tab="Hiện tại hoàn thành" key="2">
+                  <Row id="">
+                    <h1>Hiện tại hoàn thành</h1>
+                  </Row>
+                  <Row>
+                    <Tag color="blue" style={{ marginBottom: '20px' }}>
+                      Cấu trúc
+                    </Tag>
+                  </Row>
+                  <Row>
+                    <b>
+                      (+) S + has/have + PII.
+                      <br />
+                      (–) S + has/have + not + PII.
+                      <br />
+                      (?) Has/Have + S + PII?
+                      <br />
+                      Yes, S + has/have.
+                      <br />
+                      No, S + has/have + not.
+                    </b>
+                  </Row>
+                </TabPane>
+                <TabPane tab="Quá khứ đơn" key="3">
+                  Content of Tab Pane 3
+                </TabPane>
+                <TabPane tab="Quá khứ tiếp diễn" key="4">
+                  Content of Tab Pane 4
+                </TabPane>
+                <TabPane tab="Tương lai đơn" key="5">
+                  Content of Tab Pane 5
+                </TabPane>
+              </Tabs>
+            </Col>
+          </Row>
+          {
+            // <Row>
+            //   <Col span={6} offset={2}>
+            //    <Row style= {{paddingRight : "30px"}}>
+            //      <List
+            //    bordered
+            //    dataSource={data}
+            //    renderItem={item => (
+            //      <List.Item>
+            //         <Link to="#">{item}</Link>
+            //      </List.Item>
+            //    )}
+            //  />
+            //    </Row>
+            //   </Col>
+            //   <Col span={12}>
+            //    <Row id=""><h1>Hiện tại đơn. Hiện tại tiếp diễn</h1></Row>
+            //    <Row><Tag color="blue" style={{marginBottom : "20px"}}>Cấu trúc</Tag></Row>
+            //    <Row>
+            //      <Table columns={columns_grammar_01} dataSource={data_grammar_01} pagination={false}/>
+            //    </Row>
+            //   </Col>
+            // </Row>
+          }
+        </div>
       </div>
-    </div>
-  );
+    </Spin>
+    );
+  }
+  
 };
 
 export default Grammar;

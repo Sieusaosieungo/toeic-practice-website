@@ -20,21 +20,23 @@ function App({
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: `${config.API_URL}/api/users/`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then(res => {
-        console.log(res.data);
-        setUser(res.data.results.user);
+    if(accessToken != undefined) {
+      axios({
+        method: 'GET',
+        url: `${config.API_URL}/api/users/`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       })
-      .catch(err => console.log(err));
+        .then(res => {
+          console.log(res.data);
+          setUser(res.data.results.user);
+        })
+        .catch(err => console.log(err));
+    }
   }, []);
 
-  if (accessToken !== '') {
+  if (accessToken !== undefined) {
     if (Object.keys(user).length > 0) {
       if (user.role.id === 0) {
         return (
