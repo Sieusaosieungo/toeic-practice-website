@@ -16,16 +16,20 @@ function App({
   cookies: {
     cookies: { accessToken },
   },
+  auth
 }) {
+  console.log('lol: ', auth.accessToken)
+
   const [user, setUser] = useState({});
+  const accessTokenCur = auth.accessToken && auth.accessToken || accessToken;
 
   useEffect(() => {
-    if(accessToken != undefined) {
+    if(accessTokenCur !== undefined) {
       axios({
         method: 'GET',
         url: `${config.API_URL}/api/users/`,
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessTokenCur}`,
         },
       })
         .then(res => {
@@ -34,9 +38,9 @@ function App({
         })
         .catch(err => console.log(err));
     }
-  }, []);
+  }, [accessTokenCur]);
 
-  if (accessToken !== undefined) {
+  if (accessTokenCur !== undefined) {
     if (Object.keys(user).length > 0) {
       if (user.role.id === 0) {
         return (
@@ -63,10 +67,10 @@ function App({
   }
 }
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ user,auth }) => {
   console.log('id from connect: ');
 
-  return { user };
+  return { user, auth };
 };
 
 export default connect(mapStateToProps)(withCookies(App));

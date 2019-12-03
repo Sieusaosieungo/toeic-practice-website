@@ -8,7 +8,7 @@ import Register from '../../Register';
 import Login from '../../Login';
 import Update from '../../Update';
 import { services } from '../../../services';
-import { DELETE_USER, SIGN_IN } from '../../../constants/ActionTypes';
+import { DELETE_USER, SIGN_IN,SIGN_OUT } from '../../../constants/ActionTypes';
 // import toastr from '../../../common/toastr'
 
 import './style.scss';
@@ -77,6 +77,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     removeCookie('accessToken');
     removeCookie('isAuth');
     dispatch({ type: DELETE_USER });
+    dispatch({type: SIGN_OUT})
     setVisibleLoginForm(false);
     message.success('Đăng xuất thành công');
     // toastr.success("Đăng xuất thành công")

@@ -96,7 +96,7 @@ class Grammar extends React.Component {
   render() {
     return (
       <div className={`${prefixCls}`}>
-      <Spin spinning={this.state.loading} style={{flexGrow : 1, display : "block"}} class="123">
+      <Spin spinning={this.state.loading} style={{flexGrow : 1, display : "block"}}>
         {
           // <BreadcrumbCus location={this.props.location} />
       }
@@ -107,6 +107,7 @@ class Grammar extends React.Component {
                 defaultActiveKey="0"
                 // onChange={callback}
                 tabPosition="left"
+                tabBarStyle={{width : "25%", textAlign : "left"}}
               >
                 {
                   JSON.parse(sessionStorage.grammar_topics).results.topics.map(function(data, i) {
@@ -131,6 +132,7 @@ class Grammar extends React.Component {
                                       </Row>
                                       <Row style={{ marginBottom: '20px' }}>
                                         <div
+                                        className='ck-post-display'
                                           dangerouslySetInnerHTML={{ __html: gra.content }}
                                         >
                                           
