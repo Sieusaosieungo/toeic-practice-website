@@ -8,7 +8,7 @@ import Register from '../../Register';
 import Login from '../../Login';
 import Update from '../../Update';
 import { services } from '../../../services';
-import { DELETE_USER, SIGN_IN } from '../../../constants/ActionTypes';
+import { DELETE_USER, SIGN_IN,SIGN_OUT } from '../../../constants/ActionTypes';
 // import toastr from '../../../common/toastr'
 
 import './style.scss';
@@ -77,6 +77,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     removeCookie('accessToken');
     removeCookie('isAuth');
     dispatch({ type: DELETE_USER });
+    dispatch({type: SIGN_OUT})
     setVisibleLoginForm(false);
     message.success('Đăng xuất thành công');
     // toastr.success("Đăng xuất thành công")
@@ -109,6 +110,25 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
           // logOut();
         });
 
+      services.getGrammarTopics()
+        .then(res => {
+          console.log(res.data)
+          var grammar = [];
+          res.data.results.topics.map(function(data, i) {
+            services.getGrammarById({idTopic : data._id})
+              .then(res => {
+                console.log(res.data.results.grammars)
+                grammar.push({id : data._id, data : res.data.results.grammars})
+                sessionStorage.grammar = JSON.stringify(grammar)
+              })
+          })
+          sessionStorage.grammar_topics = JSON.stringify(res.data)
+
+        })
+      // services.getGrammarById()
+      //   .then(res => {
+      //     sessionStorage.grammar_topics = JSON.stringify(res.data)
+      //   }) 
       // window.location.reload();
     }
   }, [accessToken]);
@@ -129,7 +149,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             />
             {user.data.results.user.name}
             <Dropdown overlay={() => Submenu(logOut)}>
-              <Link className="ant-dropdown-link" to="">
+              <Link className="ant-dropdown-link" to="" onClick={e => e.preventDefault()}>
                 {user.full_name} <Icon type="down" />
               </Link>
             </Dropdown>

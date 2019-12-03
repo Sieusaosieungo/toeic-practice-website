@@ -5,6 +5,8 @@ const initialState = {};
 const user = (state = initialState, action) => {
   const { type, user } = action;
 
+  console.log('action user: ', action);
+
   switch (type) {
     case SIGN_IN:
       return action.data;
@@ -12,6 +14,7 @@ const user = (state = initialState, action) => {
       state = { ...state, ...user };
       return state;
     case DELETE_USER:
+      console.log('deleted user');
       state = {};
       return state;
     default:
