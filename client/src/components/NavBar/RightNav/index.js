@@ -117,8 +117,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             services.getGrammarById({idTopic : data._id})
               .then(res => {
                 console.log(res.data.results.grammars)
-                grammar.push(res.data.results.grammars)
-                console.log(grammar)
+                grammar.push({id : data._id, data : res.data.results.grammars})
                 sessionStorage.grammar = JSON.stringify(grammar)
               })
           })

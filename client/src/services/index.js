@@ -9,6 +9,7 @@ export const services = {
   uploadAvatar,
   getGrammarTopics,
   getGrammarById,
+  translate
 };
 
 function login(email, password) {
@@ -103,3 +104,19 @@ function getGrammarById(object) {
       throw err;
     });
 }
+
+function translate(value) {
+  return axios({
+    method: 'POST',
+    url: `https://toeic-practice.herokuapp.com/api/translate`,
+    headers: authHeader(),
+    data : JSON.stringify({
+      value : value
+    }),
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+

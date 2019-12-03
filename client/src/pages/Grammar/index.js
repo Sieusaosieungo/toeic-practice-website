@@ -95,69 +95,59 @@ class Grammar extends React.Component {
   }
   render() {
     return (
-    <Spin spinning={this.state.loading}>
       <div className={`${prefixCls}`}>
-        <BreadcrumbCus location={this.props.location} />
+      <Spin spinning={this.state.loading} style={{flexGrow : 1, display : "block"}} class="123">
+        {
+          // <BreadcrumbCus location={this.props.location} />
+      }
         <div className={`${prefixCls}-content`}>
           <Row>
-            <Col span={16} offset={4}>
+            <Col span={24}>
               <Tabs
-                defaultActiveKey="1"
+                defaultActiveKey="0"
                 // onChange={callback}
                 tabPosition="left"
               >
                 {
-
+                  JSON.parse(sessionStorage.grammar_topics).results.topics.map(function(data, i) {
+                    console.log(data.title)
+                    return <TabPane tab={data.title} key={i}>
+                      <Row id="">
+                        <h1>{data.title}</h1>
+                      </Row>
+                      <Row>
+                        {
+                          JSON.parse(sessionStorage.grammar).map(function(grammar, i) {
+                            if(grammar.id == data._id) {
+                              return <div>
+                                {
+                                  grammar.data.grammars.map(function(gra, i) {
+                                    console.log(gra.title)
+                                    return <div>
+                                      <Row>
+                                        <Tag color="blue" style={{ marginBottom: '20px', fontSize : "120%" }}>
+                                          {gra.title}
+                                        </Tag>
+                                      </Row>
+                                      <Row style={{ marginBottom: '20px' }}>
+                                        <div
+                                          dangerouslySetInnerHTML={{ __html: gra.content }}
+                                        >
+                                          
+                                        </div>
+                                      </Row>
+                                    </div>
+                                  })
+                                }
+                              </div>
+                            }
+                          })
+                        }
+                      </Row>
+                      
+                    </TabPane>
+                  })
                 }
-                <TabPane tab="Hiện tại đơn. Hiện tại tiếp diễn" key="1">
-                  <Row id="">
-                    <h1>Hiện tại đơn. Hiện tại tiếp diễn</h1>
-                  </Row>
-                  <Row>
-                    <Tag color="blue" style={{ marginBottom: '20px' }}>
-                      Cấu trúc
-                    </Tag>
-                  </Row>
-                  <Row>
-                    <Table
-                      columns={columns_grammar_01}
-                      dataSource={data_grammar_01}
-                      pagination={false}
-                    />
-                  </Row>
-                </TabPane>
-                <TabPane tab="Hiện tại hoàn thành" key="2">
-                  <Row id="">
-                    <h1>Hiện tại hoàn thành</h1>
-                  </Row>
-                  <Row>
-                    <Tag color="blue" style={{ marginBottom: '20px' }}>
-                      Cấu trúc
-                    </Tag>
-                  </Row>
-                  <Row>
-                    <b>
-                      (+) S + has/have + PII.
-                      <br />
-                      (–) S + has/have + not + PII.
-                      <br />
-                      (?) Has/Have + S + PII?
-                      <br />
-                      Yes, S + has/have.
-                      <br />
-                      No, S + has/have + not.
-                    </b>
-                  </Row>
-                </TabPane>
-                <TabPane tab="Quá khứ đơn" key="3">
-                  Content of Tab Pane 3
-                </TabPane>
-                <TabPane tab="Quá khứ tiếp diễn" key="4">
-                  Content of Tab Pane 4
-                </TabPane>
-                <TabPane tab="Tương lai đơn" key="5">
-                  Content of Tab Pane 5
-                </TabPane>
               </Tabs>
             </Col>
           </Row>
@@ -186,8 +176,8 @@ class Grammar extends React.Component {
             // </Row>
           }
         </div>
-      </div>
     </Spin>
+      </div>
     );
   }
   

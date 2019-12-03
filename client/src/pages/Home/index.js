@@ -5,6 +5,13 @@ import './style.scss';
 const prefixCls = 'home';
 
 const Home = props => {
+  var timeout;
+  document.addEventListener("mouseup",event=>{
+    // clearTimeout(timeout);
+    let selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString() ;
+    // timeout = setTimeout(function(){console.log(selection)}, 2000)
+    console.log(selection)
+  })
   return (
     <div className={`${prefixCls}`}>
       <Row>
