@@ -26,6 +26,7 @@ app.use('/api/parts', require('./routes/part.route'));
 app.use('/api/grammar-topics', require('./routes/grammarTopic.route'));
 app.use('/api/grammar', require('./routes/grammar.route'));
 app.use('/api/recent-word', require('./routes/recentWord.route'));
+app.use('/api/tests', require('./routes/test.route'));
 
 // // trick request
 // app.get('/', (req, res) => res.send('wake up'));
