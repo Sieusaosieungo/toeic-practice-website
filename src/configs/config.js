@@ -31,9 +31,23 @@ const questionLevel = {
   UPPER_ADVANDED: 7,
 };
 
+/**
+ * Number of questions in part
+ */
+const numberQuestions = {
+  NQPart1: 10,
+  NQPart2: 20,
+  NQPart3: 20,
+  NQPart4: 20,
+  NQPart5: 40,
+  NQPart6: 30,
+  NQPart7: 30,
+};
+
 module.exports = {
   pagination,
   staticFilePath,
   ResponseResult,
   questionLevel,
+  numberQuestions,
 };
