@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import axios from 'axios';
+import { services } from '../../services'
 
 import './style.scss';
 
@@ -10,7 +11,9 @@ import Footer from '../Footer';
 import Admin from '../../pages/Admin';
 import Loading from '../Loading';
 import config from '../../utils/config';
-
+import { setCORS } from "google-translate-api-browser";
+// setting up cors-anywhere server address
+const translate = setCORS("http://cors-anywhere.herokuapp.com/");
 function App({
   children,
   cookies: {
@@ -18,6 +21,28 @@ function App({
   },
   auth
 }) {
+  var timeout;
+  var getSelection = "";
+  document.addEventListener("mouseup",event=>{
+    // clearTimeout(timeout);
+    let selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString() ;
+    // timeout = setTimeout(function(){console.log(selection)}, 2000)
+    if(selection != "" && getSelection != selection) {
+      getSelection = selection;
+      translate(selection, {de : "en", to: "vi" })
+        .then(res => {
+          // I do not eat six days
+          var text = res.text;
+          services.addRecentWord({
+            newWord : selection,
+            meaning : text
+          }).then(res => res)
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  })
   console.log('lol: ', auth.accessToken)
 
   const [user, setUser] = useState({});

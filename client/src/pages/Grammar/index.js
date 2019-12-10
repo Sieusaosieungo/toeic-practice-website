@@ -111,7 +111,6 @@ class Grammar extends React.Component {
               >
                 {
                   JSON.parse(sessionStorage.grammar_topics).results.topics.map(function(data, i) {
-                    console.log(data.title)
                     return <TabPane tab={data.title} key={i}>
                       <Row id="">
                         <h1>{data.title}</h1>
@@ -123,7 +122,6 @@ class Grammar extends React.Component {
                               return <div>
                                 {
                                   grammar.data.grammars.map(function(gra, i) {
-                                    console.log(gra.title)
                                     return <div>
                                       <Row>
                                         <Tag color="blue" style={{ marginBottom: '20px', fontSize : "120%" }}>

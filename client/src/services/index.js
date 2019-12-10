@@ -9,7 +9,9 @@ export const services = {
   uploadAvatar,
   getGrammarTopics,
   getGrammarById,
-  translate
+  translate,
+  addRecentWord,
+  getTenWords,
 };
 
 function login(email, password) {
@@ -120,3 +122,27 @@ function translate(value) {
     });
 }
 
+function addRecentWord(object) {
+  return axios({
+    method: 'POST',
+    url: `https://toeic-practice.herokuapp.com/api/recent-word`,
+    headers: authHeader(),
+    data : object,
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function getTenWords() {
+  return axios({
+    method: 'GET',
+    url: `https://toeic-practice.herokuapp.com/api/recent-word/ten-words`,
+    headers: authHeader(),
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}

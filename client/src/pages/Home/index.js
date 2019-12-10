@@ -15,25 +15,6 @@ setCORS("http://cors-anywhere.herokuapp.com/");
 const prefixCls = 'home';
 
 const Home = props => {
-  var timeout;
-  document.addEventListener("mouseup",event=>{
-    // clearTimeout(timeout);
-    let selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString() ;
-    // timeout = setTimeout(function(){console.log(selection)}, 2000)
-    console.log(selection)
-    translate(selection, {de : "en", to: "vi" })
-      .then(res => {
-        // I do not eat six days
-        var text = res.text;
-        console.log({
-          newWord : selection,
-          meaning : text
-        })
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  })
   return (
     <div className={`${prefixCls}`}>
       <Row>
