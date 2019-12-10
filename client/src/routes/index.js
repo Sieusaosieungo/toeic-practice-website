@@ -25,6 +25,10 @@ const Intro = Loadable({
   loader: () => import('../pages/Exam/Intro'),
   loading: Loading,
 });
+const Part1 = Loadable({
+  loader: () => import('../pages/Exam/Part1'),
+  loading: Loading,
+});
 const Topics = Loadable({
   loader: () => import('../pages/Topics'),
   loading: Loading,
@@ -58,6 +62,10 @@ const routes = [
   {
     path: '/exam/intro',
     component: Intro,
+  },
+  {
+    path: '/exam/part1',
+    component: Part1,
   },
   {
     path: '/new-word',

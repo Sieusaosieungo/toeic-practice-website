@@ -4,7 +4,7 @@ import ReactAudioPlayer from 'react-audio-player';
 import './style.scss'
 const prefixCls = 'home';
 
-const Intro = ({}) => {
+const Intro = (props) => {
   const radioStyle = {
     display: 'block',
     height: '30px',
@@ -13,9 +13,9 @@ const Intro = ({}) => {
   return (
   <div className={`${prefixCls}`}> 
     <div className={`${prefixCls}-content`}>
-      <div className="" style={{marginTop : "4em", padding : "3em 6em"}}>
-        <Row>
-          <b>Part I: Picture Description</b>
+      <div className="" style={{marginTop : "4em", padding : "3em 8em"}}>
+        <Row style={{marginBottom : "1em"}}>
+          <b><h2>Part I: Picture Description</h2></b>
         </Row>
         <Row>
           <b>Directions:</b> For each question, you will see a picture and you will hear four short statements. The statements will be spoken just one time. They will not be printed in your test book so you must listen carefully to understand what the speaker says. When you hear the four statements, look at the picture and choose the statement that best describes what you see in the picture. Choose the best answer A, B, C or D
@@ -44,22 +44,26 @@ const Intro = ({}) => {
         </Row>
         <Row>
           <Radio.Group  value={4}>
-            <Radio style={radioStyle} value={1}>
+            <Radio style={radioStyle} key={1} value={1}>
               Option A
             </Radio>
-            <Radio style={radioStyle} value={2}>
+            <Radio style={radioStyle} key={2} value={2}>
               Option B
             </Radio>
-            <Radio style={radioStyle} value={3}>
+            <Radio style={radioStyle} key={3} value={3}>
               Option C
             </Radio>
-            <Radio style={radioStyle} value={4}>
+            <Radio style={radioStyle} key={4} value={4}>
               Option D
             </Radio>
           </Radio.Group>
         </Row>
         <Row style={{textAlign : "center", margin : "2em 0"}}>
-          <Button className="ant-btn-primary ant-card-hoverable" onClick={()=> console.log(1)}>Bắt đầu</Button>
+          <Button 
+            className="ant-btn-primary ant-card-hoverable" 
+            onClick={() => props.history.push('/exam/part1')}
+          >Bắt đầu
+          </Button>
         </Row>
       </div>
     </div>
