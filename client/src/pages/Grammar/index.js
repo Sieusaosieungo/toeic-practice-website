@@ -110,6 +110,7 @@ class Grammar extends React.Component {
                 tabBarStyle={{width : "25%", textAlign : "left"}}
               >
                 {
+                  sessionStorage.grammar_topics != null &&
                   JSON.parse(sessionStorage.grammar_topics).results.topics.map(function(data, i) {
                     return <TabPane tab={data.title} key={i}>
                       <Row id="">
