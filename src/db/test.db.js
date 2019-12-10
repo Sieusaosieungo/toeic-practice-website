@@ -4,7 +4,9 @@ const Question = require('../models/question.model');
 const { numberQuestions } = require('../configs/config');
 
 const randomTestDb = async (user, query) => {
-  const { level } = query;
+  let { level } = query;
+  level = Number.parseInt(level, 10);
+
   const idUser = user.id;
   const testQuestions = new TestQuestions();
   const test = new Test({
@@ -89,7 +91,7 @@ const randomTestDb = async (user, query) => {
     });
   });
 
-  testQuestions.save();
+  await testQuestions.save();
   test.save();
 
   return {
