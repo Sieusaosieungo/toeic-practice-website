@@ -36,12 +36,12 @@ const questionLevel = {
  */
 const numberQuestions = {
   NQPart1: 10,
-  NQPart2: 20,
-  NQPart3: 20,
-  NQPart4: 20,
+  NQPart2: 30,
+  NQPart3: 10,
+  NQPart4: 10,
   NQPart5: 40,
-  NQPart6: 30,
-  NQPart7: 30,
+  NQPart6: 4,
+  NQPart7: 12,
 };
 
 module.exports = {
