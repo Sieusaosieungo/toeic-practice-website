@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Register from '../../Register';
 import Login from '../../Login';
 import Update from '../../Update';
+import RecentWord from '../../RecentWord';
 import { services } from '../../../services';
 import { DELETE_USER, SIGN_IN,SIGN_OUT } from '../../../constants/ActionTypes';
 // import toastr from '../../../common/toastr'
@@ -27,6 +28,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   const [visibleRegForm, setVisibleRegForm] = useState(false);
   const [visibleLoginForm, setVisibleLoginForm] = useState(false);
   const [visibleUpdateForm, setVisibleUpdateForm] = useState(false);
+  const [visibleRecentWord, setVisibleRecentWord] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const Submenu = logOut => {
@@ -34,6 +36,9 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
       <Menu>
         <Menu.Item key="1">
           <div onClick={showModalUpdate}>Cập nhật thông tin</div>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <div onClick={showRecentWord}>Từ gần đây</div>
         </Menu.Item>
         <Menu.Item key="4">
           <div onClick={logOut}>Đăng xuất</div>
@@ -46,12 +51,18 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     setVisibleRegForm(true);
   };
 
-  const showModalLogin = () => {
+  const showModalLogin = (e) => {
+    e.preventDefault();
     setVisibleLoginForm(true);
   };
 
-  const showModalUpdate = () => {
+  const showModalUpdate = (e) => {
+    e.preventDefault();
     setVisibleUpdateForm(true);
+  };
+
+  const showRecentWord = () => {
+    setVisibleRecentWord(true);
   };
 
   const handleCancelRegForm = e => {
@@ -66,10 +77,15 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     setVisibleUpdateForm(false);
   };
 
+  const handleCancelRecentWord = e => {
+    setVisibleRecentWord(false);
+  };
+
   const onLogin = res => {
     // console.log(data)
     setCookie('accessToken', res.data.results.token);
     setCookie('isAuth', true);
+    setVisibleRecentWord(true);
     message.success('Đăng nhập thành công !');
   };
 
@@ -90,6 +106,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     setCookie('accessToken', res.data.results.token);
     setCookie('isAuth', true);
     message.success('Đăng kí thành công !');
+    setVisibleRecentWord(true);
   };
 
   useEffect(() => {
@@ -102,11 +119,13 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             // console.log('user info after call axios: ', res.data.results.user);
             dispatch({ type: SIGN_IN, data: res });
             setLoading(false);
+            setVisibleRecentWord(true);
             // dispatch(signIn(accessToken));
           }
         })
         .catch(() => {
           setLoading(false);
+          setVisibleRecentWord(true);
           // logOut();
         });
 
@@ -155,6 +174,23 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             </Dropdown>
           </Menu.Item>
         )}
+        {
+        //   Object.keys(user).length > 0 && user.data.results.user.role.id == 0 && (
+        //   <Menu.Item key="log-in">
+        //     <Link to="" className="auth-button" onClick={showModalLogin}>
+        //       Đăng nhập
+        //     </Link>
+        //     <Modal
+        //       title="Đăng nhập"
+        //       visible={visibleLoginForm}
+        //       footer={null}
+        //       onCancel={handleCancelLoginForm}
+        //     >
+        //       <Login login={onLogin} />
+        //     </Modal>
+        //   </Menu.Item>
+        // )
+        }
         {!(Object.keys(user).length > 0) && (
           <Menu.Item key="log-in">
             <Link to="" className="auth-button" onClick={showModalLogin}>
@@ -166,7 +202,10 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
               footer={null}
               onCancel={handleCancelLoginForm}
             >
-              <Login login={onLogin} />
+              <Login login={onLogin} register={() => {
+                setVisibleLoginForm(false);
+                setVisibleRegForm(true);
+              }}/>
             </Modal>
           </Menu.Item>
         )}
@@ -194,6 +233,14 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
           width={'50vw'}
         >
           <Update accessToken={accessToken} signup={onSignup} />
+        </Modal>
+        <Modal
+          title="Từ gần đây"
+          visible={visibleRecentWord}
+          footer={null}
+          onCancel={handleCancelRecentWord}
+        >
+          <RecentWord user={user}/>
         </Modal>
       </Menu>
     </Spin>

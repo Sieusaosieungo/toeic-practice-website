@@ -94,7 +94,7 @@ class NormalLoginForm extends React.Component {
             >
               Đăng nhập
             </Button>
-            hoặc <Link to="/register">Đăng ký!</Link>
+            hoặc <Link to="/register" onClick={(e) => {e.preventDefault();this.props.register()}}>Đăng ký!</Link>
           </Form.Item>
         </Form>
       </Spin>
