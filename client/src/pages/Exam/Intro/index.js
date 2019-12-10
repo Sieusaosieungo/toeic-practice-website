@@ -1,17 +1,70 @@
 import React from 'react';
-import {Row, Col} from 'antd';
+import {Row, Col, Radio, Button} from 'antd';
+import ReactAudioPlayer from 'react-audio-player';
 import './style.scss'
 const prefixCls = 'home';
 
 const Intro = ({}) => {
-  return <div className={`${prefixCls}`}> 
-    <div className="" style={{marginTop : "1.5em"}}>
-      <Row>
-        Ngạc nhiên chưa
-      </Row>
-      
+  const radioStyle = {
+    display: 'block',
+    height: '30px',
+    lineHeight: '30px',
+  };
+  return (
+  <div className={`${prefixCls}`}> 
+    <div className={`${prefixCls}-content`}>
+      <div className="" style={{marginTop : "4em", padding : "3em 6em"}}>
+        <Row>
+          <b>Part I: Picture Description</b>
+        </Row>
+        <Row>
+          <b>Directions:</b> For each question, you will see a picture and you will hear four short statements. The statements will be spoken just one time. They will not be printed in your test book so you must listen carefully to understand what the speaker says. When you hear the four statements, look at the picture and choose the statement that best describes what you see in the picture. Choose the best answer A, B, C or D
+        </Row>
+        <Row style={{textAlign : "center", margin : "2em 0"}}>
+          <img src="http://toeic24.vn/upload/img/part_1.png" />
+        </Row>
+        <Row style={{textAlign : "center"}}>
+          <ReactAudioPlayer
+            src="http://toeic24.vn/upload/audio/part_i_intro.mp3"
+            controls
+            style={{width : "50%"}}
+          />
+        </Row>
+        <Row>
+          <h2>EXAMPLE:</h2>
+        </Row>
+        <Row>
+          Now listen to the four statements.
+        </Row>
+        <Row>
+          Statement (D) best describes what you see in the picture.
+        </Row>
+        <Row>
+          Therefore, you should choose answer (D).
+        </Row>
+        <Row>
+          <Radio.Group  value={4}>
+            <Radio style={radioStyle} value={1}>
+              Option A
+            </Radio>
+            <Radio style={radioStyle} value={2}>
+              Option B
+            </Radio>
+            <Radio style={radioStyle} value={3}>
+              Option C
+            </Radio>
+            <Radio style={radioStyle} value={4}>
+              Option D
+            </Radio>
+          </Radio.Group>
+        </Row>
+        <Row style={{textAlign : "center", margin : "2em 0"}}>
+          <Button className="ant-btn-primary ant-card-hoverable" onClick={()=> console.log(1)}>Bắt đầu</Button>
+        </Row>
+      </div>
     </div>
-  </div>;
+  </div>
+  )
 };
 
 export default Intro;
