@@ -2,8 +2,8 @@ const { randomTestDb } = require('../db/test.db');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
 
-const randomTest = async user => {
-  const data = await randomTestDb(user.id);
+const randomTest = async (user, query) => {
+  const data = await randomTestDb(user, query);
   if (!data) {
     throw new CustomError(
       errorCode.INTERNAL_SERVER_ERROR,

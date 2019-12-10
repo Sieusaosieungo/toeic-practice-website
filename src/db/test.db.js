@@ -3,7 +3,9 @@ const Test = require('../models/test.model');
 const Question = require('../models/question.model');
 const { numberQuestions } = require('../configs/config');
 
-const randomTestDb = async idUser => {
+const randomTestDb = async (user, query) => {
+  const { level } = query;
+  const idUser = user.id;
   const testQuestions = new TestQuestions();
   const test = new Test({
     idUser,
@@ -12,7 +14,7 @@ const randomTestDb = async idUser => {
 
   // ramdom part 1
   const ranQuestionsP1 = await Question.aggregate([
-    { $match: { part: 1, level: 2 } },
+    { $match: { part: 1, level } },
     { $sample: { size: numberQuestions.NQPart1 } },
   ]);
   ranQuestionsP1.forEach(question => {
@@ -23,7 +25,7 @@ const randomTestDb = async idUser => {
 
   // ramdom part 2
   const ranQuestionsP2 = await Question.aggregate([
-    { $match: { part: 2 } },
+    { $match: { part: 2, level } },
     { $sample: { size: numberQuestions.NQPart2 } },
   ]);
   ranQuestionsP2.forEach(question => {
@@ -34,7 +36,7 @@ const randomTestDb = async idUser => {
 
   // ramdom part 3
   const ranQuestionsP3 = await Question.aggregate([
-    { $match: { part: 3 } },
+    { $match: { part: 3, level } },
     { $sample: { size: numberQuestions.NQPart3 } },
   ]);
   ranQuestionsP3.forEach(question => {
@@ -45,7 +47,7 @@ const randomTestDb = async idUser => {
 
   // ramdom part 4
   const ranQuestionsP4 = await Question.aggregate([
-    { $match: { part: 4 } },
+    { $match: { part: 4, level } },
     { $sample: { size: numberQuestions.NQPart4 } },
   ]);
   ranQuestionsP4.forEach(question => {
@@ -56,7 +58,7 @@ const randomTestDb = async idUser => {
 
   // ramdom part 5
   const ranQuestionsP5 = await Question.aggregate([
-    { $match: { part: 5 } },
+    { $match: { part: 5, level } },
     { $sample: { size: numberQuestions.NQPart5 } },
   ]);
   ranQuestionsP5.forEach(question => {
@@ -67,7 +69,7 @@ const randomTestDb = async idUser => {
 
   // ramdom part 6
   const ranQuestionsP6 = await Question.aggregate([
-    { $match: { part: 6 } },
+    { $match: { part: 6, level } },
     { $sample: { size: numberQuestions.NQPart6 } },
   ]);
   ranQuestionsP6.forEach(question => {
@@ -78,7 +80,7 @@ const randomTestDb = async idUser => {
 
   // ramdom part 7
   const ranQuestionsP7 = await Question.aggregate([
-    { $match: { part: 7 } },
+    { $match: { part: 7, level } },
     { $sample: { size: numberQuestions.NQPart7 } },
   ]);
   ranQuestionsP7.forEach(question => {
