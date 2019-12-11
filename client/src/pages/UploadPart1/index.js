@@ -4,8 +4,8 @@ import axios from 'axios';
 import config from '../../utils/config';
 import { withCookies } from 'react-cookie';
 
-import './style.scss';
 import TextArea from 'antd/lib/input/TextArea';
+import './style.scss';
 
 const { Option } = Select;
 
