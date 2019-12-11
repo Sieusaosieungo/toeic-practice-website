@@ -5,7 +5,7 @@ import './style.scss';
 import data from './config.json';
 const prefixCls = 'home';
 
-const Intro = ({}) => {
+const Intro = (props) => {
   const radioStyle = {
     display: 'block',
     height: '30px',
@@ -185,7 +185,7 @@ const Intro = ({}) => {
           <Row style={{ textAlign: 'center', margin: '2em 0' }}>
             <Button
               className="ant-btn-primary ant-card-hoverable"
-              onClick={() => console.log(1)}
+              onClick={() => props.history.push('/exam/part2intro')}
             >
               Next
             </Button>
