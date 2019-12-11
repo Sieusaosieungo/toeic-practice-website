@@ -13,7 +13,7 @@ async function getTenRecentWord(req, res) {
   res.send({
     status: 1,
     results: {
-      tenRecentWords: req.user.tenRecentWords,
+      user: req.user,
     },
   });
 }
