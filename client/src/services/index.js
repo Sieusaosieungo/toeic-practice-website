@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { authHeader, getCookie } from '../utils/authHeader';
+import config from '../utils/config';
 
 export const services = {
   login,
@@ -18,7 +19,7 @@ function login(email, password) {
   return axios({
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    url: 'https://toeic-practice.herokuapp.com/api/users/login',
+    url: `${config.API_URL}/api/users/login`,
     data: JSON.stringify({ email, password }),
   })
     .then(res => res)
@@ -31,7 +32,7 @@ function signUp(value) {
   return axios({
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    url: 'https://toeic-practice.herokuapp.com/api/users/signup',
+    url: `${config.API_URL}/api/users/signup`,
     data: value,
   })
     .then(res => res)
@@ -43,7 +44,7 @@ function signUp(value) {
 function getUser(accessToken) {
   return axios({
     method: 'GET',
-    url: `https://toeic-practice.herokuapp.com/api/users/`,
+    url: `${config.API_URL}/api/users/`,
     headers: authHeader(),
   })
     .then(res => res)
@@ -56,7 +57,7 @@ function updateUser(object) {
   return axios({
     method: 'PATCH',
     headers: authHeader(),
-    url: 'https://toeic-practice.herokuapp.com/api/users',
+    url: `${config.API_URL}/api/users`,
     data: object,
   })
     .then(res => res)
@@ -72,7 +73,7 @@ function uploadAvatar(formData) {
       Authorization: 'Bearer ' + getCookie('accessToken'),
       'Content-Type': 'multipart/form-data',
     },
-    url: 'https://toeic-practice.herokuapp.com/api/users/upload-avatar',
+    url: `${config.API_URL}/api/users/upload-avatar`,
     data: formData,
   })
     .then(res => res)
@@ -84,9 +85,9 @@ function uploadAvatar(formData) {
 function getGrammarTopics(object) {
   return axios({
     method: 'GET',
-    url: `https://toeic-practice.herokuapp.com/api/grammar-topics`,
+    url: `${config.API_URL}/api/grammar-topics`,
     headers: authHeader(),
-    params : object,
+    params: object,
   })
     .then(res => res)
     .catch(err => {
@@ -97,9 +98,9 @@ function getGrammarTopics(object) {
 function getGrammarById(object) {
   return axios({
     method: 'GET',
-    url: `https://toeic-practice.herokuapp.com/api/grammar`,
+    url: `${config.API_URL}/api/grammar`,
     headers: authHeader(),
-    params : object,
+    params: object,
   })
     .then(res => res)
     .catch(err => {
@@ -110,10 +111,10 @@ function getGrammarById(object) {
 function translate(value) {
   return axios({
     method: 'POST',
-    url: `https://toeic-practice.herokuapp.com/api/translate`,
+    url: `${config.API_URL}/api/translate`,
     headers: authHeader(),
-    data : JSON.stringify({
-      value : value
+    data: JSON.stringify({
+      value: value,
     }),
   })
     .then(res => res)
@@ -125,9 +126,9 @@ function translate(value) {
 function addRecentWord(object) {
   return axios({
     method: 'POST',
-    url: `https://toeic-practice.herokuapp.com/api/recent-word`,
+    url: `${config.API_URL}/api/recent-word`,
     headers: authHeader(),
-    data : object,
+    data: object,
   })
     .then(res => res)
     .catch(err => {
@@ -138,7 +139,7 @@ function addRecentWord(object) {
 function getTenWords() {
   return axios({
     method: 'GET',
-    url: `https://toeic-practice.herokuapp.com/api/recent-word/ten-words`,
+    url: `${config.API_URL}/api/recent-word/ten-words`,
     headers: authHeader(),
   })
     .then(res => res)

@@ -5,7 +5,7 @@ const initialState = {};
 const user = (state = initialState, action) => {
   const { type, user } = action;
 
-  console.log('action user: ', action);
+  // console.log('action user: ', action);
 
   switch (type) {
     case SIGN_IN:
