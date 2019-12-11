@@ -12,6 +12,7 @@ export const services = {
   translate,
   addRecentWord,
   getTenWords,
+  getExamTest,
 };
 
 function login(email, password) {
@@ -140,6 +141,19 @@ function getTenWords() {
     method: 'GET',
     url: `https://toeic-practice.herokuapp.com/api/recent-word/ten-words`,
     headers: authHeader(),
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function getExamTest(object) {
+  return axios({
+    method: 'GET',
+    url: `https://toeic-practice.herokuapp.com/api/tests`,
+    headers: authHeader(),
+    params : object
   })
     .then(res => res)
     .catch(err => {

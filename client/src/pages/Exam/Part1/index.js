@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Row, Col, Radio, Button} from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
 import './style.scss'
+import { connect } from "react-redux"; 
 const prefixCls = 'home';
 
 const Intro = (props) => {
@@ -12,6 +13,7 @@ const Intro = (props) => {
   };
   const [resultsPart1, setResultsPart1] = useState([null,null,null,null,null,null,null,null,null,null]);
 
+  console.log(props.exam)
   const onChange = (value, i) => {
     const change = Object.assign([], resultsPart1);
     change[i] = value;
@@ -72,4 +74,11 @@ const Intro = (props) => {
   )
 };
 
-export default Intro;
+const mapStateToProps = ({ exam }) => {
+  console.log(exam)
+  return {
+    exam
+  };
+};
+
+export default connect(mapStateToProps)(Intro);
