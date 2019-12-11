@@ -25,6 +25,37 @@ const randomTest = async (req, res) => {
   res.send(rs);
 };
 
+const submitResultPart = async (req, res) => {
+  const { body } = req;
+  const { idTest, part, results } = body;
+
+  if (!idTest) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm id của bài test');
+  }
+  if (!part) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      'Hãy thêm part muốn chấm điểm',
+    );
+  }
+  if (!validator.isNumeric(part.toString())) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'part phải là một số');
+  }
+  if (part > 7 || part < 1) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'part phải thuộc đoạn [0; 7]');
+  }
+  if (!results) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      'Hãy thêm results - đáp án của thí sinh',
+    );
+  }
+
+  const rs = await testService.submitResultPart(body);
+  res.send(rs);
+};
+
 module.exports = {
   randomTest,
+  submitResultPart,
 };

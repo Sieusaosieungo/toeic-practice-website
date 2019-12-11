@@ -2,6 +2,8 @@ const TestQuestions = require('../models/testQuestions.model');
 const Test = require('../models/test.model');
 const Question = require('../models/question.model');
 const { numberQuestions } = require('../configs/config');
+const CustomError = require('../errors/CustomError');
+const errorCode = require('../errors/errorCode');
 
 const randomTestDb = async (user, query) => {
   let { level } = query;
@@ -90,6 +92,7 @@ const randomTestDb = async (user, query) => {
       question: question._id,
     });
   });
+  testQuestions.userAnswer = [];
 
   await testQuestions.save();
   test.save();
@@ -108,6 +111,72 @@ const randomTestDb = async (user, query) => {
   };
 };
 
+const submitResultPartDb = async body => {
+  const { idTest, part, results } = body;
+
+  const test = await Test.findById(idTest);
+  // console.log(test);
+  if (!test) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      `Không thể tìm thấy bài test có id: ${idTest}`,
+    );
+  }
+
+  const { idTestQuestions } = test;
+  const testQuestions = await TestQuestions.findById(idTestQuestions);
+  let numberRightAnswer = 0;
+  await Promise.all(
+    testQuestions.questions.map(async question => {
+      await Promise.all(
+        results.map(async result => {
+          if (result.idQuestion === question.question.toString()) {
+            const q = await Question.findById(question.question.toString());
+            question.userAnswer = result.answer;
+            q.subQuestions.forEach((subQ, idx) => {
+              if (subQ.answer === result.userAnswer[idx].answer) {
+                numberRightAnswer += 1;
+              }
+            });
+          }
+        }),
+      );
+      return 0;
+    }),
+  );
+  // testQuestions.questions.forEach(question => {
+  //   results.forEach(async result => {
+  //     if (result.idQuestion === question.question.toString()) {
+  //       console.log('question: ', question);
+  //       const q = await Question.findById(question.question.toString());
+  //       // console.log('q: ', q.subQuestions);
+  //       console.log('result: ', result);
+  //       question.userAnswer = result.answer;
+  //       console.log('new q:', question);
+  //       q.subQuestions.forEach((subQ, idx) => {
+  //         // console.log(subQ.answer);
+  //         // console.log(result.userAnswer[idx].answer);
+  //         if (subQ.answer === result.userAnswer[idx].answer) {
+  //           numberRightAnswer += 1;
+  //           console.log('true');
+  //         }
+  //       });
+  //     }
+  //   });
+  // });
+
+  console.log(numberRightAnswer);
+  test.partResults.push({
+    part,
+    partPoint: numberRightAnswer,
+  });
+
+  const rs = await test.save();
+  await testQuestions.save();
+  return rs;
+};
+
 module.exports = {
   randomTestDb,
+  submitResultPartDb,
 };
