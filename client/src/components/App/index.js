@@ -5,6 +5,7 @@ import axios from 'axios';
 import { services } from '../../services';
 
 import './style.scss';
+import { SIGN_IN } from '../../constants/ActionTypes';
 
 import NavBar from '../NavBar';
 import Footer from '../Footer';
@@ -20,6 +21,7 @@ function App({
     cookies: { accessToken },
   },
   auth,
+  dispatch,
 }) {
   var timeout;
   var getSelection = '';
@@ -40,7 +42,14 @@ function App({
               newWord: selection,
               meaning: text,
             })
-            .then(res => res);
+            .then(res => {
+              console.log(res);
+              dispatch({
+                type: SIGN_IN,
+                data: res,
+                accessToken: res.data.results.token,
+              });
+            });
         })
         .catch(err => {
           console.error(err);
@@ -50,11 +59,7 @@ function App({
   console.log('lol: ', auth.accessToken);
 
   const [user, setUser] = useState({});
-<<<<<<< HEAD
-  const accessTokenCur = accessToken || (auth.accessToken && auth.accessToken);
-=======
   const accessTokenCur = (auth.accessToken && auth.accessToken) || accessToken;
->>>>>>> nothing
 
   useEffect(() => {
     if (accessTokenCur !== undefined) {
