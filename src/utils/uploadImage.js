@@ -23,7 +23,7 @@ const uploadImage = async (imageFile, relativePath) => {
 
     await imageFile.mv(filePath);
 
-    imageLink = `${absolutePath}/${newName}`;
+    imageLink = `${relativePath}/${newName}`;
   } catch (err) {
     throw new Error(`Can't store image + ${imageFile.name}`);
   }
