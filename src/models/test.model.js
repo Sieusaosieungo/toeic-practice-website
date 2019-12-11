@@ -19,9 +19,9 @@ const testSchema = new mongoose.Schema({
   },
   partResults: [
     {
-      idPart: {
-        type: ObjectId,
-        ref: 'Part',
+      part: {
+        type: Number,
+        required: true,
       },
       partPoint: {
         type: Number,
@@ -30,9 +30,15 @@ const testSchema = new mongoose.Schema({
   ],
   grammarResults: [
     {
-      idGrammer: {
+      idGrammarTopic: {
         type: ObjectId,
-        ref: 'Grammar',
+        ref: 'GrammarTopic',
+      },
+      totalQuestionsInTopic: {
+        type: Number,
+      },
+      result: {
+        type: Number,
       },
     },
   ],
