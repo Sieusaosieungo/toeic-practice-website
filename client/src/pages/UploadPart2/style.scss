@@ -1,16 +1,16 @@
-.upload-part1 {
-  .upload-part1-content {
-    .upload-part1-raw {
+.upload-part2 {
+  .upload-part2-content {
+    .upload-part2-raw {
       display: flex;
       align-items: center;
 
       > div {
-        margin-right: 1rem;
+        margin-right: 2rem;
       }
 
-      > .upload-part1-level {
-        width: 10%;
-        margin-bottom: 1rem;
+      > .upload-part2-level {
+        width: 20%;
+        margin-bottom: 2rem;
       }
 
       > .question-title {
@@ -21,11 +21,11 @@
         width: 80%;
       }
     }
-    .upload-part1-btn {
+    .upload-part2-btn {
       display: flex;
       justify-content: flex-end;
-      margin-right: 1rem;
-      margin-top: 1rem;
+      margin-right: 2rem;
+      margin-top: 2rem;
 
       > button {
         // width: 10rem;
@@ -33,28 +33,28 @@
     }
   }
 
-  .upload-part1-question {
-    .upload-part1-raw {
+  .upload-part2-question {
+    .upload-part2-raw {
       display: grid;
-      margin-bottom: 1rem;
-      grid-template-columns: repeat(11, 1fr);
+      margin-bottom: 2rem;
+      grid-template-columns: repeat(12, 1fr);
 
       > .question-title {
-        margin-right: 1rem;
-        grid-column: 1/1;
+        margin-right: 2rem;
+        grid-column: 1/2;
       }
 
       > input {
-        grid-column: 1/11;
+        grid-column: 2/12;
         flex-grow: 1;
       }
     }
-    .upload-part1-btn {
+    .upload-part2-btn {
       display: flex;
       justify-content: flex-end;
 
       > button {
-        margin-right: 1rem;
+        margin-right: 2rem;
       }
     }
   }
@@ -68,23 +68,23 @@
 
 .upload-btn-wrapper {
   cursor: pointer;
-  border: 1px dashed rgb(117, 117, 117);
+  border: 1px dashed rgb(217, 217, 217);
   border-radius: 15px;
   padding: 10px 0px;
   display: inline-block;
-  width: 10%;
+  width: 20%;
 
   &:hover {
-    border-color: #10a9ff;
-    box-shadow: 0 0 0 1px rgba(11, 111, 155, 0.1);
+    border-color: #20a9ff;
+    box-shadow: 0 0 0 2px rgba(22, 122, 255, 0.2);
   }
   &:active {
     background: #ccf;
   }
   & :invalid + span {
-    color: #a11;
+    color: #a22;
   }
   & :valid + span {
-    color: #1a1;
+    color: #2a2;
   }
 }

@@ -9,6 +9,11 @@ import PostGrammar from '../PostGrammar';
 import MyPostsGrammar from '../MyPostsGrammar';
 import PostTopicGrammar from '../PostTopicGrammar';
 import UploadPart7 from '../UploadPart7';
+import UploadPart6 from '../UploadPart6';
+import UploadPart5 from '../UploadPart5';
+import UploadPart4 from '../UploadPart4';
+import UploadPart3 from '../UploadPart3';
+import UploadPart2 from '../UploadPart2';
 import UploadPart1 from '../UploadPart1';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -128,6 +133,12 @@ const Admin = ({}) => {
                   exact={true}
                 />
                 <Route path="/part/7" component={UploadPart7} exact={true} />
+                <Route path="/part/6" component={UploadPart6} exact={true} />
+                <Route path="/part/5" component={UploadPart5} exact={true} />
+                <Route path="/part/4" component={UploadPart4} exact={true} />
+                <Route path="/part/3" component={UploadPart3} exact={true} />
+                <Route path="/part/2" component={UploadPart2} exact={true} />
+                <Route path="/part/1" component={UploadPart1} exact={true} />
               </Switch>
             </div>
           </Content>

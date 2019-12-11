@@ -65,7 +65,9 @@ function App({
     }
   }, [accessTokenCur]);
 
-  if (accessTokenCur !== undefined) {
+  // console.log('accessToken: ', accessToken);
+
+  if (accessToken && accessToken !== '') {
     if (Object.keys(user).length > 0) {
       if (user.role.id === 0) {
         return (
@@ -92,8 +94,13 @@ function App({
   }
 }
 
+<<<<<<< HEAD
+const mapStateToProps = ({ user }) => {
+  // console.log('id from connect: ', user);
+=======
 const mapStateToProps = ({ user,auth }) => {
   console.log('id from connect: ');
+>>>>>>> dev
 
   return { user, auth };
 };
