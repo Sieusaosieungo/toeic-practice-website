@@ -4,7 +4,7 @@ import ReactAudioPlayer from 'react-audio-player';
 import './style.scss'
 const prefixCls = 'home';
 
-const Intro = ({}) => {
+const Intro = (props) => {
   const radioStyle = {
     display: 'block',
     height: '30px',
@@ -149,7 +149,7 @@ const Intro = ({}) => {
         }
         
         <Row style={{textAlign : "center", margin : "2em 0"}}>
-          <Button className="ant-btn-primary ant-card-hoverable" onClick={()=> console.log(1)}>Next</Button>
+          <Button className="ant-btn-primary ant-card-hoverable" onClick={() => props.history.push('/exam/part4intro')}>Next</Button>
         </Row>
       </div>
     </div>
