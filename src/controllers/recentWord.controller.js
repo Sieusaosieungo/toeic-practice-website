@@ -6,6 +6,9 @@ async function addRecentWord(req, res) {
 
   res.send({
     status: 1,
+    results: {
+      user: req.user,
+    }
   });
 }
 
@@ -13,7 +16,7 @@ async function getTenRecentWord(req, res) {
   res.send({
     status: 1,
     results: {
-      user: req.user,
+      tenRecentWords: req.user.tenRecentWords,
     },
   });
 }
