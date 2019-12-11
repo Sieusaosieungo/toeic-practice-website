@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Radio, Button } from 'antd';
 // import ReactAudioPlayer from 'react-audio-player';
+import { config } from '../../../utils/config'
+import { connect } from "react-redux"; 
 import './style.scss';
-import data from './config.json';
+// import data from './config.json';
 const prefixCls = 'home';
 
 const Intro = (props) => {
@@ -11,6 +13,31 @@ const Intro = (props) => {
     height: '30px',
     lineHeight: '30px',
   };
+
+  const [dataAudio, setDataAudio] = useState([
+  {
+    "link": "https://gateway-vb.vbeecore.com/audio1/15760791046400.96097868453676960.21030729301411810.7824553872253723.mp3"
+  }, 
+  {
+    "link": "https://gateway-vb.vbeecore.com/audio1/15760791604290.326402270596576560.153375529417137280.6871507027830566.mp3"
+  },
+  {
+    "link": "https://gateway-vb.vbeecore.com/audio1/15760791882650.093035076013273650.33137393811717430.8900932730107964.mp3"
+  }
+]);
+  useEffect(() => {
+    console.log(JSON.parse(sessionStorage.exam))
+    if(JSON.parse(sessionStorage.exam).part2.length > 0) {
+      var data = [];
+      JSON.parse(sessionStorage.exam).part2.map(function(exam, i) {
+        var url = "http://202.191.56.159:2510/" + data.audio;
+        data.push({ "link" : url});
+
+      })
+      setDataAudio(data);
+      console.log(data)
+    }
+  }, []);
 
   // code cua Manh
   const audioPlayer = React.createRef();
@@ -61,15 +88,15 @@ const Intro = (props) => {
   const onToggleAudio = () => {
     setIndexAudio(indexAudio + 1);
 
-    if (indexAudio < data.length - 1) {
-      audioPlayer.current.src = data[indexAudio + 1].link;
+    if (indexAudio < dataAudio.length - 1) {
+      audioPlayer.current.src = dataAudio[indexAudio + 1].link;
       console.log(audioPlayer);
       audioPlayer.current.play();
     }
 
-    if (indexAudio === data.length - 1) {
+    if (indexAudio === dataAudio.length - 1) {
       setIndexAudio(0);
-      audioPlayer.current.src = data[0].link;
+      audioPlayer.current.src = dataAudio[0].link;
       audioPlayer.current.pause();
     }
   };
@@ -94,7 +121,7 @@ const Intro = (props) => {
               controls
               style={{ width: '50%' }}
             >
-              <source src={data[0].link} />
+              <source src={dataAudio[0].link} />
               <track kind="captions" />
             </audio>
           </Row>
@@ -196,4 +223,11 @@ const Intro = (props) => {
   );
 };
 
-export default Intro;
+const mapStateToProps = ({ exam }) => {
+  console.log(exam)
+  return {
+    exam
+  };
+};
+
+export default connect(mapStateToProps)(Intro);
