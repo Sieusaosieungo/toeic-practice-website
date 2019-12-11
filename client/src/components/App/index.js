@@ -50,7 +50,11 @@ function App({
   console.log('lol: ', auth.accessToken);
 
   const [user, setUser] = useState({});
+<<<<<<< HEAD
   const accessTokenCur = accessToken || (auth.accessToken && auth.accessToken);
+=======
+  const accessTokenCur = (auth.accessToken && auth.accessToken) || accessToken;
+>>>>>>> nothing
 
   useEffect(() => {
     if (accessTokenCur !== undefined) {
