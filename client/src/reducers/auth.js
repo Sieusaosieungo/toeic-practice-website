@@ -12,6 +12,11 @@ const auth = (state = initialState, action) => {
   switch (type) {
     case SIGN_IN:
       return { ...state, accessToken };
+      case SIGN_OUT:
+      state={
+  accessToken: '',
+}
+      return state;
     default:
       return state;
   }

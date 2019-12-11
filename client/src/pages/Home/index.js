@@ -2,6 +2,16 @@ import React from 'react';
 import { Row, Col, Button } from 'antd';
 import './style.scss';
 
+import { setCORS } from "google-translate-api-browser";
+// setting up cors-anywhere server address
+const translate = setCORS("http://cors-anywhere.herokuapp.com/");
+/*
+// or
+import translate, { setCORS } from "google-translate-api-browser";
+setCORS("http://cors-anywhere.herokuapp.com/");
+*/
+
+// };
 const prefixCls = 'home';
 
 const Home = props => {

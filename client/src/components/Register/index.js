@@ -202,7 +202,7 @@ class RegistrationForm extends React.Component {
             </Col>,
           )}
         </Form.Item>
-        <Form.Item label="Gender" hasFeedback>
+        <Form.Item label="Gender">
           {getFieldDecorator('gender', {
             rules: [{ required: true, message: 'Please select your country!' }],
           })(
@@ -217,7 +217,7 @@ class RegistrationForm extends React.Component {
             valuePropName: 'checked',
           })(
             <Checkbox>
-              Tôi đồng ý với <a href="">chính sách</a> của MHHD
+              Tôi đồng ý với chính sách của nhóm 07.
             </Checkbox>,
           )}
         </Form.Item>

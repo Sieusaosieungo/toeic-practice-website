@@ -24,7 +24,8 @@ class NormalLoginForm extends React.Component {
           .then(res => {
             // console.log(res);
             const { dispatch } = this.props;
-            dispatch({ type: SIGN_IN, data: res });
+            console.log(res.data)
+            dispatch({ type: SIGN_IN, data: res, accessToken : res.data.results.token });
             this.props.login(res);
             this.setState({ loading: false });
             // toastr.success("Đăng nhập thành công")
@@ -93,7 +94,7 @@ class NormalLoginForm extends React.Component {
             >
               Đăng nhập
             </Button>
-            hoặc <Link to="/register">Đăng ký!</Link>
+            hoặc <Link to="/register" onClick={(e) => {e.preventDefault();this.props.register()}}>Đăng ký!</Link>
           </Form.Item>
         </Form>
       </Spin>
