@@ -1,4 +1,8 @@
-const { randomTestDb, submitResultPartDb } = require('../db/test.db');
+const {
+  randomTestDb,
+  submitResultPartDb,
+  getTestByIdDb,
+} = require('../db/test.db');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
 const { numberQuestions } = require('../configs/config');
@@ -61,7 +65,20 @@ const submitResultPart = async body => {
   return data;
 };
 
+const getTestById = async query => {
+  const data = await getTestByIdDb(query);
+
+  if (!data) {
+    throw new CustomError(
+      errorCode.INTERNAL_SERVER_ERROR,
+      `Không thể lấy test`,
+    );
+  }
+  return data;
+};
+
 module.exports = {
   randomTest,
   submitResultPart,
+  getTestById,
 };

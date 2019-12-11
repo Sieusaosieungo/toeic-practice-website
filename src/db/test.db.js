@@ -165,7 +165,6 @@ const submitResultPartDb = async body => {
   //   });
   // });
 
-  console.log(numberRightAnswer);
   test.partResults.push({
     part,
     partPoint: numberRightAnswer,
@@ -176,7 +175,74 @@ const submitResultPartDb = async body => {
   return rs;
 };
 
+const getTestByIdDb = async query => {
+  const { id } = query;
+
+  const test = await Test.findById(id);
+  if (!test) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      `Không thể tìm thấy bài test có id: ${id}`,
+    );
+  }
+
+  const { idTestQuestions } = test;
+  const testQuestions = await TestQuestions.findById(idTestQuestions);
+  const part1 = [];
+  const part2 = [];
+  const part3 = [];
+  const part4 = [];
+  const part5 = [];
+  const part6 = [];
+  const part7 = [];
+
+  testQuestions.questions.forEach(async question => {
+    const q = await Question.findById(question.question);
+    switch (q.part) {
+      case 1:
+        part1.push(q);
+        break;
+      case 2:
+        part2.push(q);
+        break;
+      case 3:
+        part3.push(q);
+        break;
+      case 4:
+        part4.push(q);
+        break;
+      case 5:
+        part5.push(q);
+        break;
+      case 6:
+        part6.push(q);
+        break;
+      case 7:
+        part7.push(q);
+        break;
+      default:
+        break;
+    }
+  });
+
+  const data = {
+    test,
+    questions: {
+      part1,
+      part2,
+      part3,
+      part4,
+      part5,
+      part6,
+      part7,
+    },
+  };
+
+  return data;
+};
+
 module.exports = {
   randomTestDb,
   submitResultPartDb,
+  getTestByIdDb,
 };

@@ -55,7 +55,20 @@ const submitResultPart = async (req, res) => {
   res.send(rs);
 };
 
+const getTestById = async (req, res) => {
+  const { query } = req;
+  const { id } = query;
+
+  if (!id) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm id bài test');
+  }
+
+  const rs = await testService.getTestById(query);
+  res.send(rs);
+};
+
 module.exports = {
   randomTest,
   submitResultPart,
+  getTestById,
 };
