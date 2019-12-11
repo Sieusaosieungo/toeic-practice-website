@@ -34,7 +34,9 @@ function App({
       .catch(err => console.log(err));
   }, []);
 
-  if (accessToken !== '') {
+  // console.log('accessToken: ', accessToken);
+
+  if (accessToken && accessToken !== '') {
     if (Object.keys(user).length > 0) {
       if (user.role.id === 0) {
         return (
@@ -62,7 +64,7 @@ function App({
 }
 
 const mapStateToProps = ({ user }) => {
-  console.log('id from connect: ');
+  // console.log('id from connect: ', user);
 
   return { user };
 };

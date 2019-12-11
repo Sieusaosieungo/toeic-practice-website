@@ -7,26 +7,28 @@ import axios from 'axios';
 import config from '../../utils/config';
 import { withCookies } from 'react-cookie';
 
+import './style.scss';
+
 const { Option } = Select;
 
-const UploadPart7 = ({
+const UploadPart6 = ({
   cookies: {
     cookies: { accessToken },
   },
 }) => {
-  const [part7, setPart7] = useState({
-    part: 7,
+  const [part6, setPart6] = useState({
+    part: 6,
     level: 0,
     paragraph: '',
   });
-  const [subQuesPart7, setSubQuesPart7] = useState({});
-  const [subQuesPart7Child, setSubQuesPart7Child] = useState({});
+  const [subQuesPart6, setSubQuesPart6] = useState({});
+  const [subQuesPart6Child, setSubQuesPart6Child] = useState({});
 
-  const handleUploadPart7Des = () => {
+  const handleUploadPart6Des = () => {
     const formData = new FormData();
-    formData.set('part', part7.part);
-    formData.set('level', part7.level);
-    formData.set('paragraph', part7.paragraph);
+    formData.set('part', part6.part);
+    formData.set('level', part6.level);
+    formData.set('paragraph', part6.paragraph);
 
     console.log('form data before upload des:', accessToken);
     for (const [x, y] of formData.entries()) {
@@ -45,13 +47,13 @@ const UploadPart7 = ({
       .then(res => {
         message.success('Đăng bài thành công.');
         console.log('question after uploaded: ', res.data);
-        setSubQuesPart7({ ...subQuesPart7, idQuestion: res.data.results._id });
+        setSubQuesPart6({ ...subQuesPart6, idQuestion: res.data.results._id });
       })
       .catch(err => console.log(err));
   };
 
-  const handleUploadPart7Content = () => {
-    console.log('Data before upload content:', subQuesPart7);
+  const handleUploadPart6Content = () => {
+    console.log('Data before upload content:', subQuesPart6);
 
     axios({
       method: 'POST',
@@ -59,30 +61,30 @@ const UploadPart7 = ({
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      data: subQuesPart7,
+      data: subQuesPart6,
     })
       .then(res => {
         message.success('Đăng bài thành công.');
         console.log('Subquestion after uploaded: ', res);
-        setPart7({ part: 7, level: 0, paragraph: '' });
+        setPart6({ part: 6, level: 0, paragraph: '' });
       })
       .catch(err => console.log(err));
   };
 
-  const handleChange = value => setPart7({ ...part7, level: value });
+  const handleChange = value => setPart6({ ...part6, level: value });
 
   const handleChangeSubQues = e => {
     const { name, value } = e.target;
-    setSubQuesPart7Child({ ...subQuesPart7Child, [name]: value });
+    setSubQuesPart6Child({ ...subQuesPart6Child, [name]: value });
   };
 
   return (
-    <div className="upload-part7">
-      <div className="upload-part7-content">
-        <div className="upload-part7-raw">
+    <div className="upload-part6">
+      <div className="upload-part6-content">
+        <div className="upload-part6-raw">
           <div>Chọn độ khó của câu hỏi:</div>
           <Select
-            className="upload-part7-level"
+            className="upload-part6-level"
             placeholder="Chọn độ khó của câu hỏi"
             onChange={handleChange}
           >
@@ -98,96 +100,96 @@ const UploadPart7 = ({
         </div>
         <CKEditor
           editor={CKEditorCustom}
-          data={part7.paragraph}
+          data={part6.paragraph}
           onChange={(event, editor) => {
             const data = editor.getData();
-            setPart7({ ...part7, paragraph: data });
+            setPart6({ ...part6, paragraph: data });
           }}
         />
-        <div className="upload-part7-btn">
-          <Button type="primary" onClick={handleUploadPart7Des}>
+        <div className="upload-part6-btn">
+          <Button type="primary" onClick={handleUploadPart6Des}>
             Đăng mô tả câu hỏi
           </Button>
         </div>
       </div>
       <br /> <hr /> <br />
-      <div className="upload-part7-question">
-        <div className="upload-part7-raw">
+      <div className="upload-part6-question">
+        <div className="upload-part6-raw">
           <div className="question-title">Câu hỏi:</div>
           <Input
             name="question"
             onChange={handleChangeSubQues}
-            value={subQuesPart7Child.question}
+            value={subQuesPart6Child.question}
           />
         </div>
-        <div className="upload-part7-raw">
+        <div className="upload-part6-raw">
           <div className="question-title">A:</div>
           <Input
             name="A"
             onChange={handleChangeSubQues}
-            value={subQuesPart7Child.A}
+            value={subQuesPart6Child.A}
           />
         </div>
-        <div className="upload-part7-raw">
+        <div className="upload-part6-raw">
           <div className="question-title">B:</div>
           <Input
             name="B"
             onChange={handleChangeSubQues}
-            value={subQuesPart7Child.B}
+            value={subQuesPart6Child.B}
           />
         </div>
-        <div className="upload-part7-raw">
+        <div className="upload-part6-raw">
           <div className="question-title">C:</div>
           <Input
             name="C"
             onChange={handleChangeSubQues}
-            value={subQuesPart7Child.C}
+            value={subQuesPart6Child.C}
           />
         </div>
-        <div className="upload-part7-raw">
+        <div className="upload-part6-raw">
           <div className="question-title">D:</div>
           <Input
             name="D"
             onChange={handleChangeSubQues}
-            value={subQuesPart7Child.D}
+            value={subQuesPart6Child.D}
           />
         </div>
-        <div className="upload-part7-raw">
+        <div className="upload-part6-raw">
           <div className="question-title">Answer:</div>
           <Input
             name="answer"
             onChange={handleChangeSubQues}
-            value={subQuesPart7Child.answer}
+            value={subQuesPart6Child.answer}
           />
         </div>
-        <div className="upload-part7-raw">
+        <div className="upload-part6-raw">
           <div className="question-title">Tips:</div>
           <Input
             name="tips"
             onChange={handleChangeSubQues}
-            value={subQuesPart7Child.tips}
+            value={subQuesPart6Child.tips}
           />
         </div>
-        <div className="upload-part7-btn">
+        <div className="upload-part6-btn">
           <Button
             type="primary"
             onClick={() => {
-              setSubQuesPart7({
-                ...subQuesPart7,
+              setSubQuesPart6({
+                ...subQuesPart6,
                 subQuestions: [
-                  ...(subQuesPart7.subQuestions
-                    ? subQuesPart7.subQuestions
+                  ...(subQuesPart6.subQuestions
+                    ? subQuesPart6.subQuestions
                     : []),
-                  subQuesPart7Child,
+                  subQuesPart6Child,
                 ],
               });
-              setSubQuesPart7Child({});
+              setSubQuesPart6Child({});
               message.success('Thêm câu hỏi nhỏ thành công.');
             }}
             disabled={
-              !subQuesPart7.idQuestion ||
-              (subQuesPart7.subQuestions &&
-                subQuesPart7.subQuestions.length === 4)
+              !subQuesPart6.idQuestion ||
+              (subQuesPart6.subQuestions &&
+                subQuesPart6.subQuestions.length === 3)
                 ? true
                 : false
             }
@@ -196,8 +198,8 @@ const UploadPart7 = ({
           </Button>
           <Button
             type="primary"
-            onClick={handleUploadPart7Content}
-            disabled={!subQuesPart7.idQuestion ? true : false}
+            onClick={handleUploadPart6Content}
+            disabled={!subQuesPart6.idQuestion ? true : false}
           >
             Đăng phần nội dung câu hỏi
           </Button>
@@ -207,4 +209,4 @@ const UploadPart7 = ({
   );
 };
 
-export default withCookies(UploadPart7);
+export default withCookies(UploadPart6);
