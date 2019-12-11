@@ -1,0 +1,39 @@
+.topic {
+  padding: 0 2rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 2rem;
+
+  .topic-wrap-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 10rem;
+    height: 10rem;
+
+    > img {
+      transition: all 0.5s;
+      border-radius: 50%;
+      width: 13rem;
+      height: 13rem;
+    }
+  }
+
+  &:hover {
+    .topic-wrap-image {
+      > img {
+        transform: scale(1.5);
+      }
+    }
+  }
+
+  > h4 {
+    margin: 2rem 0 1rem;
+    text-align: center;
+    font-size: 2rem;
+  }
+}

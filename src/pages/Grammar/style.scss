@@ -1,0 +1,40 @@
+.grammar {
+  flex-grow: 1;
+  background-color: #ebebeb;
+  display: flex;
+  flex-direction: column;
+
+  .grammar-content {
+    background-color: #fff;
+    width: 70%;
+    margin: auto;
+    margin-top: 4rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .ant-row {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+
+      .ant-col {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        .ant-tabs-left {
+          flex-grow: 1;
+          display: flex;
+
+          .ant-tabs-left-bar {
+            padding-top: 3rem;
+          }
+          .ant-tabs-content {
+            padding-top: 3rem;
+          }
+        }
+      }
+    }
+  }
+}
