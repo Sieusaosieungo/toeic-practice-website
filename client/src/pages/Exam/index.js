@@ -37,7 +37,7 @@ const Exam = props => {
               onClick={() => {
                 
                 // props.dispatch({type : "EXAM", data})
-                services.getExamTest({level : 3})
+                services.getExamTest({level : 2})
                   .then(res => {
                     console.log(res)
                     props.dispatch({type : "EXAM_TEST", data : res.data.questions})

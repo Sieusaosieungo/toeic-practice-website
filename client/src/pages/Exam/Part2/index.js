@@ -26,17 +26,17 @@ const Intro = (props) => {
   }
 ]);
   useEffect(() => {
-    console.log(JSON.parse(sessionStorage.exam))
-    if(JSON.parse(sessionStorage.exam).part2.length > 0) {
-      var data = [];
-      JSON.parse(sessionStorage.exam).part2.map(function(exam, i) {
-        var url = "http://202.191.56.159:2510/" + data.audio;
-        data.push({ "link" : url});
+    console.log(props.exam)
+    // if(props.exam.part2.length > 0) {
+    //   var data = [];
+    //   JSON.parse(sessionStorage.exam).part2.map(function(exam, i) {
+    //     var url = "http://202.191.56.159:2510/" + data.audio;
+    //     data.push({ "link" : url});
 
-      })
-      setDataAudio(data);
-      console.log(data)
-    }
+    //   })
+    //   setDataAudio(data);
+    //   console.log(data)
+    // }
   }, []);
 
   // code cua Manh

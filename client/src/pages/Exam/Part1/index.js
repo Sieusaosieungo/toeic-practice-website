@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Row, Col, Radio, Button} from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
 import './style.scss'
@@ -11,14 +11,62 @@ const Intro = (props) => {
     height: '30px',
     lineHeight: '30px',
   };
+
+  const [dataAudio, setDataAudio] = useState([
+  {
+    "link": "https://gateway-vb.vbeecore.com/audio1/15760791046400.96097868453676960.21030729301411810.7824553872253723.mp3"
+  }, 
+  {
+    "link": "https://gateway-vb.vbeecore.com/audio1/15760791604290.326402270596576560.153375529417137280.6871507027830566.mp3"
+  },
+  {
+    "link": "https://gateway-vb.vbeecore.com/audio1/15760791882650.093035076013273650.33137393811717430.8900932730107964.mp3"
+  }
+]);
+  useEffect(() => {
+    console.log(props.exam)
+    // if(props.exam.part2.length > 0) {
+    //   var data = [];
+    //   JSON.parse(sessionStorage.exam).part2.map(function(exam, i) {
+    //     var url = "http://202.191.56.159:2510/" + data.audio;
+    //     data.push({ "link" : url});
+
+    //   })
+    //   setDataAudio(data);
+    //   console.log(data)
+    // }
+  }, []);
+
+  // code cua Manh
+  const audioPlayer = React.createRef();
+  const [isPlaying, setIsPlaying] = useState();
+  const [indexAudio, setIndexAudio] = useState(0);
+  //end Manh
+
   const [resultsPart1, setResultsPart1] = useState([null,null,null,null,null,null,null,null,null,null]);
 
-  console.log(props.exam)
   const onChange = (value, i) => {
     const change = Object.assign([], resultsPart1);
     change[i] = value;
     setResultsPart1(change);
   }
+
+  const onToggleAudio = () => {
+    setIndexAudio(indexAudio + 1);
+
+    if (indexAudio < dataAudio.length - 1) {
+      audioPlayer.current.src = dataAudio[indexAudio + 1].link;
+      console.log(audioPlayer);
+      audioPlayer.current.play();
+    }
+
+    if (indexAudio === dataAudio.length - 1) {
+      setIndexAudio(0);
+      audioPlayer.current.src = dataAudio[0].link;
+      audioPlayer.current.pause();
+    }
+  };
+
   return (
   <div className={`${prefixCls}`}> 
     <div className={`${prefixCls}-content`}>
