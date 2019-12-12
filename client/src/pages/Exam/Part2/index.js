@@ -153,13 +153,13 @@ const Intro = (props) => {
                     <Radio.Group
                       onChange={e => onChange(e.target.value, 3 * i)}
                     >
-                      <Radio style={radioStyle} value={1}>
+                      <Radio style={radioStyle} value={"a"}>
                         A
                       </Radio>
-                      <Radio style={radioStyle} value={2}>
+                      <Radio style={radioStyle} value={"b"}>
                         B
                       </Radio>
-                      <Radio style={radioStyle} value={3}>
+                      <Radio style={radioStyle} value={"c"}>
                         C
                       </Radio>
                     </Radio.Group>
@@ -170,13 +170,13 @@ const Intro = (props) => {
                     <Radio.Group
                       onChange={e => onChange(e.target.value, 3 * i + 1)}
                     >
-                      <Radio style={radioStyle} value={1}>
+                      <Radio style={radioStyle} value={"a"}>
                         A
                       </Radio>
-                      <Radio style={radioStyle} value={2}>
+                      <Radio style={radioStyle} value={"b"}>
                         B
                       </Radio>
-                      <Radio style={radioStyle} value={3}>
+                      <Radio style={radioStyle} value={"c"}>
                         C
                       </Radio>
                     </Radio.Group>
@@ -187,13 +187,13 @@ const Intro = (props) => {
                     <Radio.Group
                       onChange={e => onChange(e.target.value, 3 * i + 2)}
                     >
-                      <Radio style={radioStyle} value={1}>
+                      <Radio style={radioStyle} value={"a"}>
                         A
                       </Radio>
-                      <Radio style={radioStyle} value={2}>
+                      <Radio style={radioStyle} value={"b"}>
                         B
                       </Radio>
-                      <Radio style={radioStyle} value={3}>
+                      <Radio style={radioStyle} value={"c"}>
                         C
                       </Radio>
                     </Radio.Group>
@@ -206,7 +206,31 @@ const Intro = (props) => {
           <Row style={{ textAlign: 'center', margin: '2em 0' }}>
             <Button
               className="ant-btn-primary ant-card-hoverable"
-              onClick={() => props.history.push('/exam/part3intro?id='  + props.location.search.substring(4))}
+              onClick={() => {
+                var object = {};
+                object.idTest = props.location.search.substring(4);
+                object.part = 2;
+                var results = [];
+                dataPart1.map(function(data, i) {
+                  var temp = {};
+                  console.log(data)
+                  temp.idQuestion = data._id;
+                  temp.userAnswer = [
+                    {
+                      idSubQuestion : data.subQuestions[0]._id,
+                      answer : resultsPart1[i]
+                    }
+                  ]
+                  results.push(temp);
+                })
+                object.results = results;
+                services.submitResults(object)
+                  .then(res => {
+                    console.log(res)
+                    props.history.push('/exam/part3intro?id=' + props.location.search.substring(4));
+                  })
+                // props.history.push('/exam/part3intro?id=' + props.location.search.substring(4));
+              }}
             >
               Next
             </Button>

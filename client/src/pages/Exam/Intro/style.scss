@@ -18,3 +18,50 @@
 
   }
 }
+
+.top-nav-list {
+    position: relative;
+    display: inline-block;
+    float: right;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.top-nav-list>li {
+    text-align: center;
+    display: inline-block;
+}
+
+.top-nav-list>li:first-child>a {
+    border: 0;
+}
+
+.top-nav-list>li>a {
+    position: relative;
+    display: table-cell;
+    font-family: Lato,sans-serif;
+    font-size: 14px;
+    color: #666;
+    background-color: #79554808;
+    padding: 0 10px;
+    line-height: 40px;
+    min-width: 60px;
+    z-index: 999;
+    border-left: 1px solid #d4d4d4;
+    -webkit-transition: all .3s ease 0s;
+    -moz-transition: all .3s ease 0s;
+    -ms-transition: all .3s ease 0s;
+    -o-transition: all .3s ease 0s;
+    transition: all .3s ease 0s;
+}
+
+.top-nav-list>li>a:hover {
+    color: #37abf2;
+}
+
+.icon {
+    width: auto;
+    display: inline-block;
+}
