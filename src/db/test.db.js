@@ -196,34 +196,36 @@ const getTestByIdDb = async query => {
   const part6 = [];
   const part7 = [];
 
-  testQuestions.questions.forEach(async question => {
-    const q = await Question.findById(question.question);
-    switch (q.part) {
-      case 1:
-        part1.push(q);
-        break;
-      case 2:
-        part2.push(q);
-        break;
-      case 3:
-        part3.push(q);
-        break;
-      case 4:
-        part4.push(q);
-        break;
-      case 5:
-        part5.push(q);
-        break;
-      case 6:
-        part6.push(q);
-        break;
-      case 7:
-        part7.push(q);
-        break;
-      default:
-        break;
-    }
-  });
+  await Promise.all(
+    testQuestions.questions.map(async question => {
+      const q = await Question.findById(question.question);
+      switch (q.part) {
+        case 1:
+          part1.push(q);
+          break;
+        case 2:
+          part2.push(q);
+          break;
+        case 3:
+          part3.push(q);
+          break;
+        case 4:
+          part4.push(q);
+          break;
+        case 5:
+          part5.push(q);
+          break;
+        case 6:
+          part6.push(q);
+          break;
+        case 7:
+          part7.push(q);
+          break;
+        default:
+          break;
+      }
+    }),
+  );
 
   const data = {
     test,
