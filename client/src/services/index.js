@@ -152,7 +152,7 @@ function getTenWords() {
 function getExamTest(object) {
   return axios({
     method: 'GET',
-    url: `http://202.191.56.159:2510/api/tests`,
+    url: `${config.API_URL}/api/tests`,
     headers: authHeader(),
     params : object
   })
