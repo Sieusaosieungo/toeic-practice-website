@@ -17,7 +17,7 @@ import './style.scss';
 import config from '../../../utils/config';
 import { storeUser, signIn, deleteUser, signOut } from '../../../actions';
 
-const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
+const RightMenu = ({ mode, user, accessTokenStore, dispatch, history }) => {
   // console.log(user)
   // console.log('mode: ', mode);
   // console.log(history)
@@ -47,7 +47,8 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     );
   };
 
-  const showModalRegister = () => {
+  const showModalRegister = (e) => {
+    e.preventDefault();
     setVisibleRegForm(true);
   };
 
@@ -95,6 +96,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     dispatch({ type: DELETE_USER });
     dispatch({ type: SIGN_OUT });
     setVisibleLoginForm(false);
+    document.getElementById("link").click();
     message.success('Đăng xuất thành công');
     // toastr.success("Đăng xuất thành công")
     // dispatch(signOut());
@@ -119,13 +121,13 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             // console.log('user info after call axios: ', res.data.results.user);
             dispatch({ type: SIGN_IN, data: res });
             setLoading(false);
-            setVisibleRecentWord(true);
+            // setVisibleRecentWord(true);
             // dispatch(signIn(accessToken));
           }
         })
         .catch(() => {
           setLoading(false);
-          setVisibleRecentWord(true);
+          // setVisibleRecentWord(true);
           // logOut();
         });
 
@@ -193,7 +195,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
         }
         {!(Object.keys(user).length > 0) && (
           <Menu.Item key="log-in">
-            <Link to="" className="auth-button" onClick={showModalLogin}>
+            <Link to="" id="login" className="auth-button" onClick={showModalLogin}>
               Đăng nhập
             </Link>
             <Modal
@@ -214,7 +216,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
         )}
         {!(Object.keys(user).length > 0) && (
           <Menu.Item key="sign-up">
-            <Link to="" className="auth-button" onClick={showModalRegister}>
+            <Link to="" id="signup" className="auth-button" onClick={showModalRegister}>
               Đăng ký
             </Link>
             <Modal
@@ -246,6 +248,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
           <RecentWord user={user} />
         </Modal>
       </Menu>
+      <Link id="link" to="/" style={{display : "none"}} />
     </Spin>
   );
 };
