@@ -141,7 +141,32 @@ const Intro = (props) => {
         }
         
         <Row style={{textAlign : "center", margin : "2em 0"}}>
-          <Button className="ant-btn-primary ant-card-hoverable" onClick={()=> console.log(1)}>Next</Button>
+          <Button className="ant-btn-primary ant-card-hoverable" 
+          onClick={()=> {
+            var object = {};
+            object.idTest = props.location.search.substring(4);
+            object.part = 7;
+            var results = [];
+            dataPart1.map(function(data, i) {
+              var temp = {};
+              console.log(data)
+              temp.idQuestion = data._id;
+              temp.userAnswer = [
+                {
+                  idSubQuestion : data.subQuestions[0]._id,
+                  answer : resultsPart1[i]
+                }
+              ]
+              results.push(temp);
+            })
+            object.results = results;
+            services.submitResults(object)
+              .then(res => {
+                console.log(res)
+                // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+              })
+            // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+          }}>Next</Button>
         </Row>
       </div>
     </div>

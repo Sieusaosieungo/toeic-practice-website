@@ -1,8 +1,10 @@
 import React from 'react';
-import {Row, Col, Radio, Button} from 'antd';
+import {Row, Col, Radio, Button, Icon, Modal, Statistic} from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
 import './style.scss'
+import BackwardTimer from '../../../utils/countdown'
 const prefixCls = 'home';
+const { Countdown } = Statistic;
 
 const Intro = (props) => {
   const radioStyle = {
@@ -11,7 +13,8 @@ const Intro = (props) => {
     lineHeight: '30px',
   };
   return (
-  <div className={`${prefixCls}`}> 
+  <div className={`${prefixCls}`} style={{position : "relative"}}> 
+    <BackwardTimer onOk={() => {props.history.push("/")}}/>
     <div className={`${prefixCls}-content`}>
       <div className="" style={{marginTop : "4em", padding : "3em 8em"}}>
         <Row style={{marginBottom : "1em"}}>
@@ -21,7 +24,7 @@ const Intro = (props) => {
           <b>Directions:</b> For each question, you will see a picture and you will hear four short statements. The statements will be spoken just one time. They will not be printed in your test book so you must listen carefully to understand what the speaker says. When you hear the four statements, look at the picture and choose the statement that best describes what you see in the picture. Choose the best answer A, B, C or D
         </Row>
         <Row style={{textAlign : "center", margin : "2em 0"}}>
-          <img src="http://toeic24.vn/upload/img/part_1.png" />
+          <img src="http://toeic24.vn/upload/img/part_1.png" style={{width : "70%"}}/>
         </Row>
         <Row style={{textAlign : "center"}}>
           <ReactAudioPlayer

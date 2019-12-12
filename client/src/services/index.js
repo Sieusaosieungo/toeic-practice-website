@@ -14,7 +14,8 @@ export const services = {
   addRecentWord,
   getTenWords,
   getExamTest,
-  getExamTestById
+  getExamTestById,
+  submitResults,
 };
 
 function login(email, password) {
@@ -169,6 +170,19 @@ function getExamTestById(object) {
     url: `${config.API_URL}/api/tests/id`,
     headers: authHeader(),
     params : object
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function submitResults(object) {
+  return axios({
+    method: 'POST',
+    url: `${config.API_URL}/api/tests/results/part`,
+    headers: authHeader(),
+    data : object
   })
     .then(res => res)
     .catch(err => {

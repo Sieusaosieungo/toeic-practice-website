@@ -39,7 +39,7 @@ const Exam = props => {
                 // props.dispatch({type : "EXAM", data})
                 services.getExamTest({level : 2})
                   .then(res => {
-                    console.log(res)
+                    sessionStorage.startTest = Date.now();
                     props.dispatch({type : "EXAM_TEST", data : res.data.questions})
                     props.history.push('/exam/intro?id=' + res.data.test._id);
                   })
