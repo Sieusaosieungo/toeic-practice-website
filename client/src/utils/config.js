@@ -1,6 +1,6 @@
 const config = {
-  API_URL: 'https://toeic-practice.herokuapp.com',
-  IMG_URL: 'http://123.30.235.196:5221',
+  API_URL: 'http://202.191.56.159:2510',
+  IMG_URL: 'http://202.191.56.159:2510',
 };
 
 export default config;

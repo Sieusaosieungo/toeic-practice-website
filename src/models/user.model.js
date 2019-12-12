@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-const mongoose = require('mongoose');
+  const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema(
         type: String,
         trim: true,
         lowercase: true,
+        default: 'user',
       },
     },
     name: {
@@ -39,12 +40,17 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
     },
-    recentWords: [
+    tenRecentWords: [
       {
-        word: {
+        _id: false,
+        newWord: {
           type: String,
           lowercase: true,
           trim: true,
+        },
+        meaning: {
+          type: String,
+          required: true,
         },
       },
     ],
@@ -76,7 +82,6 @@ userSchema.methods.toJSON = function() {
   const userObject = user.toObject();
   delete userObject.password;
   delete userObject.tokens;
-  delete userObject.role;
 
   return userObject;
 };

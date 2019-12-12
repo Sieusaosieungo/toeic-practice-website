@@ -2,8 +2,8 @@ const shortid = require('shortid');
 const fs = require('fs');
 const path = require('path');
 
-const uploadImage = async (imageFile, relativePath) => {
-  let imageLink;
+const uploadAudio = async (audioFile, relativePath) => {
+  let audioLink;
   try {
     const absolutePath = path.join(__dirname, '../../static', relativePath);
 
@@ -11,8 +11,7 @@ const uploadImage = async (imageFile, relativePath) => {
       recursive: true,
     });
 
-    // const fileName = imageFile.name + shortid.generate();
-    const fileName = imageFile.name.trim();
+    const fileName = audioFile.name.trim();
     const indexOfDot = fileName.lastIndexOf('.');
     const temp =
       fileName.slice(0, indexOfDot) +
@@ -21,13 +20,13 @@ const uploadImage = async (imageFile, relativePath) => {
     const newName = temp.split(' ').join('-');
     const filePath = `${absolutePath}/${newName}`;
 
-    await imageFile.mv(filePath);
+    await audioFile.mv(filePath);
 
-    imageLink = `${absolutePath}/${newName}`;
+    audioLink = `${relativePath}/${newName}`;
   } catch (err) {
-    throw new Error(`Can't store image + ${imageFile.name}`);
+    throw new Error(`Can't store audio + ${audioFile.name}`);
   }
-  return imageLink;
+  return audioLink;
 };
 
-module.exports = uploadImage;
+module.exports = uploadAudio;

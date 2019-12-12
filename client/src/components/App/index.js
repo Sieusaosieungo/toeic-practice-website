@@ -2,54 +2,67 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import axios from 'axios';
-import { services } from '../../services'
+import { services } from '../../services';
 
 import './style.scss';
+import { SIGN_IN } from '../../constants/ActionTypes';
 
 import NavBar from '../NavBar';
 import Footer from '../Footer';
 import Admin from '../../pages/Admin';
 import Loading from '../Loading';
 import config from '../../utils/config';
-import { setCORS } from "google-translate-api-browser";
+import { setCORS } from 'google-translate-api-browser';
 // setting up cors-anywhere server address
-const translate = setCORS("http://cors-anywhere.herokuapp.com/");
+const translate = setCORS('http://cors-anywhere.herokuapp.com/');
 function App({
   children,
   cookies: {
     cookies: { accessToken },
   },
-  auth
+  auth,
+  dispatch,
 }) {
   var timeout;
-  var getSelection = "";
-  document.addEventListener("mouseup",event=>{
+  var getSelection = '';
+  document.addEventListener('mouseup', event => {
     // clearTimeout(timeout);
-    let selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString() ;
+    let selection = document.getSelection
+      ? document.getSelection().toString()
+      : document.selection.createRange().toString();
     // timeout = setTimeout(function(){console.log(selection)}, 2000)
-    if(selection != "" && getSelection != selection) {
+    if (selection != '' && getSelection != selection) {
       getSelection = selection;
-      translate(selection, {de : "en", to: "vi" })
+      translate(selection, { de: 'en', to: 'vi' })
         .then(res => {
           // I do not eat six days
           var text = res.text;
-          services.addRecentWord({
-            newWord : selection,
-            meaning : text
-          }).then(res => res)
+          services
+            .addRecentWord({
+              newWord: selection,
+              meaning: text,
+            })
+            .then(res => {
+              console.log(res);
+              dispatch({
+                type: SIGN_IN,
+                data: res,
+                accessToken: res.data.results.token,
+              });
+            });
         })
         .catch(err => {
           console.error(err);
         });
     }
-  })
-  console.log('lol: ', auth.accessToken)
+  });
+  console.log('lol: ', auth.accessToken);
 
   const [user, setUser] = useState({});
-  const accessTokenCur = auth.accessToken && auth.accessToken || accessToken;
+  const accessTokenCur = (auth.accessToken && auth.accessToken) || accessToken;
 
   useEffect(() => {
-    if(accessTokenCur !== undefined) {
+    if (accessTokenCur !== undefined) {
       axios({
         method: 'GET',
         url: `${config.API_URL}/api/users/`,
@@ -65,7 +78,9 @@ function App({
     }
   }, [accessTokenCur]);
 
-  if (accessTokenCur !== undefined) {
+  // console.log('accessToken: ', accessTokenCur);
+
+  if (accessTokenCur && accessTokenCur !== '') {
     if (Object.keys(user).length > 0) {
       if (user.role.id === 0) {
         return (
@@ -92,8 +107,8 @@ function App({
   }
 }
 
-const mapStateToProps = ({ user,auth }) => {
-  console.log('id from connect: ');
+const mapStateToProps = ({ user, auth }) => {
+  console.log('id user from connect: ', user);
 
   return { user, auth };
 };

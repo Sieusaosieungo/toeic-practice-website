@@ -9,7 +9,7 @@ import Login from '../../Login';
 import Update from '../../Update';
 import RecentWord from '../../RecentWord';
 import { services } from '../../../services';
-import { DELETE_USER, SIGN_IN,SIGN_OUT } from '../../../constants/ActionTypes';
+import { DELETE_USER, SIGN_IN, SIGN_OUT } from '../../../constants/ActionTypes';
 // import toastr from '../../../common/toastr'
 
 import './style.scss';
@@ -51,12 +51,12 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     setVisibleRegForm(true);
   };
 
-  const showModalLogin = (e) => {
+  const showModalLogin = e => {
     e.preventDefault();
     setVisibleLoginForm(true);
   };
 
-  const showModalUpdate = (e) => {
+  const showModalUpdate = e => {
     e.preventDefault();
     setVisibleUpdateForm(true);
   };
@@ -93,7 +93,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
     removeCookie('accessToken');
     removeCookie('isAuth');
     dispatch({ type: DELETE_USER });
-    dispatch({type: SIGN_OUT})
+    dispatch({ type: SIGN_OUT });
     setVisibleLoginForm(false);
     message.success('Đăng xuất thành công');
     // toastr.success("Đăng xuất thành công")
@@ -129,25 +129,22 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
           // logOut();
         });
 
-      services.getGrammarTopics()
-        .then(res => {
-          console.log(res.data)
-          var grammar = [];
-          res.data.results.topics.map(function(data, i) {
-            services.getGrammarById({idTopic : data._id})
-              .then(res => {
-                console.log(res.data.results.grammars)
-                grammar.push({id : data._id, data : res.data.results.grammars})
-                sessionStorage.grammar = JSON.stringify(grammar)
-              })
-          })
-          sessionStorage.grammar_topics = JSON.stringify(res.data)
-
-        })
+      services.getGrammarTopics().then(res => {
+        console.log(res.data);
+        var grammar = [];
+        res.data.results.topics.map(function(data, i) {
+          services.getGrammarById({ idTopic: data._id }).then(res => {
+            console.log(res.data.results.grammars);
+            grammar.push({ id: data._id, data: res.data.results.grammars });
+            sessionStorage.grammar = JSON.stringify(grammar);
+          });
+        });
+        sessionStorage.grammar_topics = JSON.stringify(res.data);
+      });
       // services.getGrammarById()
       //   .then(res => {
       //     sessionStorage.grammar_topics = JSON.stringify(res.data)
-      //   }) 
+      //   })
       // window.location.reload();
     }
   }, [accessToken]);
@@ -160,36 +157,39 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
             <Avatar
               src={
                 (user.data.results.user.avatar &&
-                  'http://123.30.235.196:5221/' +
-                    user.data.results.user.avatar) ||
+                  config.API_URL + user.data.results.user.avatar) ||
                 'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
               }
               style={{ marginRight: '10px' }}
             />
             {user.data.results.user.name}
             <Dropdown overlay={() => Submenu(logOut)}>
-              <Link className="ant-dropdown-link" to="" onClick={e => e.preventDefault()}>
+              <Link
+                className="ant-dropdown-link"
+                to=""
+                onClick={e => e.preventDefault()}
+              >
                 {user.full_name} <Icon type="down" />
               </Link>
             </Dropdown>
           </Menu.Item>
         )}
         {
-        //   Object.keys(user).length > 0 && user.data.results.user.role.id == 0 && (
-        //   <Menu.Item key="log-in">
-        //     <Link to="" className="auth-button" onClick={showModalLogin}>
-        //       Đăng nhập
-        //     </Link>
-        //     <Modal
-        //       title="Đăng nhập"
-        //       visible={visibleLoginForm}
-        //       footer={null}
-        //       onCancel={handleCancelLoginForm}
-        //     >
-        //       <Login login={onLogin} />
-        //     </Modal>
-        //   </Menu.Item>
-        // )
+          //   Object.keys(user).length > 0 && user.data.results.user.role.id == 0 && (
+          //   <Menu.Item key="log-in">
+          //     <Link to="" className="auth-button" onClick={showModalLogin}>
+          //       Đăng nhập
+          //     </Link>
+          //     <Modal
+          //       title="Đăng nhập"
+          //       visible={visibleLoginForm}
+          //       footer={null}
+          //       onCancel={handleCancelLoginForm}
+          //     >
+          //       <Login login={onLogin} />
+          //     </Modal>
+          //   </Menu.Item>
+          // )
         }
         {!(Object.keys(user).length > 0) && (
           <Menu.Item key="log-in">
@@ -202,10 +202,13 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
               footer={null}
               onCancel={handleCancelLoginForm}
             >
-              <Login login={onLogin} register={() => {
-                setVisibleLoginForm(false);
-                setVisibleRegForm(true);
-              }}/>
+              <Login
+                login={onLogin}
+                register={() => {
+                  setVisibleLoginForm(false);
+                  setVisibleRegForm(true);
+                }}
+              />
             </Modal>
           </Menu.Item>
         )}
@@ -240,7 +243,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
           footer={null}
           onCancel={handleCancelRecentWord}
         >
-          <RecentWord user={user}/>
+          <RecentWord user={user} />
         </Modal>
       </Menu>
     </Spin>
