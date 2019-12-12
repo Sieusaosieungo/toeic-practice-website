@@ -1,9 +1,12 @@
 import React from 'react';
 import { Row, Col, Button } from 'antd';
 import './style.scss';
+import { services} from "../../services"
+import { connect} from 'react-redux';
 const prefixCls = 'exam';
 
 const Exam = props => {
+  console.log(props)
   return (
     <div className={`${prefixCls}`}>
       <div className={`${prefixCls}-content`}>
@@ -31,7 +34,16 @@ const Exam = props => {
           </Row>
           <div style={{ textAlign: 'center' }}>
             <Button
-              onClick={() => props.history.push('/exam/intro')}
+              onClick={() => {
+                
+                // props.dispatch({type : "EXAM", data})
+                services.getExamTest({level : 2})
+                  .then(res => {
+                    console.log(res)
+                    props.dispatch({type : "EXAM_TEST", data : res.data.questions})
+                    props.history.push('/exam/intro?id=' + res.data.test._id);
+                  })
+              }}
               className="ant-btn-primary ant-card-hoverable"
               style={{marginBottom : "3em", marginTop : "2em"}}
             >
@@ -45,4 +57,4 @@ const Exam = props => {
   );
 };
 
-export default Exam;
+export default connect(null)(Exam);

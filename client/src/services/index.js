@@ -13,6 +13,8 @@ export const services = {
   translate,
   addRecentWord,
   getTenWords,
+  getExamTest,
+  getExamTestById
 };
 
 function login(email, password) {
@@ -141,6 +143,32 @@ function getTenWords() {
     method: 'GET',
     url: `${config.API_URL}/api/recent-word/ten-words`,
     headers: authHeader(),
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function getExamTest(object) {
+  return axios({
+    method: 'GET',
+    url: `${config.API_URL}/api/tests`,
+    headers: authHeader(),
+    params : object
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function getExamTestById(object) {
+  return axios({
+    method: 'GET',
+    url: `${config.API_URL}/api/tests/id`,
+    headers: authHeader(),
+    params : object
   })
     .then(res => res)
     .catch(err => {

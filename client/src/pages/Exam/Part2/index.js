@@ -1,16 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Radio, Button } from 'antd';
 // import ReactAudioPlayer from 'react-audio-player';
+import { services} from "../../../services"
+import { config } from '../../../utils/config'
+import { connect } from "react-redux"; 
 import './style.scss';
-import data from './config.json';
+// import data from './config.json';
 const prefixCls = 'home';
 
-const Intro = ({}) => {
+const Intro = (props) => {
   const radioStyle = {
     display: 'block',
     height: '30px',
     lineHeight: '30px',
   };
+
+  const [dataAudio, setDataAudio] = useState([
+  
+]);
+  const [dataPart1, setDataPart1] = useState([
+  
+]);
+  useEffect(() => {
+    console.log(props.exam)
+    console.log(props.exam.part1)
+    if(props.exam.part1 == undefined) {
+      services.getExamTestById({id : props.location.search.substring(4)})
+        .then(res => {
+          setDataPart1(res.data.questions.part2);
+          var question = res.data.questions;
+          props.dispatch({type : "EXAM_TEST", data : question})
+          var data =[];
+          question.part2.map(function(part, i) {
+            var url = "http://202.191.56.159:2510/" + part.audio;
+            data.push({link : url});
+          })
+          setDataAudio(data);
+          console.log(data)
+        })
+      
+    }
+    else {
+      setDataPart1(props.exam.part2);
+      var data =[];
+      props.exam.part2.map(function(part, i) {
+        var url = "http://202.191.56.159:2510/" + part.audio;
+        data.push({link : url});
+      })
+      setDataAudio(data);
+    }
+  }, []);
 
   // code cua Manh
   const audioPlayer = React.createRef();
@@ -59,19 +98,21 @@ const Intro = ({}) => {
 
   // code cua Manh
   const onToggleAudio = () => {
+    if(dataAudio.length > 0) {
     setIndexAudio(indexAudio + 1);
 
-    if (indexAudio < data.length - 1) {
-      audioPlayer.current.src = data[indexAudio + 1].link;
+    if (indexAudio < dataAudio.length - 1) {
+      audioPlayer.current.src = dataAudio[indexAudio + 1].link;
       console.log(audioPlayer);
       audioPlayer.current.play();
     }
 
-    if (indexAudio === data.length - 1) {
+    if (indexAudio === dataAudio.length - 1) {
       setIndexAudio(0);
-      audioPlayer.current.src = data[0].link;
+      audioPlayer.current.src = dataAudio[0].link;
       audioPlayer.current.pause();
     }
+  }
   };
   //end Manh
 
@@ -94,35 +135,15 @@ const Intro = ({}) => {
               controls
               style={{ width: '50%' }}
             >
-              <source src={data[0].link} />
+              {
+                dataAudio.length > 0 &&
+                <source src={dataAudio[0].link} />
+              }
               <track kind="captions" />
             </audio>
           </Row>
-          {['', '', '', '', '', '', '', '', '', ''].map(function(data, i) {
-            // return <div>
-            //   <Row style={{textAlign : "center", margin : "2em 0"}}>
-            //     <img src="http://toeic24.vn/upload/img/part_1.png" />
-            //   </Row>
-            //   <Row>
-            //     <b>{i + 1}. Select the answer</b>
-            //   </Row>
-            //   <Row>
-            //     <Radio.Group onChange={(e) => onChange(e.target.value, i)}>
-            //       <Radio style={radioStyle} value={1}>
-            //         Option A
-            //       </Radio>
-            //       <Radio style={radioStyle} value={2}>
-            //         Option B
-            //       </Radio>
-            //       <Radio style={radioStyle} value={3}>
-            //         Option C
-            //       </Radio>
-            //       <Radio style={radioStyle} value={4}>
-            //         Option D
-            //       </Radio>
-            //     </Radio.Group>
-            //   </Row>
-            // </div>
+          {
+            ['', '', '', '', '', '', '', '', '', ''].map(function(data, i) {
             return (
               <div>
                 <Row style={{ marginTop: '1em' }}>
@@ -185,7 +206,7 @@ const Intro = ({}) => {
           <Row style={{ textAlign: 'center', margin: '2em 0' }}>
             <Button
               className="ant-btn-primary ant-card-hoverable"
-              onClick={() => console.log(1)}
+              onClick={() => props.history.push('/exam/part3intro?id='  + props.location.search.substring(4))}
             >
               Next
             </Button>
@@ -196,4 +217,11 @@ const Intro = ({}) => {
   );
 };
 
-export default Intro;
+const mapStateToProps = ({ exam }) => {
+  console.log(exam)
+  return {
+    exam
+  };
+};
+
+export default connect(mapStateToProps)(Intro);
