@@ -198,31 +198,22 @@ const submitResultPartDb = async body => {
       return 0;
     }),
   );
-  // testQuestions.questions.forEach(question => {
-  //   results.forEach(async result => {
-  //     if (result.idQuestion === question.question.toString()) {
-  //       console.log('question: ', question);
-  //       const q = await Question.findById(question.question.toString());
-  //       // console.log('q: ', q.subQuestions);
-  //       console.log('result: ', result);
-  //       question.userAnswer = result.answer;
-  //       console.log('new q:', question);
-  //       q.subQuestions.forEach((subQ, idx) => {
-  //         // console.log(subQ.answer);
-  //         // console.log(result.userAnswer[idx].answer);
-  //         if (subQ.answer === result.userAnswer[idx].answer) {
-  //           numberRightAnswer += 1;
-  //           console.log('true');
-  //         }
-  //       });
-  //     }
-  //   });
-  // });
 
-  test.partResults.push({
-    part,
-    partPoint: numberRightAnswer,
-  });
+  let check = 0;
+  for (let i = 0; i < test.partResults.length; i += 1) {
+    if (test.partResults[i].part === part) {
+      check = 1;
+      test.partResults[i].partPoint = numberRightAnswer;
+      break;
+    }
+  }
+
+  if (check === 0) {
+    test.partResults.push({
+      part,
+      partPoint: numberRightAnswer,
+    });
+  }
 
   const rs = await test.save();
   await testQuestions.save();
