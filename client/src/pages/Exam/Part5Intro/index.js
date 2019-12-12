@@ -48,7 +48,7 @@ const Intro = (props) => {
         <Row style={{textAlign : "center", margin : "2em 0"}}>
           <Button 
             className="ant-btn-primary ant-card-hoverable" 
-            onClick={() => props.history.push('/exam/part5')}
+            onClick={() => props.history.push('/exam/part5?id=' + props.location.search.substring(4))}
           >Bắt đầu
           </Button>
         </Row>

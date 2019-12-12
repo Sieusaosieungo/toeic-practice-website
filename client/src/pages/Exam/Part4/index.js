@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Row, Col, Radio, Button} from 'antd';
+import { services} from "../../../services"
+import { config } from '../../../utils/config'
+import { connect } from "react-redux"; 
 import ReactAudioPlayer from 'react-audio-player';
 import './style.scss'
 const prefixCls = 'home';
@@ -10,6 +13,48 @@ const Intro = (props) => {
     height: '30px',
     lineHeight: '30px',
   };
+
+  const [dataAudio, setDataAudio] = useState([
+  
+]);
+  const [dataPart1, setDataPart1] = useState([
+  
+]);
+  useEffect(() => {
+    if(props.exam.part1 == undefined) {
+      services.getExamTestById({id : props.location.search.substring(4)})
+        .then(res => {
+          console.log(res)
+          setDataPart1(res.data.questions.part4);
+          var question = res.data.questions;
+          props.dispatch({type : "EXAM_TEST", data : question})
+          var data =[];
+          question.part4.map(function(part, i) {
+            var url = "http://202.191.56.159:2510/" + part.audio;
+            data.push({link : url});
+          })
+          setDataAudio(data);
+          console.log(data)
+        })
+      
+    }
+    else {
+      setDataPart1(props.exam.part4);
+      var data =[];
+      props.exam.part4.map(function(part, i) {
+        var url = "http://202.191.56.159:2510/" + part.audio;
+        data.push({link : url});
+      })
+      setDataAudio(data);
+    }
+  }, []);
+
+  // code cua Manh
+  const audioPlayer = React.createRef();
+  const [isPlaying, setIsPlaying] = useState();
+  const [indexAudio, setIndexAudio] = useState(0);
+  //end Manh
+
   const [resultsPart1, setResultsPart1] = useState([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
 
   const onChange = (value, i) => {
@@ -17,7 +62,27 @@ const Intro = (props) => {
     change[i] = value;
     setResultsPart1(change);
   }
-  console.log(resultsPart1)
+
+   // code cua Manh
+  const onToggleAudio = () => {
+    if(dataAudio.length > 0) {
+    setIndexAudio(indexAudio + 1);
+
+    if (indexAudio < dataAudio.length - 1) {
+      audioPlayer.current.src = dataAudio[indexAudio + 1].link;
+      console.log(audioPlayer);
+      audioPlayer.current.play();
+    }
+
+    if (indexAudio === dataAudio.length - 1) {
+      setIndexAudio(0);
+      audioPlayer.current.src = dataAudio[0].link;
+      audioPlayer.current.pause();
+    }
+  }
+  };
+  //end Manh
+
   return (
   <div className={`${prefixCls}`}> 
     <div className={`${prefixCls}-content`}>
@@ -29,72 +94,80 @@ const Intro = (props) => {
           <b>Mark your answer on your answer sheet:</b>
         </Row>
         <Row style={{textAlign : "center"}}>
-          <ReactAudioPlayer
-            src="http://toeic24.vn/upload/audio/part_i_intro.mp3"
+          <audio
+            onEnded={onToggleAudio}
+            ref={audioPlayer}
             controls
-            style={{width : "50%"}}
-          />
+            style={{ width: '50%' }}
+          >
+            {
+              dataAudio.length > 0 &&
+              <source src={dataAudio[0].link} />
+            }
+            <track kind="captions" />
+          </audio>
         </Row>
         {
-          ["","","","","","","","","",""].map(function(data, i) {
+          dataPart1.length > 0 &&
+          dataPart1.map(function(data, i) {
             return <div>
               <Row style={{textAlign : "center", margin : "2em 0"}}>
                 Question {71 + 3 * i} - {71 + 3 * i + 2} refer to following conversation:
               </Row>
               <Row>
-                <b>{71 + 3 * i}. How does the woman feel?</b>
+                <b>{71 + 3 * i}. {data.subQuestions[0].question}</b>
               </Row>
               <Row>
                 <Radio.Group onChange={(e) => onChange(e.target.value, 3 * i)}>
                   <Radio style={radioStyle} value={1}>
-                    Option A
+                    {data.subQuestions[0].A}
                   </Radio>
                   <Radio style={radioStyle} value={2}>
-                    Option B
+                    {data.subQuestions[0].B}
                   </Radio>
                   <Radio style={radioStyle} value={3}>
-                    Option C
+                    {data.subQuestions[0].C}
                   </Radio>
                   <Radio style={radioStyle} value={4}>
-                    Option D
+                    {data.subQuestions[0].D}
                   </Radio>
                 </Radio.Group>
               </Row>
               <Row>
-                <b>{71 + 3 * i + 1}. How does the woman feel?</b>
+                <b>{71 + 3 * i + 1}. {data.subQuestions[1].question}</b>
               </Row>
               <Row>
                 <Radio.Group onChange={(e) => onChange(e.target.value, 3 * i + 1)}>
                   <Radio style={radioStyle} value={1}>
-                    Option A
+                    {data.subQuestions[1].A}
                   </Radio>
                   <Radio style={radioStyle} value={2}>
-                    Option B
+                    {data.subQuestions[1].B}
                   </Radio>
                   <Radio style={radioStyle} value={3}>
-                    Option C
+                    {data.subQuestions[1].C}
                   </Radio>
                   <Radio style={radioStyle} value={4}>
-                    Option D
+                    {data.subQuestions[1].D}
                   </Radio>
                 </Radio.Group>
               </Row>
               <Row>
-                <b>{71 + 3 * i + 2}. How does the woman feel?</b>
+                <b>{71 + 3 * i + 2}. {data.subQuestions[2].question}</b>
               </Row>
               <Row>
                 <Radio.Group onChange={(e) => onChange(e.target.value, 3 * i + 2)}>
                   <Radio style={radioStyle} value={1}>
-                    Option A
+                    {data.subQuestions[2].A}
                   </Radio>
                   <Radio style={radioStyle} value={2}>
-                    Option B
+                    {data.subQuestions[2].B}
                   </Radio>
                   <Radio style={radioStyle} value={3}>
-                    Option C
+                    {data.subQuestions[2].C}
                   </Radio>
                   <Radio style={radioStyle} value={4}>
-                    Option D
+                    {data.subQuestions[2].D}
                   </Radio>
                 </Radio.Group>
               </Row>
@@ -103,7 +176,7 @@ const Intro = (props) => {
         }
         
         <Row style={{textAlign : "center", margin : "2em 0"}}>
-          <Button className="ant-btn-primary ant-card-hoverable" onClick={() => props.history.push('/exam/part5intro')}>Next</Button>
+          <Button className="ant-btn-primary ant-card-hoverable" onClick={() => props.history.push('/exam/part5intro?id=' + props.location.search.substring(4))}>Next</Button>
         </Row>
       </div>
     </div>
@@ -111,4 +184,11 @@ const Intro = (props) => {
   )
 };
 
-export default Intro;
+const mapStateToProps = ({ exam }) => {
+  console.log(exam)
+  return {
+    exam
+  };
+};
+
+export default connect(mapStateToProps)(Intro);

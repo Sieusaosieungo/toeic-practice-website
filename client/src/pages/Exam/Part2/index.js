@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Radio, Button } from 'antd';
 // import ReactAudioPlayer from 'react-audio-player';
+import { services} from "../../../services"
 import { config } from '../../../utils/config'
 import { connect } from "react-redux"; 
 import './style.scss';
@@ -15,28 +16,39 @@ const Intro = (props) => {
   };
 
   const [dataAudio, setDataAudio] = useState([
-  {
-    "link": "https://gateway-vb.vbeecore.com/audio1/15760791046400.96097868453676960.21030729301411810.7824553872253723.mp3"
-  }, 
-  {
-    "link": "https://gateway-vb.vbeecore.com/audio1/15760791604290.326402270596576560.153375529417137280.6871507027830566.mp3"
-  },
-  {
-    "link": "https://gateway-vb.vbeecore.com/audio1/15760791882650.093035076013273650.33137393811717430.8900932730107964.mp3"
-  }
+  
+]);
+  const [dataPart1, setDataPart1] = useState([
+  
 ]);
   useEffect(() => {
     console.log(props.exam)
-    // if(props.exam.part2.length > 0) {
-    //   var data = [];
-    //   JSON.parse(sessionStorage.exam).part2.map(function(exam, i) {
-    //     var url = "http://202.191.56.159:2510/" + data.audio;
-    //     data.push({ "link" : url});
-
-    //   })
-    //   setDataAudio(data);
-    //   console.log(data)
-    // }
+    console.log(props.exam.part1)
+    if(props.exam.part1 == undefined) {
+      services.getExamTestById({id : props.location.search.substring(4)})
+        .then(res => {
+          setDataPart1(res.data.questions.part2);
+          var question = res.data.questions;
+          props.dispatch({type : "EXAM_TEST", data : question})
+          var data =[];
+          question.part2.map(function(part, i) {
+            var url = "http://202.191.56.159:2510/" + part.audio;
+            data.push({link : url});
+          })
+          setDataAudio(data);
+          console.log(data)
+        })
+      
+    }
+    else {
+      setDataPart1(props.exam.part2);
+      var data =[];
+      props.exam.part2.map(function(part, i) {
+        var url = "http://202.191.56.159:2510/" + part.audio;
+        data.push({link : url});
+      })
+      setDataAudio(data);
+    }
   }, []);
 
   // code cua Manh
@@ -86,6 +98,7 @@ const Intro = (props) => {
 
   // code cua Manh
   const onToggleAudio = () => {
+    if(dataAudio.length > 0) {
     setIndexAudio(indexAudio + 1);
 
     if (indexAudio < dataAudio.length - 1) {
@@ -99,6 +112,7 @@ const Intro = (props) => {
       audioPlayer.current.src = dataAudio[0].link;
       audioPlayer.current.pause();
     }
+  }
   };
   //end Manh
 
@@ -121,35 +135,15 @@ const Intro = (props) => {
               controls
               style={{ width: '50%' }}
             >
-              <source src={dataAudio[0].link} />
+              {
+                dataAudio.length > 0 &&
+                <source src={dataAudio[0].link} />
+              }
               <track kind="captions" />
             </audio>
           </Row>
-          {['', '', '', '', '', '', '', '', '', ''].map(function(data, i) {
-            // return <div>
-            //   <Row style={{textAlign : "center", margin : "2em 0"}}>
-            //     <img src="http://toeic24.vn/upload/img/part_1.png" />
-            //   </Row>
-            //   <Row>
-            //     <b>{i + 1}. Select the answer</b>
-            //   </Row>
-            //   <Row>
-            //     <Radio.Group onChange={(e) => onChange(e.target.value, i)}>
-            //       <Radio style={radioStyle} value={1}>
-            //         Option A
-            //       </Radio>
-            //       <Radio style={radioStyle} value={2}>
-            //         Option B
-            //       </Radio>
-            //       <Radio style={radioStyle} value={3}>
-            //         Option C
-            //       </Radio>
-            //       <Radio style={radioStyle} value={4}>
-            //         Option D
-            //       </Radio>
-            //     </Radio.Group>
-            //   </Row>
-            // </div>
+          {
+            ['', '', '', '', '', '', '', '', '', ''].map(function(data, i) {
             return (
               <div>
                 <Row style={{ marginTop: '1em' }}>
@@ -212,7 +206,7 @@ const Intro = (props) => {
           <Row style={{ textAlign: 'center', margin: '2em 0' }}>
             <Button
               className="ant-btn-primary ant-card-hoverable"
-              onClick={() => props.history.push('/exam/part2intro')}
+              onClick={() => props.history.push('/exam/part3intro?id='  + props.location.search.substring(4))}
             >
               Next
             </Button>

@@ -41,7 +41,7 @@ const Exam = props => {
                   .then(res => {
                     console.log(res)
                     props.dispatch({type : "EXAM_TEST", data : res.data.questions})
-                    props.history.push('/exam/intro');
+                    props.history.push('/exam/intro?id=' + res.data.test._id);
                   })
               }}
               className="ant-btn-primary ant-card-hoverable"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Row, Col, Radio, Button} from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
+import { services} from "../../../services"
 import './style.scss'
 import { connect } from "react-redux"; 
 const prefixCls = 'home';
@@ -13,30 +14,39 @@ const Intro = (props) => {
   };
 
   const [dataAudio, setDataAudio] = useState([
-  {
-    "link": "https://gateway-vb.vbeecore.com/audio1/15760791046400.96097868453676960.21030729301411810.7824553872253723.mp3"
-  }, 
-  {
-    "link": "https://gateway-vb.vbeecore.com/audio1/15760791604290.326402270596576560.153375529417137280.6871507027830566.mp3"
-  },
-  {
-    "link": "https://gateway-vb.vbeecore.com/audio1/15760791882650.093035076013273650.33137393811717430.8900932730107964.mp3"
-  }
+  
+]);
+  const [dataPart1, setDataPart1] = useState([
+  
 ]);
   useEffect(() => {
-    console.log(props.exam)
-    // if(props.exam.part2.length > 0) {
-    //   var data = [];
-    //   JSON.parse(sessionStorage.exam).part2.map(function(exam, i) {
-    //     var url = "http://202.191.56.159:2510/" + data.audio;
-    //     data.push({ "link" : url});
-
-    //   })
-    //   setDataAudio(data);
-    //   console.log(data)
-    // }
+    if(props.exam.part1 == undefined) {
+      services.getExamTestById({id : props.location.search.substring(4)})
+        .then(res => {
+          setDataPart1(res.data.questions.part1);
+          var question = res.data.questions;
+          props.dispatch({type : "EXAM_TEST", data : question})
+          var data =[];
+          question.part1.map(function(part, i) {
+            var url = "http://202.191.56.159:2510/" + part.audio;
+            data.push({link : url});
+          })
+          setDataAudio(data);
+          console.log(data)
+        })
+      
+    }
+    else {
+      setDataPart1(props.exam.part1);
+      var data =[];
+      props.exam.part1.map(function(part, i) {
+        var url = "http://202.191.56.159:2510/" + part.audio;
+        data.push({link : url});
+      })
+      setDataAudio(data);
+    }
   }, []);
-
+  console.log(dataAudio)
   // code cua Manh
   const audioPlayer = React.createRef();
   const [isPlaying, setIsPlaying] = useState();
@@ -52,6 +62,7 @@ const Intro = (props) => {
   }
 
   const onToggleAudio = () => {
+    if(dataAudio.length > 0) {
     setIndexAudio(indexAudio + 1);
 
     if (indexAudio < dataAudio.length - 1) {
@@ -65,6 +76,7 @@ const Intro = (props) => {
       audioPlayer.current.src = dataAudio[0].link;
       audioPlayer.current.pause();
     }
+  }
   };
 
   return (
@@ -78,17 +90,25 @@ const Intro = (props) => {
           <b>Mark your answer on your answer sheet:</b>
         </Row>
         <Row style={{textAlign : "center"}}>
-          <ReactAudioPlayer
-            src="http://toeic24.vn/upload/audio/part_i_intro.mp3"
+          <audio
+            onEnded={onToggleAudio}
+            ref={audioPlayer}
             controls
             style={{width : "50%"}}
-          />
+          >
+            {
+              dataAudio.length > 0 &&
+              <source src={dataAudio[0].link} />
+            }
+            <track kind="captions" />
+          </audio>
         </Row>
         {
-          ["","","","","","","","","",""].map(function(data, i) {
+          dataPart1.length > 0 &&
+          dataPart1.map(function(data, i) {
             return <div>
               <Row style={{textAlign : "center", margin : "2em 0"}}>
-                <img src="http://toeic24.vn/upload/img/part_1.png" />
+                <img src={`http://202.191.56.159:2510/${data.image}`} style={{width : "70%"}}/>
               </Row>
               <Row>
                 <b>{i + 1}. Select the answer</b>
@@ -114,7 +134,7 @@ const Intro = (props) => {
         }
         
         <Row style={{textAlign : "center", margin : "2em 0"}}>
-          <Button className="ant-btn-primary ant-card-hoverable" onClick={() => props.history.push('/exam/part2intro')}>Next</Button>
+          <Button className="ant-btn-primary ant-card-hoverable" onClick={() => props.history.push('/exam/part2intro?id=' + props.location.search.substring(4))}>Next</Button>
         </Row>
       </div>
     </div>
