@@ -25,6 +25,7 @@ const UploadPart1 = ({
 
   const handleUploadPart1Des = async () => {
     const formData = new FormData();
+
     formData.set('part', part1.part);
     formData.set('level', part1.level);
     formData.set('audio', part1.audio);
@@ -53,6 +54,8 @@ const UploadPart1 = ({
       },
     })
       .then(res => {
+        console.log('res part 1: ', res.data);
+
         message.success('Đăng bài thành công.');
         setPart1({ part: 1, level: 0, audio: '' });
         refInputAudio.current.value = null;
@@ -67,13 +70,13 @@ const UploadPart1 = ({
   const handleChangeScripts = e =>
     setPart1({ ...part1, scripts: e.target.value });
 
-  const handleChangeAudio = ({target:{files}}) =>
+  const handleChangeAudio = ({ target: { files } }) =>
     setPart1({ ...part1, audio: files[0] });
-};
-const handleChangeImage = ({target:{files}}) => 
-  setPart1({ ...part1, image: files[0] });
 
-  const handleChangeSubQues = ({target:{ name, value }}) => 
+  const handleChangeImage = ({ target: { files } }) =>
+    setPart1({ ...part1, image: files[0] });
+
+  const handleChangeSubQues = ({ target: { name, value } }) =>
     setSubQuesPart1Child({ ...subQuesPart1Child, [name]: value });
 
   return (
