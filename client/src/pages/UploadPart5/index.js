@@ -79,6 +79,7 @@ const UploadPart5 = ({
             className="upload-part5-level"
             placeholder="Chọn độ khó của câu hỏi"
             onChange={handleChange}
+            value={part5.level}
           >
             <Option value={0}>0</Option>
             <Option value={1}>1</Option>
