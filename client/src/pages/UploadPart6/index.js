@@ -120,6 +120,13 @@ const UploadPart6 = ({
             name="question"
             onChange={handleChangeSubQues}
             value={subQuesPart6Child.question}
+            disabled={
+              !subQuesPart6.idQuestion ||
+              (subQuesPart6.subQuestions &&
+                subQuesPart6.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part6-raw">
@@ -128,6 +135,13 @@ const UploadPart6 = ({
             name="A"
             onChange={handleChangeSubQues}
             value={subQuesPart6Child.A}
+            disabled={
+              !subQuesPart6.idQuestion ||
+              (subQuesPart6.subQuestions &&
+                subQuesPart6.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part6-raw">
@@ -136,6 +150,13 @@ const UploadPart6 = ({
             name="B"
             onChange={handleChangeSubQues}
             value={subQuesPart6Child.B}
+            disabled={
+              !subQuesPart6.idQuestion ||
+              (subQuesPart6.subQuestions &&
+                subQuesPart6.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part6-raw">
@@ -144,6 +165,13 @@ const UploadPart6 = ({
             name="C"
             onChange={handleChangeSubQues}
             value={subQuesPart6Child.C}
+            disabled={
+              !subQuesPart6.idQuestion ||
+              (subQuesPart6.subQuestions &&
+                subQuesPart6.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part6-raw">
@@ -152,6 +180,13 @@ const UploadPart6 = ({
             name="D"
             onChange={handleChangeSubQues}
             value={subQuesPart6Child.D}
+            disabled={
+              !subQuesPart6.idQuestion ||
+              (subQuesPart6.subQuestions &&
+                subQuesPart6.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part6-raw">
@@ -160,6 +195,13 @@ const UploadPart6 = ({
             name="answer"
             onChange={handleChangeSubQues}
             value={subQuesPart6Child.answer}
+            disabled={
+              !subQuesPart6.idQuestion ||
+              (subQuesPart6.subQuestions &&
+                subQuesPart6.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part6-raw">
@@ -168,6 +210,13 @@ const UploadPart6 = ({
             name="tips"
             onChange={handleChangeSubQues}
             value={subQuesPart6Child.tips}
+            disabled={
+              !subQuesPart6.idQuestion ||
+              (subQuesPart6.subQuestions &&
+                subQuesPart6.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part6-btn">
@@ -199,7 +248,12 @@ const UploadPart6 = ({
           <Button
             type="primary"
             onClick={handleUploadPart6Content}
-            disabled={!subQuesPart6.idQuestion ? true : false}
+            disabled={
+              subQuesPart6.subQuestions &&
+              subQuesPart6.subQuestions.length === 3
+                ? false
+                : true
+            }
           >
             Đăng phần nội dung câu hỏi
           </Button>

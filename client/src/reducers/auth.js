@@ -1,7 +1,7 @@
 import { SIGN_IN, SIGN_OUT } from '../constants/ActionTypes';
 
 const initialState = {
-  accessToken: '',
+  accessToken: null,
 };
 
 const auth = (state = initialState, action) => {
@@ -12,10 +12,10 @@ const auth = (state = initialState, action) => {
   switch (type) {
     case SIGN_IN:
       return { ...state, accessToken };
-      case SIGN_OUT:
-      state={
-  accessToken: '',
-}
+    case SIGN_OUT:
+      state = {
+        accessToken: '',
+      };
       return state;
     default:
       return state;
