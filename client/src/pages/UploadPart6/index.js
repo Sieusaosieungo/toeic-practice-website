@@ -45,7 +45,9 @@ const UploadPart6 = ({
       data: formData,
     })
       .then(res => {
-        message.success('Đăng bài thành công.');
+        message.success(
+          `Đăng bài thành công. Bạn cần phải upload thêm 3 câu hỏi nhỏ.`,
+        );
         console.log('question after uploaded: ', res.data);
         setSubQuesPart6({ ...subQuesPart6, idQuestion: res.data.results._id });
       })
@@ -87,6 +89,7 @@ const UploadPart6 = ({
             className="upload-part6-level"
             placeholder="Chọn độ khó của câu hỏi"
             onChange={handleChange}
+            disabled={!(subQuesPart6.idQuestion === undefined)}
           >
             <Option value={0}>0</Option>
             <Option value={1}>1</Option>
@@ -105,9 +108,14 @@ const UploadPart6 = ({
             const data = editor.getData();
             setPart6({ ...part6, paragraph: data });
           }}
+          disabled={!(subQuesPart6.idQuestion === undefined)}
         />
         <div className="upload-part6-btn">
-          <Button type="primary" onClick={handleUploadPart6Des}>
+          <Button
+            type="primary"
+            onClick={handleUploadPart6Des}
+            disabled={!(subQuesPart6.idQuestion === undefined)}
+          >
             Đăng mô tả câu hỏi
           </Button>
         </div>
@@ -233,7 +241,13 @@ const UploadPart6 = ({
                 ],
               });
               setSubQuesPart6Child({});
-              message.success('Thêm câu hỏi nhỏ thành công.');
+              message.success(
+                `Thêm câu hỏi nhỏ thành công. Bạn cần phải upload ${
+                  subQuesPart6.subQuestions
+                    ? Math.abs(subQuesPart6.subQuestions.length - 2)
+                    : 2
+                } thêm câu hỏi nhỏ.`,
+              );
             }}
             disabled={
               !subQuesPart6.idQuestion ||
