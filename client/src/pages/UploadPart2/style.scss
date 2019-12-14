@@ -3,9 +3,10 @@
     .upload-part2-raw {
       display: flex;
       align-items: center;
+      margin-top: 1.5rem;
 
       > div {
-        margin-right: 2rem;
+        width: 17%;
       }
 
       > .upload-part2-level {
@@ -16,11 +17,17 @@
       > .question-title {
       }
 
+      > textarea {
+        flex-grow: 1;
+        width: 80%;
+      }
+
       > input {
         flex-grow: 1;
         width: 80%;
       }
     }
+
     .upload-part2-btn {
       display: flex;
       justify-content: flex-end;
@@ -33,29 +40,12 @@
     }
   }
 
-  .upload-part2-question {
-    .upload-part2-raw {
-      display: grid;
-      margin-bottom: 2rem;
-      grid-template-columns: repeat(12, 1fr);
+  .upload-part2-btn {
+    display: flex;
+    justify-content: flex-end;
 
-      > .question-title {
-        margin-right: 2rem;
-        grid-column: 1/2;
-      }
-
-      > input {
-        grid-column: 2/12;
-        flex-grow: 1;
-      }
-    }
-    .upload-part2-btn {
-      display: flex;
-      justify-content: flex-end;
-
-      > button {
-        margin-right: 2rem;
-      }
+    > button {
+      margin-right: 2rem;
     }
   }
 }

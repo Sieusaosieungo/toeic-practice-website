@@ -28,11 +28,6 @@ const UploadPart7 = ({
     formData.set('level', part7.level);
     formData.set('paragraph', part7.paragraph);
 
-    console.log('form data before upload des:', accessToken);
-    for (const [x, y] of formData.entries()) {
-      console.log(x, y);
-    }
-
     axios({
       method: 'POST',
       url: `${config.API_URL}/api/questions/basic-info`,
@@ -46,15 +41,12 @@ const UploadPart7 = ({
         message.success(
           `Đăng bài thành công. Bạn cần phải upload thêm 4 câu hỏi nhỏ.`,
         );
-        console.log('question after uploaded: ', res.data);
         setSubQuesPart7({ ...subQuesPart7, idQuestion: res.data.results._id });
       })
       .catch(err => console.log(err));
   };
 
   const handleUploadPart7Content = () => {
-    console.log('Data before upload content:', subQuesPart7);
-
     axios({
       method: 'POST',
       url: `${config.API_URL}/api/questions/sub-questions`,
@@ -65,11 +57,14 @@ const UploadPart7 = ({
     })
       .then(res => {
         message.success('Bạn đã hoàn tất đăng câu hỏi.');
-        console.log('Subquestion after uploaded: ', res);
         setPart7({ ...part7, part: 7, level: 0, paragraph: '' });
         setSubQuesPart7({});
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        message.error('Đăng câu hỏi lỗi. Mời bạn đăng lại.');
+        window.location.reload();
+        console.log(err);
+      });
   };
 
   const handleChange = value => setPart7({ ...part7, level: value });

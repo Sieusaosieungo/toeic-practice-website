@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Select, message, Input } from 'antd';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import CKEditorCustom from '../../components/CKEditorCustom';
 import axios from 'axios';
 import config from '../../utils/config';
 import { withCookies } from 'react-cookie';
@@ -19,12 +17,9 @@ const UploadPart5 = ({
     part: 5,
     level: 0,
   });
-  const [subQuesPart5, setSubQuesPart5] = useState({});
   const [subQuesPart5Child, setSubQuesPart5Child] = useState({});
 
   const handleUploadPart5Content = async () => {
-    console.log('Data before upload content:', subQuesPart5);
-
     const formData = new FormData();
     formData.set('part', part5.part);
     formData.set('level', part5.level);
@@ -53,11 +48,14 @@ const UploadPart5 = ({
       })
         .then(res => {
           message.success('Đăng bài thành công.');
-          console.log('Subquestion after uploaded: ', res);
           setSubQuesPart5Child({});
           setPart5({ part: 5, level: 0 });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          window.location.reload();
+          message.error('Đăng câu hỏi lỗi. Mời bạn đăng lại.');
+          console.log(err);
+        });
     } catch (e) {
       console.log(e);
     }
@@ -151,7 +149,7 @@ const UploadPart5 = ({
         </div>
         <div className="upload-part5-btn">
           <Button type="primary" onClick={handleUploadPart5Content}>
-            Đăng phần nội dung câu hỏi
+            Đăng câu hỏi
           </Button>
         </div>
       </div>
