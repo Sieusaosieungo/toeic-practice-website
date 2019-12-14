@@ -31,11 +31,6 @@ const UploadPart4 = ({
     formData.set('audio', part4.audio);
     formData.set('scripts', part4.scripts);
 
-    console.log('form data before upload des:');
-    for (const [x, y] of formData.entries()) {
-      console.log(x, y);
-    }
-
     axios({
       method: 'POST',
       url: `${config.API_URL}/api/questions/basic-info`,
@@ -46,16 +41,15 @@ const UploadPart4 = ({
       data: formData,
     })
       .then(res => {
-        message.success('Đăng bài thành công.');
-        console.log('question after uploaded: ', res.data);
+        message.success(
+          `Đăng bài thành công. Bạn cần phải upload thêm 3 câu hỏi nhỏ.`,
+        );
         setSubQuesPart4({ ...subQuesPart4, idQuestion: res.data.results._id });
       })
       .catch(err => console.log(err.response));
   };
 
   const handleUploadPart4Content = () => {
-    console.log('Data before upload content:', subQuesPart4);
-
     axios({
       method: 'POST',
       url: `${config.API_URL}/api/questions/sub-questions`,
@@ -66,21 +60,22 @@ const UploadPart4 = ({
     })
       .then(res => {
         message.success('Bạn đã hoàn tất đăng câu hỏi.');
-        console.log('Subquestion after uploaded: ', res);
         setPart4({ part: 4, level: 0, audio: null });
         refInputFile.current.value = null;
         setSubQuesPart4({});
       })
-      .catch(err => console.log(err.response));
+      .catch(err => {
+        window.location.reload();
+        message.error('Đăng câu hỏi lỗi. Mời bạn đăng lại.');
+        console.log(err.response);
+      });
   };
 
   const handleChange = value => setPart4({ ...part4, level: value });
   const handleChangeScripts = e =>
     setPart4({ ...part4, scripts: e.target.value });
-  const handleChangeAudio = e => {
-    console.log('audio: ', e.target.files[0]);
+  const handleChangeAudio = e =>
     setPart4({ ...part4, audio: e.target.files[0] });
-  };
 
   const handleChangeSubQues = e => {
     const { name, value } = e.target;

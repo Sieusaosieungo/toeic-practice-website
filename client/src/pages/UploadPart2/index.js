@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Select, message, Input } from 'antd';
 import axios from 'axios';
 import config from '../../utils/config';
@@ -19,22 +19,17 @@ const UploadPart2 = ({
     level: 0,
     audio: null,
   });
-  const [subQuesPart2, setSubQuesPart2] = useState({});
   const [subQuesPart2Child, setSubQuesPart2Child] = useState({});
+  const refInputFile = useRef(null);
 
-  const handleUploadPart2Des = () => {
+  const handleUploadPart2Des = async () => {
     const formData = new FormData();
     formData.set('part', part2.part);
     formData.set('level', part2.level);
     formData.set('audio', part2.audio);
     formData.set('scripts', part2.scripts);
 
-    console.log('form data before upload des:');
-    for (const [x, y] of formData.entries()) {
-      console.log(x, y);
-    }
-
-    axios({
+    const res = await axios({
       method: 'POST',
       url: `${config.API_URL}/api/questions/basic-info`,
       headers: {
@@ -42,17 +37,7 @@ const UploadPart2 = ({
         'Content-Type': 'multipart/form-data',
       },
       data: formData,
-    })
-      .then(res => {
-        message.success('Đăng bài thành công.');
-        console.log('question after uploaded: ', res.data);
-        setSubQuesPart2({ ...subQuesPart2, idQuestion: res.data.results._id });
-      })
-      .catch(err => console.log(err.response));
-  };
-
-  const handleUploadPart2Content = () => {
-    console.log('Data before upload content:', subQuesPart2);
+    });
 
     axios({
       method: 'POST',
@@ -60,12 +45,16 @@ const UploadPart2 = ({
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      data: subQuesPart2,
+      data: {
+        idQuestion: res.data.results._id,
+        subQuestions: [subQuesPart2Child],
+      },
     })
       .then(res => {
         message.success('Đăng bài thành công.');
-        console.log('Subquestion after uploaded: ', res.data);
-        setPart2({ part: 2, level: 0, audio: '' });
+        setPart2({ part: 2, level: 0, audio: null });
+        refInputFile.current.value = null;
+        setSubQuesPart2Child({});
       })
       .catch(err => console.log(err.response));
   };
@@ -74,7 +63,6 @@ const UploadPart2 = ({
   const handleChangeScripts = e =>
     setPart2({ ...part2, scripts: e.target.value });
   const handleChangeAudio = e => {
-    console.log('audio: ', e.target.files[0]);
     setPart2({ ...part2, audio: e.target.files[0] });
   };
 
@@ -92,6 +80,7 @@ const UploadPart2 = ({
             className="upload-part2-level"
             placeholder="Chọn độ khó của câu hỏi"
             onChange={handleChange}
+            value={part2.level}
           >
             <Option value={0}>0</Option>
             <Option value={1}>1</Option>
@@ -110,28 +99,19 @@ const UploadPart2 = ({
               required
               onChange={handleChangeAudio}
               name="productAttachImages"
+              ref={refInputFile}
             />
             <span>Chọn audio</span>
           </label>
         </div>
-        <div
-          style={{ marginTop: '1rem', display: 'flex', alignItems: 'center' }}
-        >
-          <span style={{ marginRight: '1rem' }}>Scripts: </span>
+        <div className="upload-part2-raw">
+          <div>Scripts:</div>
           <TextArea
             onChange={handleChangeScripts}
             name="scripts"
-            style={{ flexGrow: '1' }}
+            value={part2.scripts}
           ></TextArea>
         </div>
-        <div className="upload-part2-btn">
-          <Button type="primary" onClick={handleUploadPart2Des}>
-            Đăng mô tả câu hỏi
-          </Button>
-        </div>
-      </div>
-      <br /> <hr /> <br />
-      <div className="upload-part2-question">
         <div className="upload-part2-raw">
           <div className="question-title">Answer:</div>
           <Input
@@ -149,37 +129,8 @@ const UploadPart2 = ({
           />
         </div>
         <div className="upload-part2-btn">
-          <Button
-            type="primary"
-            onClick={() => {
-              setSubQuesPart2({
-                ...subQuesPart2,
-                subQuestions: [
-                  ...(subQuesPart2.subQuestions
-                    ? subQuesPart2.subQuestions
-                    : []),
-                  subQuesPart2Child,
-                ],
-              });
-              setSubQuesPart2Child({});
-              message.success('Thêm câu hỏi nhỏ thành công.');
-            }}
-            disabled={
-              !subQuesPart2.idQuestion ||
-              (subQuesPart2.subQuestions &&
-                subQuesPart2.subQuestions.length === 1)
-                ? true
-                : false
-            }
-          >
-            Thêm câu hỏi nhỏ
-          </Button>
-          <Button
-            type="primary"
-            onClick={handleUploadPart2Content}
-            disabled={!subQuesPart2.idQuestion ? true : false}
-          >
-            Đăng phần nội dung câu hỏi
+          <Button type="primary" onClick={handleUploadPart2Des}>
+            Đăng mô tả câu hỏi
           </Button>
         </div>
       </div>
