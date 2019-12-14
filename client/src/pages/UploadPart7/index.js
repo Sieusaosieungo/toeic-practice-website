@@ -43,7 +43,9 @@ const UploadPart7 = ({
       data: formData,
     })
       .then(res => {
-        message.success('Đăng bài thành công.');
+        message.success(
+          `Đăng bài thành công. Bạn cần phải upload thêm 4 câu hỏi nhỏ.`,
+        );
         console.log('question after uploaded: ', res.data);
         setSubQuesPart7({ ...subQuesPart7, idQuestion: res.data.results._id });
       })
@@ -62,7 +64,7 @@ const UploadPart7 = ({
       data: subQuesPart7,
     })
       .then(res => {
-        message.success('Đăng bài thành công.');
+        message.success('Bạn đã hoàn tất đăng câu hỏi.');
         console.log('Subquestion after uploaded: ', res);
         setPart7({ ...part7, part: 7, level: 0, paragraph: '' });
         setSubQuesPart7({});
@@ -190,7 +192,13 @@ const UploadPart7 = ({
                 ],
               });
               setSubQuesPart7Child({});
-              message.success('Thêm câu hỏi nhỏ thành công.');
+              message.warning(
+                `Thêm câu hỏi nhỏ thành công. Bạn cần phải upload ${
+                  subQuesPart7.subQuestions
+                    ? Math.abs(subQuesPart7.subQuestions.length - 3)
+                    : 3
+                } thêm câu hỏi nhỏ.`,
+              );
             }}
             disabled={
               !subQuesPart7.idQuestion ||
