@@ -64,7 +64,8 @@ const UploadPart7 = ({
       .then(res => {
         message.success('Đăng bài thành công.');
         console.log('Subquestion after uploaded: ', res);
-        setPart7({ part: 7, level: 0, paragraph: '' });
+        setPart7({ ...part7, part: 7, level: 0, paragraph: '' });
+        setSubQuesPart7({});
       })
       .catch(err => console.log(err));
   };
@@ -85,6 +86,8 @@ const UploadPart7 = ({
             className="upload-part7-level"
             placeholder="Chọn độ khó của câu hỏi"
             onChange={handleChange}
+            value={part7.level}
+            disabled={!(subQuesPart7.idQuestion === undefined)}
           >
             <Option value={0}>0</Option>
             <Option value={1}>1</Option>
@@ -103,9 +106,14 @@ const UploadPart7 = ({
             const data = editor.getData();
             setPart7({ ...part7, paragraph: data });
           }}
+          disabled={!(subQuesPart7.idQuestion === undefined)}
         />
         <div className="upload-part7-btn">
-          <Button type="primary" onClick={handleUploadPart7Des}>
+          <Button
+            type="primary"
+            onClick={handleUploadPart7Des}
+            disabled={!(subQuesPart7.idQuestion === undefined)}
+          >
             Đăng mô tả câu hỏi
           </Button>
         </div>
@@ -197,7 +205,12 @@ const UploadPart7 = ({
           <Button
             type="primary"
             onClick={handleUploadPart7Content}
-            disabled={!subQuesPart7.idQuestion ? true : false}
+            disabled={
+              subQuesPart7.subQuestions &&
+              subQuesPart7.subQuestions.length === 4
+                ? false
+                : true
+            }
           >
             Đăng phần nội dung câu hỏi
           </Button>
