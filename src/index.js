@@ -7,14 +7,10 @@ const cors = require('cors');
 const path = require('path');
 const fileUpload = require('express-fileupload');
 
-<<<<<<< HEAD
 const errorHandler = require('./middlewares/errorHandler');
-=======
-const app = express();
->>>>>>> dev
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());

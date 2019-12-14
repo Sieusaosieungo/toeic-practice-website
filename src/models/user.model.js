@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-  const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -69,7 +69,10 @@ const userSchema = new mongoose.Schema(
 
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
-  const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET);
+  const token = jwt.sign(
+    { _id: user.id.toString() },
+    process.env.JWT_SECRET || 'xxx',
+  );
 
   user.tokens = user.tokens.concat({ token });
   await user.save();

@@ -43,7 +43,9 @@ const UploadPart7 = ({
       data: formData,
     })
       .then(res => {
-        message.success('Đăng bài thành công.');
+        message.success(
+          `Đăng bài thành công. Bạn cần phải upload thêm 4 câu hỏi nhỏ.`,
+        );
         console.log('question after uploaded: ', res.data);
         setSubQuesPart7({ ...subQuesPart7, idQuestion: res.data.results._id });
       })
@@ -62,9 +64,10 @@ const UploadPart7 = ({
       data: subQuesPart7,
     })
       .then(res => {
-        message.success('Đăng bài thành công.');
+        message.success('Bạn đã hoàn tất đăng câu hỏi.');
         console.log('Subquestion after uploaded: ', res);
-        setPart7({ part: 7, level: 0, paragraph: '' });
+        setPart7({ ...part7, part: 7, level: 0, paragraph: '' });
+        setSubQuesPart7({});
       })
       .catch(err => console.log(err));
   };
@@ -85,6 +88,8 @@ const UploadPart7 = ({
             className="upload-part7-level"
             placeholder="Chọn độ khó của câu hỏi"
             onChange={handleChange}
+            value={part7.level}
+            disabled={!(subQuesPart7.idQuestion === undefined)}
           >
             <Option value={0}>0</Option>
             <Option value={1}>1</Option>
@@ -103,9 +108,14 @@ const UploadPart7 = ({
             const data = editor.getData();
             setPart7({ ...part7, paragraph: data });
           }}
+          disabled={!(subQuesPart7.idQuestion === undefined)}
         />
         <div className="upload-part7-btn">
-          <Button type="primary" onClick={handleUploadPart7Des}>
+          <Button
+            type="primary"
+            onClick={handleUploadPart7Des}
+            disabled={!(subQuesPart7.idQuestion === undefined)}
+          >
             Đăng mô tả câu hỏi
           </Button>
         </div>
@@ -182,7 +192,13 @@ const UploadPart7 = ({
                 ],
               });
               setSubQuesPart7Child({});
-              message.success('Thêm câu hỏi nhỏ thành công.');
+              message.warning(
+                `Thêm câu hỏi nhỏ thành công. Bạn cần phải upload ${
+                  subQuesPart7.subQuestions
+                    ? Math.abs(subQuesPart7.subQuestions.length - 3)
+                    : 3
+                } thêm câu hỏi nhỏ.`,
+              );
             }}
             disabled={
               !subQuesPart7.idQuestion ||
@@ -197,7 +213,12 @@ const UploadPart7 = ({
           <Button
             type="primary"
             onClick={handleUploadPart7Content}
-            disabled={!subQuesPart7.idQuestion ? true : false}
+            disabled={
+              subQuesPart7.subQuestions &&
+              subQuesPart7.subQuestions.length === 4
+                ? false
+                : true
+            }
           >
             Đăng phần nội dung câu hỏi
           </Button>
