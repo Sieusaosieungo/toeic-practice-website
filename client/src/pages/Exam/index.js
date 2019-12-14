@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, message } from 'antd';
 import './style.scss';
 import { services} from "../../services"
 import { connect} from 'react-redux';
@@ -35,14 +35,18 @@ const Exam = props => {
           <div style={{ textAlign: 'center' }}>
             <Button
               onClick={() => {
-                
+                if(Object.keys(props.user).length > 0)
                 // props.dispatch({type : "EXAM", data})
-                services.getExamTest({level : 2})
-                  .then(res => {
-                    sessionStorage.startTest = Date.now();
-                    props.dispatch({type : "EXAM_TEST", data : res.data.questions})
-                    props.history.push('/exam/intro?id=' + res.data.test._id);
-                  })
+                  services.getExamTest({level : 2})
+                    .then(res => {
+                      sessionStorage.startTest = Date.now();
+                      props.dispatch({type : "EXAM_TEST", data : res.data.questions})
+                      props.history.push('/exam/intro?id=' + res.data.test._id);
+                    })
+                  else {
+                    message.error("Vui lòng đăng nhập");
+                    document.getElementById("login").click();
+                  }
               }}
               className="ant-btn-primary ant-card-hoverable"
               style={{marginBottom : "3em", marginTop : "2em"}}
@@ -57,4 +61,11 @@ const Exam = props => {
   );
 };
 
-export default connect(null)(Exam);
+const mapStateToProps = ({ user }) => {
+  console.log(user)
+  return {
+    user
+  };
+};
+
+export default connect(mapStateToProps)(Exam);
