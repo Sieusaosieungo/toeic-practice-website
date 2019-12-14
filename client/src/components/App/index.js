@@ -27,33 +27,35 @@ function App({
   var getSelection = '';
   document.addEventListener('mouseup', event => {
     // clearTimeout(timeout);
-    let selection = document.getSelection
-      ? document.getSelection().toString()
-      : document.selection.createRange().toString();
-    // timeout = setTimeout(function(){console.log(selection)}, 2000)
-    if (selection != '' && getSelection != selection) {
-      getSelection = selection;
-      translate(selection, { de: 'en', to: 'vi' })
-        .then(res => {
-          // I do not eat six days
-          var text = res.text;
-          services
-            .addRecentWord({
-              newWord: selection,
-              meaning: text,
-            })
-            .then(res => {
-              console.log(res);
-              dispatch({
-                type: SIGN_IN,
-                data: res,
-                accessToken: res.data.results.token,
+    if(user.role != null && user.role.id == 0) {
+      let selection = document.getSelection
+        ? document.getSelection().toString()
+        : document.selection.createRange().toString();
+      // timeout = setTimeout(function(){console.log(selection)}, 2000)
+      if (selection != '' && getSelection != selection) {
+        getSelection = selection;
+        translate(selection, { de: 'en', to: 'vi' })
+          .then(res => {
+            // I do not eat six days
+            var text = res.text;
+            services
+              .addRecentWord({
+                newWord: selection,
+                meaning: text,
+              })
+              .then(res => {
+                console.log(res);
+                dispatch({
+                  type: SIGN_IN,
+                  data: res,
+                  accessToken: res.data.results.token,
+                });
               });
-            });
-        })
-        .catch(err => {
-          console.error(err);
-        });
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
     }
   });
   console.log('lol: ', auth.accessToken);

@@ -37,7 +37,7 @@ const Exam = props => {
               onClick={() => {
                 if(Object.keys(props.user).length > 0)
                 // props.dispatch({type : "EXAM", data})
-                  services.getExamTest({level : 2})
+                  services.getExamTest({level : 3})
                     .then(res => {
                       sessionStorage.startTest = Date.now();
                       props.dispatch({type : "EXAM_TEST", data : res.data.questions})
