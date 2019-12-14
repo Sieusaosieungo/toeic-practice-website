@@ -1,0 +1,2 @@
+(this.webpackJsonpcnwtt=this.webpackJsonpcnwtt||[]).push([[7],{754:function(e,t,n){},773:function(e,t,n){"use strict";n.r(t);var a=n(245),c=n(0),s=n.n(c),i=n(740);n(754);t.default=function(e){return Object(a.a)(e),s.a.createElement("div",{className:"".concat("home")},s.a.createElement("div",{className:"",style:{marginTop:"1.5em"}},s.a.createElement(i.a,null,"Ng\u1ea1c nhi\xean ch\u01b0a")))}}}]);
+//# sourceMappingURL=7.cd877022.chunk.js.map

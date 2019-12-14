@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.scss"],"names":[],"mappings":"AAAA,MACE,kBAAmB,CACnB,iBAAkB,CAClB,gBAAiB,CACjB,WAAY","file":"7.00551fbe.chunk.css","sourcesContent":[".home {\r\n  padding-right: 30px;\r\n  padding-left: 30px;\r\n  padding-top: 30px;\r\n  flex-grow: 1;\r\n}"]}
