@@ -1,0 +1,30 @@
+.post-topic-grammar {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 5rem;
+  border: 1px solid rgb(217, 217, 217);
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem rgb(217, 217, 217);
+
+  .post-topic-grammar-row {
+    display: flex;
+    align-items: center;
+
+    > div {
+      margin-right: 2rem;
+    }
+
+    > .ant-input {
+      flex-grow: 1;
+      width: 80%;
+    }
+  }
+
+  .post-topic-grammar-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2rem;
+    margin-top: 2rem;
+  }
+}

@@ -8,6 +8,8 @@ import './style.scss';
 import PostGrammar from '../PostGrammar';
 import MyPostsGrammar from '../MyPostsGrammar';
 import PostTopicGrammar from '../PostTopicGrammar';
+import UploadTopicNewword from '../UploadTopicNewword';
+import UploadNewword from '../UploadNewword';
 import UploadPart7 from '../UploadPart7';
 import UploadPart6 from '../UploadPart6';
 import UploadPart5 from '../UploadPart5';
@@ -94,6 +96,36 @@ const Admin = ({}) => {
                 <Link to="/post-grammar">Grammar</Link>
               </Menu.Item>
             </SubMenu>
+            <SubMenu
+              key="sub3"
+              title={
+                <span>
+                  <Icon type="table" />
+                  <span>
+                    <Link to="/upload-newword" style={{ color: '#fff' }}>
+                      Newwords
+                    </Link>
+                  </span>
+                </span>
+              }
+            >
+              <Menu.Item key="upload-newword">
+                <Icon type="table" />
+                <span>
+                  <Link to="/upload-newword" style={{ color: '#fff' }}>
+                    Upload New word
+                  </Link>
+                </span>
+              </Menu.Item>
+              <Menu.Item key="upload-topic-newword">
+                <Icon type="table" />
+                <span>
+                  <Link to="/upload-topic-newword" style={{ color: '#fff' }}>
+                    Upload Topic New word
+                  </Link>
+                </span>
+              </Menu.Item>
+            </SubMenu>
             <Menu.Item key="my-posts-grammar">
               <Icon type="table" />
               <span>
@@ -130,6 +162,16 @@ const Admin = ({}) => {
                 <Route
                   path="/upload-topic-grammar"
                   component={PostTopicGrammar}
+                  exact={true}
+                />
+                <Route
+                  path="/upload-newword"
+                  component={UploadNewword}
+                  exact={true}
+                />
+                <Route
+                  path="/upload-topic-newword"
+                  component={UploadTopicNewword}
                   exact={true}
                 />
                 <Route path="/part/7" component={UploadPart7} exact={true} />
