@@ -9,7 +9,7 @@ const {
   addGrammarTopic,
 } = require('../controllers/grammarTopic.controller');
 
-router.get('/', authAdmin, asyncWrap(getAllTopics));
+router.get('/', asyncWrap(getAllTopics));
 router.post('/', authAdmin, asyncWrap(addGrammarTopic));
 
 module.exports = router;

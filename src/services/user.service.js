@@ -1,7 +1,4 @@
 const bcrypt = require('bcryptjs');
-const axios = require('axios');
-const FormData = require('form-data');
-const fs = require('fs');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
 const User = require('../models/user.model');
@@ -89,21 +86,21 @@ async function updateInfoUser(user, infoUpdates) {
 async function uploadAvatar(user, avatar) {
   const avatarLink = await uploadImage(avatar, '/images/avatar');
 
-  const bodyFormData = new FormData();
-  bodyFormData.append('relativePath', 'images/avatar');
-  bodyFormData.append('file', fs.createReadStream(avatarLink));
+  // const bodyFormData = new FormData();
+  // bodyFormData.append('relativePath', 'images/avatar');
+  // bodyFormData.append('file', fs.createReadStream(avatarLink));
 
-  const config = {
-    headers: bodyFormData.getHeaders(),
-  };
+  // const config = {
+  //   headers: bodyFormData.getHeaders(),
+  // };
 
-  const res = await axios.post(
-    'http://123.30.235.196:5221/api/files',
-    bodyFormData,
-    config,
-  );
+  // const res = await axios.post(
+  //   'http://123.30.235.196:5221/api/files',
+  //   bodyFormData,
+  //   config,
+  // );
 
-  user.avatar = res.data.link;
+  user.avatar = avatarLink;
   await user.save();
 
   return user;
