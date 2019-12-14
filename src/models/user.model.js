@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const configFix = require('../configs/config.fix');
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -71,7 +73,7 @@ userSchema.methods.generateAuthToken = async function() {
   const user = this;
   const token = jwt.sign(
     { _id: user.id.toString() },
-    process.env.JWT_SECRET || 'xxx',
+    process.env.JWT_SECRET || configFix.JWT_SECRET,
   );
 
   user.tokens = user.tokens.concat({ token });
