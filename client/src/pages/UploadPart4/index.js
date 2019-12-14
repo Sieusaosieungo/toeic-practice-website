@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Select, message, Input } from 'antd';
 import axios from 'axios';
 import config from '../../utils/config';
@@ -18,9 +18,11 @@ const UploadPart4 = ({
     part: 4,
     level: 0,
     audio: null,
+    scripts: '',
   });
   const [subQuesPart4, setSubQuesPart4] = useState({});
   const [subQuesPart4Child, setSubQuesPart4Child] = useState({});
+  const refInputFile = useRef(null);
 
   const handleUploadPart4Des = () => {
     const formData = new FormData();
@@ -63,9 +65,11 @@ const UploadPart4 = ({
       data: subQuesPart4,
     })
       .then(res => {
-        message.success('Đăng bài thành công.');
+        message.success('Bạn đã hoàn tất đăng câu hỏi.');
         console.log('Subquestion after uploaded: ', res);
-        setPart4({ part: 4, level: 0, audio: '' });
+        setPart4({ part: 4, level: 0, audio: null });
+        refInputFile.current.value = null;
+        setSubQuesPart4({});
       })
       .catch(err => console.log(err.response));
   };
@@ -92,6 +96,8 @@ const UploadPart4 = ({
             className="upload-part4-level"
             placeholder="Chọn độ khó của câu hỏi"
             onChange={handleChange}
+            disabled={!(subQuesPart4.idQuestion === undefined)}
+            value={part4.level}
           >
             <Option value={0}>0</Option>
             <Option value={1}>1</Option>
@@ -108,8 +114,10 @@ const UploadPart4 = ({
             <input
               type="file"
               required
+              ref={refInputFile}
               onChange={handleChangeAudio}
               name="productAttachImages"
+              disabled={!(subQuesPart4.idQuestion === undefined)}
             />
             <span>Chọn audio</span>
           </label>
@@ -122,10 +130,16 @@ const UploadPart4 = ({
             onChange={handleChangeScripts}
             name="scripts"
             style={{ flexGrow: '1' }}
+            disabled={!(subQuesPart4.idQuestion === undefined)}
+            value={part4.scripts}
           ></TextArea>
         </div>
         <div className="upload-part4-btn">
-          <Button type="primary" onClick={handleUploadPart4Des}>
+          <Button
+            type="primary"
+            onClick={handleUploadPart4Des}
+            disabled={!(subQuesPart4.idQuestion === undefined)}
+          >
             Đăng mô tả câu hỏi
           </Button>
         </div>
@@ -138,6 +152,13 @@ const UploadPart4 = ({
             name="question"
             onChange={handleChangeSubQues}
             value={subQuesPart4Child.question}
+            disabled={
+              !subQuesPart4.idQuestion ||
+              (subQuesPart4.subQuestions &&
+                subQuesPart4.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part4-raw">
@@ -146,6 +167,13 @@ const UploadPart4 = ({
             name="A"
             onChange={handleChangeSubQues}
             value={subQuesPart4Child.A}
+            disabled={
+              !subQuesPart4.idQuestion ||
+              (subQuesPart4.subQuestions &&
+                subQuesPart4.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part4-raw">
@@ -154,6 +182,13 @@ const UploadPart4 = ({
             name="B"
             onChange={handleChangeSubQues}
             value={subQuesPart4Child.B}
+            disabled={
+              !subQuesPart4.idQuestion ||
+              (subQuesPart4.subQuestions &&
+                subQuesPart4.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part4-raw">
@@ -162,6 +197,13 @@ const UploadPart4 = ({
             name="C"
             onChange={handleChangeSubQues}
             value={subQuesPart4Child.C}
+            disabled={
+              !subQuesPart4.idQuestion ||
+              (subQuesPart4.subQuestions &&
+                subQuesPart4.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part4-raw">
@@ -170,6 +212,13 @@ const UploadPart4 = ({
             name="D"
             onChange={handleChangeSubQues}
             value={subQuesPart4Child.D}
+            disabled={
+              !subQuesPart4.idQuestion ||
+              (subQuesPart4.subQuestions &&
+                subQuesPart4.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part4-raw">
@@ -178,6 +227,13 @@ const UploadPart4 = ({
             name="answer"
             onChange={handleChangeSubQues}
             value={subQuesPart4Child.answer}
+            disabled={
+              !subQuesPart4.idQuestion ||
+              (subQuesPart4.subQuestions &&
+                subQuesPart4.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part4-raw">
@@ -186,6 +242,13 @@ const UploadPart4 = ({
             name="tips"
             onChange={handleChangeSubQues}
             value={subQuesPart4Child.tips}
+            disabled={
+              !subQuesPart4.idQuestion ||
+              (subQuesPart4.subQuestions &&
+                subQuesPart4.subQuestions.length === 3)
+                ? true
+                : false
+            }
           />
         </div>
         <div className="upload-part4-btn">
@@ -202,7 +265,13 @@ const UploadPart4 = ({
                 ],
               });
               setSubQuesPart4Child({});
-              message.success('Thêm câu hỏi nhỏ thành công.');
+              message.success(
+                `Thêm câu hỏi nhỏ thành công. Bạn cần phải upload ${
+                  subQuesPart4.subQuestions
+                    ? Math.abs(subQuesPart4.subQuestions.length - 2)
+                    : 2
+                } thêm câu hỏi nhỏ.`,
+              );
             }}
             disabled={
               !subQuesPart4.idQuestion ||
@@ -217,7 +286,12 @@ const UploadPart4 = ({
           <Button
             type="primary"
             onClick={handleUploadPart4Content}
-            disabled={!subQuesPart4.idQuestion ? true : false}
+            disabled={
+              subQuesPart4.subQuestions &&
+              subQuesPart4.subQuestions.length === 3
+                ? false
+                : true
+            }
           >
             Đăng phần nội dung câu hỏi
           </Button>
