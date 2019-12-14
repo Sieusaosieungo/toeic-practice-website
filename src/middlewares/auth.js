@@ -2,10 +2,15 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 
+const configFix = require('../configs/config.fix');
+
 async function auth(req, res, next) {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
-    const decode = jwt.verify(token, process.env.JWT_SECRET || 'xxx');
+    const decode = jwt.verify(
+      token,
+      process.env.JWT_SECRET || configFix.JWT_SECRET,
+    );
     const user = await User.findOne({
       _id: decode._id,
       'tokens.token': token,
