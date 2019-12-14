@@ -66,9 +66,10 @@ const UploadPart6 = ({
       data: subQuesPart6,
     })
       .then(res => {
-        message.success('Đăng bài thành công.');
+        message.success('Bạn đã hoàn tất đăng câu hỏi.');
         console.log('Subquestion after uploaded: ', res);
-        setPart6({ part: 6, level: 0, paragraph: '' });
+        setPart6({ ...part6, part: 6, level: 0, paragraph: '' });
+        setSubQuesPart6({});
       })
       .catch(err => console.log(err));
   };
