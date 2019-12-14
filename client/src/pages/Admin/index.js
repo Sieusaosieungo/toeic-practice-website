@@ -15,6 +15,7 @@ import UploadPart4 from '../UploadPart4';
 import UploadPart3 from '../UploadPart3';
 import UploadPart2 from '../UploadPart2';
 import UploadPart1 from '../UploadPart1';
+import UserManager from '../UserManager';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -117,6 +118,7 @@ const Admin = ({}) => {
             <Breadcrumb style={{ margin: '16px 0' }}></Breadcrumb>
             <div style={{ padding: 24, background: '#fff', minHeight: '100%' }}>
               <Switch>
+                <Route path="/" component={UserManager} exact={true} />
                 <Route
                   path="/post-grammar"
                   component={PostGrammar}
