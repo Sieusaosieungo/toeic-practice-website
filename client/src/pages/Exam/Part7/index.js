@@ -17,15 +17,17 @@ const Intro = (props) => {
   const [dataPart1, setDataPart1] = useState([
   
 ]);
+
+  const [userAnswer, setUserAnswer] = useState([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
+  
   useEffect(() => {
-    if(props.exam.part1 == undefined) {
       services.getExamTestById({id : props.location.search.substring(4)})
         .then(res => {
           var part7 = [];
+          const answer = Object.assign([], userAnswer);
           res.data.questions.part7.map(function(part, i) {
             part7.push(part.question)
           })
-          setDataPart1(part7);
           var question = {};
           var data_part1 = [], data_part2 = [], data_part3 = [], data_part4 = [], data_part5 = [], data_part6 = [], data_part7 = [];
           res.data.questions.part1.map(function(part, i) {
@@ -48,6 +50,12 @@ const Intro = (props) => {
           })
           res.data.questions.part7.map(function(part, i) {
             data_part7.push(part.question);
+            if(part.userAnswer.length > 0) {
+              answer[4 * i] = part.userAnswer[0].answer;
+              answer[4 * i + 1] = part.userAnswer[1].answer;
+              answer[4 * i + 2] = part.userAnswer[2].answer;
+              answer[4 * i + 3] = part.userAnswer[3].answer;
+            }
           })
           question.part1 = data_part1;
           question.part2 = data_part2;
@@ -57,12 +65,11 @@ const Intro = (props) => {
           question.part6 = data_part6;
           question.part7 = data_part7;
           props.dispatch({type : "EXAM_TEST", data : question})
+          setUserAnswer(answer);
+          setResultsPart1(answer);
+          setDataPart1(part7);
         })
-      
-    }
-    else {
-      setDataPart1(props.exam.part7);
-    }
+  
   }, []);
 
   const [resultsPart1, setResultsPart1] = useState([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
@@ -72,6 +79,7 @@ const Intro = (props) => {
     change[i] = value;
     setResultsPart1(change);
   }
+
   return (
   <div className={`${prefixCls}`}> 
     <div className={`${prefixCls}-content`}>
@@ -86,7 +94,7 @@ const Intro = (props) => {
           dataPart1.length > 0 &&
           dataPart1.map(function(data, i) {
             console.log(data.subQuestions[0].question)
-            return <div>
+            return <div key={i}>
               <Row style={{textAlign : "center", margin : "2em 0"}}>
                 Question {153 + 4 * i} - {153 + 4 * i + 3} refer to following conversation:
               </Row>
@@ -97,7 +105,7 @@ const Intro = (props) => {
                 <b>{152 + 4 * i + 1}. {data.subQuestions[0].question}</b>
               </Row>
               <Row>
-                <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i)}>
+                <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i)} defaultValue={userAnswer[4 * i]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[0].A}
                   </Radio>
@@ -116,7 +124,7 @@ const Intro = (props) => {
                 <b>{152 + 4 * i + 2}. {data.subQuestions[1].question}</b>
               </Row>
               <Row>
-                <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 1)}>
+                <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 1)} defaultValue={userAnswer[4 * i + 1]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[1].A}
                   </Radio>
@@ -135,7 +143,7 @@ const Intro = (props) => {
                 <b>{152 + 4 * i + 3}. {data.subQuestions[2].question}</b>
               </Row>
               <Row>
-                <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 2)}>
+                <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 2)} defaultValue={userAnswer[4 * i + 2]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[2].A}
                   </Radio>
@@ -154,7 +162,7 @@ const Intro = (props) => {
                 <b>{152 + 4 * i + 4}. {data.subQuestions[3].question}</b>
               </Row>
               <Row>
-                <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 3)}>
+                <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 3)} defaultValue={userAnswer[4 * i + 3]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[3].A}
                   </Radio>
@@ -176,7 +184,43 @@ const Intro = (props) => {
         <Row style={{textAlign : "center", margin : "2em 0"}}>
           <Button 
             className="ant-btn-primary ant-card-hoverable" 
-            onClick={() => props.history.push('/exam/part4?id=' + props.location.search.substring(4))}
+            onClick={() => {
+              var object = {};
+              object.idTest = props.location.search.substring(4);
+              object.part = 7;
+              var results = [];
+              dataPart1.map(function(data, i) {
+                var temp = {};
+                console.log(data)
+                temp.idQuestion = data._id;
+                temp.userAnswer = [
+                  {
+                    idSubQuestion : data.subQuestions[0]._id,
+                    answer : resultsPart1[4 * i]
+                  },
+                  {
+                    idSubQuestion : data.subQuestions[1]._id,
+                    answer : resultsPart1[4 * i + 1]
+                  },
+                  {
+                    idSubQuestion : data.subQuestions[2]._id,
+                    answer : resultsPart1[4 * i + 2]
+                  },
+                  {
+                    idSubQuestion : data.subQuestions[3]._id,
+                    answer : resultsPart1[4 * i + 3]
+                  },
+                ]
+                results.push(temp);
+              })
+              object.results = results;
+              services.submitResults(object)
+                .then(res => {
+                  console.log(res)
+                  props.history.push('/exam/part6?id=' + props.location.search.substring(4));
+                })
+
+            }}
           >Return Part 6
           </Button>
           <Button className="ant-btn-primary ant-card-hoverable" 
