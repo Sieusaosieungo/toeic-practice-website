@@ -23,16 +23,49 @@ const Intro = (props) => {
     if(props.exam.part1 == undefined) {
       services.getExamTestById({id : props.location.search.substring(4)})
         .then(res => {
-          setDataPart1(res.data.questions.part1);
-          var question = res.data.questions;
+          var data1 = [];
+          res.data.questions.part1.map(function(part, i) {
+            data1.push(part.question)
+          })
+          setDataPart1(data1);
+          // var question = res.data.questions;
+          var question = {};
+          var data_part1 = [], data_part2 = [], data_part3 = [], data_part4 = [], data_part5 = [], data_part6 = [], data_part7 = [];
+          res.data.questions.part1.map(function(part, i) {
+            data_part1.push(part.question);
+          })
+          res.data.questions.part2.map(function(part, i) {
+            data_part2.push(part.question);
+          })
+          res.data.questions.part3.map(function(part, i) {
+            data_part3.push(part.question);
+          })
+          res.data.questions.part4.map(function(part, i) {
+            data_part4.push(part.question);
+          })
+          res.data.questions.part5.map(function(part, i) {
+            data_part5.push(part.question);
+          })
+          res.data.questions.part6.map(function(part, i) {
+            data_part6.push(part.question);
+          })
+          res.data.questions.part7.map(function(part, i) {
+            data_part7.push(part.question);
+          })
+          question.part1 = data_part1;
+          question.part2 = data_part2;
+          question.part3 = data_part3;
+          question.part4 = data_part4;
+          question.part5 = data_part5;
+          question.part6 = data_part6;
+          question.part7 = data_part7;
           props.dispatch({type : "EXAM_TEST", data : question})
           var data =[];
-          question.part1.map(function(part, i) {
-            var url = "http://202.191.56.159:2510/" + part.audio;
+          res.data.questions.part1.map(function(part, i) {
+            var url = "http://202.191.56.159:2510/" + part.question.audio;
             data.push({link : url});
           })
           setDataAudio(data);
-          console.log(data)
         })
       
     }
@@ -46,7 +79,6 @@ const Intro = (props) => {
       setDataAudio(data);
     }
   }, []);
-  console.log(dataAudio)
   // code cua Manh
   const audioPlayer = React.createRef();
   const [isPlaying, setIsPlaying] = useState();
@@ -67,7 +99,6 @@ const Intro = (props) => {
 
     if (indexAudio < dataAudio.length - 1) {
       audioPlayer.current.src = dataAudio[indexAudio + 1].link;
-      console.log(audioPlayer);
       audioPlayer.current.play();
     }
 
@@ -78,6 +109,9 @@ const Intro = (props) => {
     }
   }
   };
+
+  console.log(dataAudio);
+  console.log(dataPart1);
 
   return (
   <div className={`${prefixCls}`}> 
@@ -143,7 +177,6 @@ const Intro = (props) => {
               var results = [];
               dataPart1.map(function(data, i) {
                 var temp = {};
-                console.log(data)
                 temp.idQuestion = data._id;
                 temp.userAnswer = [
                   {
@@ -156,7 +189,6 @@ const Intro = (props) => {
               object.results = results;
               services.submitResults(object)
                 .then(res => {
-                  console.log(res)
                   props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
                 })
               // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));

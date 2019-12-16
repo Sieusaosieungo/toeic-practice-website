@@ -21,9 +21,41 @@ const Intro = (props) => {
     if(props.exam.part1 == undefined) {
       services.getExamTestById({id : props.location.search.substring(4)})
         .then(res => {
-          console.log(res)
-          setDataPart1(res.data.questions.part6);
-          var question = res.data.questions;
+          var part6 = [];
+          res.data.questions.part6.map(function(part, i) {
+            part6.push(part.question)
+          })
+          setDataPart1(part6);
+          var question = {};
+          var data_part1 = [], data_part2 = [], data_part3 = [], data_part4 = [], data_part5 = [], data_part6 = [], data_part7 = [];
+          res.data.questions.part1.map(function(part, i) {
+            data_part1.push(part.question);
+          })
+          res.data.questions.part2.map(function(part, i) {
+            data_part2.push(part.question);
+          })
+          res.data.questions.part3.map(function(part, i) {
+            data_part3.push(part.question);
+          })
+          res.data.questions.part4.map(function(part, i) {
+            data_part4.push(part.question);
+          })
+          res.data.questions.part5.map(function(part, i) {
+            data_part5.push(part.question);
+          })
+          res.data.questions.part6.map(function(part, i) {
+            data_part6.push(part.question);
+          })
+          res.data.questions.part7.map(function(part, i) {
+            data_part7.push(part.question);
+          })
+          question.part1 = data_part1;
+          question.part2 = data_part2;
+          question.part3 = data_part3;
+          question.part4 = data_part4;
+          question.part5 = data_part5;
+          question.part6 = data_part6;
+          question.part7 = data_part7;
           props.dispatch({type : "EXAM_TEST", data : question})
         })
       
@@ -66,16 +98,16 @@ const Intro = (props) => {
               </Row>
               <Row>
                 <Radio.Group onChange={(e) => onChange(e.target.value, 3 * i)}>
-                  <Radio style={radioStyle} value={1}>
+                  <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[0].A}
                   </Radio>
-                  <Radio style={radioStyle} value={2}>
+                  <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[0].B}
                   </Radio>
-                  <Radio style={radioStyle} value={3}>
+                  <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[0].C}
                   </Radio>
-                  <Radio style={radioStyle} value={4}>
+                  <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[0].D}
                   </Radio>
                 </Radio.Group>
@@ -85,16 +117,16 @@ const Intro = (props) => {
               </Row>
               <Row>
                 <Radio.Group onChange={(e) => onChange(e.target.value, 3 * i + 1)}>
-                  <Radio style={radioStyle} value={1}>
+                  <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[1].A}
                   </Radio>
-                  <Radio style={radioStyle} value={2}>
+                  <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[1].B}
                   </Radio>
-                  <Radio style={radioStyle} value={3}>
+                  <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[1].C}
                   </Radio>
-                  <Radio style={radioStyle} value={4}>
+                  <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[1].D}
                   </Radio>
                 </Radio.Group>
@@ -104,16 +136,16 @@ const Intro = (props) => {
               </Row>
               <Row>
                 <Radio.Group onChange={(e) => onChange(e.target.value, 3 * i + 2)}>
-                  <Radio style={radioStyle} value={1}>
+                  <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[2].A}
                   </Radio>
-                  <Radio style={radioStyle} value={2}>
+                  <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[2].B}
                   </Radio>
-                  <Radio style={radioStyle} value={3}>
+                  <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[2].C}
                   </Radio>
-                  <Radio style={radioStyle} value={4}>
+                  <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[2].D}
                   </Radio>
                 </Radio.Group>
@@ -123,6 +155,11 @@ const Intro = (props) => {
         }
         
         <Row style={{textAlign : "center", margin : "2em 0"}}>
+          <Button 
+            className="ant-btn-primary ant-card-hoverable" 
+            onClick={() => props.history.push('/exam/part5?id=' + props.location.search.substring(4))}
+          >Return Part 5
+          </Button>
           <Button className="ant-btn-primary ant-card-hoverable" 
           onClick={() => {
             var object = {};
