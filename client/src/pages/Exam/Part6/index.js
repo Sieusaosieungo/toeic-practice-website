@@ -136,8 +136,16 @@ const Intro = (props) => {
                 temp.userAnswer = [
                   {
                     idSubQuestion : data.subQuestions[0]._id,
-                    answer : resultsPart1[i]
-                  }
+                    answer : resultsPart1[3 * i]
+                  },
+                  {
+                    idSubQuestion : data.subQuestions[1]._id,
+                    answer : resultsPart1[3 * i + 1]
+                  },
+                  {
+                    idSubQuestion : data.subQuestions[2]._id,
+                    answer : resultsPart1[3 * i + 2]
+                  },
                 ]
                 results.push(temp);
               })

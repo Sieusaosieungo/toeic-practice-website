@@ -53,6 +53,7 @@ const Intro = (props) => {
         {
           dataPart1.length > 0 &&
           dataPart1.map(function(data, i) {
+            console.log(data)
             return <div>
               <Row style={{textAlign : "center", margin : "2em 0"}}>
                 Question {153 + 4 * i} - {153 + 4 * i + 3} refer to following conversation:
@@ -154,8 +155,20 @@ const Intro = (props) => {
               temp.userAnswer = [
                 {
                   idSubQuestion : data.subQuestions[0]._id,
-                  answer : resultsPart1[i]
-                }
+                  answer : resultsPart1[4 * i]
+                },
+                {
+                  idSubQuestion : data.subQuestions[1]._id,
+                  answer : resultsPart1[4 * i + 1]
+                },
+                {
+                  idSubQuestion : data.subQuestions[2]._id,
+                  answer : resultsPart1[4 * i + 2]
+                },
+                {
+                  idSubQuestion : data.subQuestions[3]._id,
+                  answer : resultsPart1[4 * i + 3]
+                },
               ]
               results.push(temp);
             })
