@@ -77,6 +77,10 @@ const Part7Intro = Loadable({
   loader: () => import('../pages/Exam/Part7Intro'),
   loading: Loading,
 });
+const Result = Loadable({
+  loader: () => import('../pages/Exam/Result'),
+  loading: Loading,
+});
 const Topics = Loadable({
   loader: () => import('../pages/Topics'),
   loading: Loading,
@@ -158,6 +162,10 @@ const routes = [
   {
     path: '/exam/part7intro',
     component: Part7Intro,
+  },
+  {
+    path: '/exam/result',
+    component: Result,
   },
   {
     path: '/exam/part7',

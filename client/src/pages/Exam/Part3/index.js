@@ -24,17 +24,48 @@ const Intro = (props) => {
     if(props.exam.part1 == undefined) {
       services.getExamTestById({id : props.location.search.substring(4)})
         .then(res => {
-          console.log(res)
-          setDataPart1(res.data.questions.part3);
-          var question = res.data.questions;
+          var part3 = [];
+          res.data.questions.part3.map(function(part, i) {
+            part3.push(part.question)
+          })
+          setDataPart1(part3);
+          var question = {};
+          var data_part1 = [], data_part2 = [], data_part3 = [], data_part4 = [], data_part5 = [], data_part6 = [], data_part7 = [];
+          res.data.questions.part1.map(function(part, i) {
+            data_part1.push(part.question);
+          })
+          res.data.questions.part2.map(function(part, i) {
+            data_part2.push(part.question);
+          })
+          res.data.questions.part3.map(function(part, i) {
+            data_part3.push(part.question);
+          })
+          res.data.questions.part4.map(function(part, i) {
+            data_part4.push(part.question);
+          })
+          res.data.questions.part5.map(function(part, i) {
+            data_part5.push(part.question);
+          })
+          res.data.questions.part6.map(function(part, i) {
+            data_part6.push(part.question);
+          })
+          res.data.questions.part7.map(function(part, i) {
+            data_part7.push(part.question);
+          })
+          question.part1 = data_part1;
+          question.part2 = data_part2;
+          question.part3 = data_part3;
+          question.part4 = data_part4;
+          question.part5 = data_part5;
+          question.part6 = data_part6;
+          question.part7 = data_part7;
           props.dispatch({type : "EXAM_TEST", data : question})
           var data =[];
-          question.part3.map(function(part, i) {
-            var url = "http://202.191.56.159:2510/" + part.audio;
+          res.data.questions.part3.map(function(part, i) {
+            var url = "http://202.191.56.159:2510/" + part.question.audio;
             data.push({link : url});
           })
           setDataAudio(data);
-          console.log(data)
         })
       
     }
@@ -189,8 +220,16 @@ const Intro = (props) => {
               temp.userAnswer = [
                 {
                   idSubQuestion : data.subQuestions[0]._id,
-                  answer : resultsPart1[i]
-                }
+                  answer : resultsPart1[3 * i]
+                },
+                {
+                  idSubQuestion : data.subQuestions[1]._id,
+                  answer : resultsPart1[3 * i + 1]
+                },
+                {
+                  idSubQuestion : data.subQuestions[2]._id,
+                  answer : resultsPart1[3 * i + 2]
+                },
               ]
               results.push(temp);
             })

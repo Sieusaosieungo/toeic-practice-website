@@ -17,29 +17,65 @@ const Intro = (props) => {
   const [dataPart1, setDataPart1] = useState([
   
 ]);
+
+  const [userAnswer, setUserAnswer] = useState([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
+
   useEffect(() => {
-    if(props.exam.part1 == undefined) {
       services.getExamTestById({id : props.location.search.substring(4)})
         .then(res => {
-          setDataPart1(res.data.questions.part5);
-          var question = res.data.questions;
+          var part5 = [];
+          const answer = Object.assign([], userAnswer);
+          res.data.questions.part5.map(function(part, i) {
+            part5.push(part.question)
+          })
+          var question = {};
+          var data_part1 = [], data_part2 = [], data_part3 = [], data_part4 = [], data_part5 = [], data_part6 = [], data_part7 = [];
+          res.data.questions.part1.map(function(part, i) {
+            data_part1.push(part.question);
+          })
+          res.data.questions.part2.map(function(part, i) {
+            data_part2.push(part.question);
+          })
+          res.data.questions.part3.map(function(part, i) {
+            data_part3.push(part.question);
+          })
+          res.data.questions.part4.map(function(part, i) {
+            data_part4.push(part.question);
+          })
+          res.data.questions.part5.map(function(part, i) {
+            data_part5.push(part.question);
+            if(part.userAnswer.length > 0)
+              answer[i] = part.userAnswer[0].answer;
+          })
+          res.data.questions.part6.map(function(part, i) {
+            data_part6.push(part.question);
+          })
+          res.data.questions.part7.map(function(part, i) {
+            data_part7.push(part.question);
+          })
+          question.part1 = data_part1;
+          question.part2 = data_part2;
+          question.part3 = data_part3;
+          question.part4 = data_part4;
+          question.part5 = data_part5;
+          question.part6 = data_part6;
+          question.part7 = data_part7;
           props.dispatch({type : "EXAM_TEST", data : question})
+          setUserAnswer(answer);
+          setResultsPart1(answer);
+          setDataPart1(part5);
         })
-      
-
-    }
-    else {
-      setDataPart1(props.exam.part5);
-    }
+    
   }, []);
 
-  const [resultsPart1, setResultsPart1] = useState([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
+  const [resultsPart1, setResultsPart1] = useState([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
 
   const onChange = (value, i) => {
     const change = Object.assign([], resultsPart1);
     change[i] = value;
     setResultsPart1(change);
   }
+
   return (
   <div className={`${prefixCls}`}> 
     <div className={`${prefixCls}-content`}>
@@ -53,22 +89,22 @@ const Intro = (props) => {
         {
           dataPart1.length > 0 &&
           dataPart1.map(function(data, i) {
-            return <div>
+            return <div key={i}>
               <Row>
                 <b>{100 + i + 1}. {data.subQuestions[0].question}</b>
               </Row>
               <Row>
-                <Radio.Group onChange={(e) => onChange(e.target.value, i)}>
-                  <Radio style={radioStyle} value={1}>
+                <Radio.Group onChange={(e) => onChange(e.target.value, i)} defaultValue={userAnswer[i]}>
+                  <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[0].A}
                   </Radio>
-                  <Radio style={radioStyle} value={2}>
+                  <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[0].B}
                   </Radio>
-                  <Radio style={radioStyle} value={3}>
+                  <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[0].C}
                   </Radio>
-                  <Radio style={radioStyle} value={4}>
+                  <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[0].D}
                   </Radio>
                 </Radio.Group>
