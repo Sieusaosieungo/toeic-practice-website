@@ -186,7 +186,7 @@ const submitResultPartDb = async body => {
         results.map(async result => {
           if (result.idQuestion === question.question.toString()) {
             const q = await Question.findById(question.question.toString());
-            question.userAnswer = result.answer;
+            question.userAnswer = result.userAnswer;
             q.subQuestions.forEach((subQ, idx) => {
               if (subQ.answer === result.userAnswer[idx].answer) {
                 numberRightAnswer += 1;
@@ -246,25 +246,46 @@ const getTestByIdDb = async query => {
       const q = await Question.findById(question.question);
       switch (q.part) {
         case 1:
-          part1.push(q);
+          part1.push({
+            question: q,
+            userAnswer: question.userAnswer,
+          });
           break;
         case 2:
-          part2.push(q);
+          part2.push({
+            question: q,
+            userAnswer: question.userAnswer,
+          });
           break;
         case 3:
-          part3.push(q);
+          part3.push({
+            question: q,
+            userAnswer: question.userAnswer,
+          });
           break;
         case 4:
-          part4.push(q);
+          part4.push({
+            question: q,
+            userAnswer: question.userAnswer,
+          });
           break;
         case 5:
-          part5.push(q);
+          part5.push({
+            question: q,
+            userAnswer: question.userAnswer,
+          });
           break;
         case 6:
-          part6.push(q);
+          part6.push({
+            question: q,
+            userAnswer: question.userAnswer,
+          });
           break;
         case 7:
-          part7.push(q);
+          part7.push({
+            question: q,
+            userAnswer: question.userAnswer,
+          });
           break;
         default:
           break;
