@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
+import config from '../../utils/config';
 
 import './style.scss';
 
@@ -14,7 +15,7 @@ const Card = ({ newWord, meaning, image, example }) => {
     <div className={`${prefixCls}`}>
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
         <div onClick={handleClick} className={`${prefixCls}-front`}>
-          <img src={image} alt={newWord} />
+          <img src={`${config.API_URL}/${image}`} alt={newWord} />
         </div>
 
         <div onClick={handleClick} className={`${prefixCls}-back`}>
