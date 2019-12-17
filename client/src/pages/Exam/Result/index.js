@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Button, message } from 'antd';
+import { Link } from 'react-router-dom';
 import './style.scss';
 import { services} from "../../../services"
 import { connect} from 'react-redux';
@@ -45,24 +46,28 @@ const Result = props => {
                     <td><b>1 - 10</b></td>
                     <td className="td-quest">Part I: Picture Description <b>({result[0]}/10)</b></td>
                     <td className="td-right-answer">
+                      <Link to={"/" + 'exam/part1?id=' + props.location.search.substring(4)}>Chi tiết</Link>
                     </td>
                   </tr>
                   <tr>
                     <td><b>11 - 40</b></td>
                     <td className="td-quest">Part II: Question - Response <b>({result[1]}/30)</b></td>
                     <td className="td-right-answer">
+                      <Link to={"/" + 'exam/part2?id=' + props.location.search.substring(4)}>Chi tiết</Link>
                     </td>
                   </tr>
                   <tr>
                     <td><b>41 - 70</b></td>
                     <td className="td-quest">Part III: Short Conversations <b>({result[2]}/30)</b></td>
                     <td className="td-right-answer">
+                      <Link to={"/" + 'exam/part3?id=' + props.location.search.substring(4)}>Chi tiết</Link>
                     </td>
                   </tr>
                   <tr>
                     <td><b>71 - 100</b></td>
                     <td className="td-quest">Part IV: Short Talks <b>({result[3]}/30)</b></td>
                     <td className="td-right-answer">
+                      <Link to={"/" + 'exam/part4?id=' + props.location.search.substring(4)}>Chi tiết</Link>
                     </td>
                   </tr>
                 </tbody>
@@ -82,18 +87,21 @@ const Result = props => {
                     <td><b>101 - 140</b></td>
                     <td className="td-quest">Part V: Incomplete Sentences <b>({result[4]}/40)</b></td>
                     <td className="td-right-answer">
+                      <Link to={"/" + 'exam/part5?id=' + props.location.search.substring(4)}>Chi tiết</Link>
                     </td>
                   </tr>
                   <tr>
                     <td><b>141 - 152</b></td>
                     <td className="td-quest">Part VI: Text Completion <b>({result[5]}/12)</b></td>
                     <td className="td-right-answer">
+                      <Link to={"/" + 'exam/part6?id=' + props.location.search.substring(4)}>Chi tiết</Link>
                     </td>
                   </tr>
                   <tr>
                     <td><b>153 - 200</b></td>
                     <td className="td-quest">Part VII: Reading Comprehension <b>({result[6]}/48)</b></td>
                     <td className="td-right-answer">
+                      <Link to={"/" + 'exam/part7?id=' + props.location.search.substring(4)}>Chi tiết</Link>
                     </td>
                   </tr>
                 </tbody>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Radio, Button } from 'antd';
+import { Row, Col, Radio, Button, Icon } from 'antd';
 // import ReactAudioPlayer from 'react-audio-player';
 import { services} from "../../../services"
 import { config } from '../../../utils/config'
@@ -21,10 +21,13 @@ const Intro = (props) => {
   const [dataPart1, setDataPart1] = useState([
   
 ]);
+
+  const [checked, setChecked] = useState(false);
+
   useEffect(() => {
-    console.log(props.exam)
-    console.log(props.exam.part1)
-    if(props.exam.part1 == undefined) {
+    // console.log(props.exam)
+    // console.log(props.exam.part1)
+    // if(props.exam.part1 == undefined) {
       services.getExamTestById({id : props.location.search.substring(4)})
         .then(res => {
           var data2 = [];
@@ -69,18 +72,19 @@ const Intro = (props) => {
             data.push({link : url});
           })
           setDataAudio(data);
+          setChecked(res.data.test.checked);
         })
       
-    }
-    else {
-      setDataPart1(props.exam.part2);
-      var data =[];
-      props.exam.part2.map(function(part, i) {
-        var url = "http://202.191.56.159:2510/" + part.audio;
-        data.push({link : url});
-      })
-      setDataAudio(data);
-    }
+    // }
+    // else {
+    //   setDataPart1(props.exam.part2);
+    //   var data =[];
+    //   props.exam.part2.map(function(part, i) {
+    //     var url = "http://202.191.56.159:2510/" + part.audio;
+    //     data.push({link : url});
+    //   })
+    //   setDataAudio(data);
+    // }
   }, []);
 
   // code cua Manh
@@ -161,6 +165,8 @@ const Intro = (props) => {
             <b>Mark your answer on your answer sheet:</b>
           </Row>
           <Row style={{ textAlign: 'center' }}>
+          {
+            !checked &&
             <audio
               onEnded={onToggleAudio}
               ref={audioPlayer}
@@ -173,11 +179,23 @@ const Intro = (props) => {
               }
               <track kind="captions" />
             </audio>
+          }
           </Row>
           {
             ['', '', '', '', '', '', '', '', '', ''].map(function(data, i) {
             return (
               <div>
+                <Row style={{textAlign : "center"}}>
+                {
+                  checked &&
+                  <audio
+                    controls
+                    style={{width : "50%"}}
+                  >
+                      <source src={"http://202.191.56.159:2510/" + data.audio} />
+                  </audio>
+                }
+                </Row>
                 <Row style={{ marginTop: '1em' }}>
                   <Col span={8}>
                     <b>{10 + 3 * i + 1}.</b>
@@ -187,12 +205,27 @@ const Intro = (props) => {
                     >
                       <Radio style={radioStyle} value={"a"}>
                         A
+                        {
+                          checked &&
+                          data.subQuestions[0].answer == "a" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                       <Radio style={radioStyle} value={"b"}>
                         B
+                        {
+                          checked &&
+                          data.subQuestions[0].answer == "b" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                       <Radio style={radioStyle} value={"c"}>
                         C
+                        {
+                          checked &&
+                          data.subQuestions[0].answer == "c" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                     </Radio.Group>
                   </Col>
@@ -204,12 +237,27 @@ const Intro = (props) => {
                     >
                       <Radio style={radioStyle} value={"a"}>
                         A
+                        {
+                          checked &&
+                          data.subQuestions[1].answer == "a" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                       <Radio style={radioStyle} value={"b"}>
                         B
+                        {
+                          checked &&
+                          data.subQuestions[1].answer == "b" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                       <Radio style={radioStyle} value={"c"}>
                         C
+                        {
+                          checked &&
+                          data.subQuestions[1].answer == "c" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                     </Radio.Group>
                   </Col>
@@ -221,12 +269,27 @@ const Intro = (props) => {
                     >
                       <Radio style={radioStyle} value={"a"}>
                         A
+                        {
+                          checked &&
+                          data.subQuestions[2].answer == "a" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                       <Radio style={radioStyle} value={"b"}>
                         B
+                        {
+                          checked &&
+                          data.subQuestions[2].answer == "b" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                       <Radio style={radioStyle} value={"c"}>
                         C
+                        {
+                          checked &&
+                          data.subQuestions[2].answer == "c" &&
+                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                        }
                       </Radio>
                     </Radio.Group>
                   </Col>

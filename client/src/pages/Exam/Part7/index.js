@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Row, Col, Radio, Button} from 'antd';
+import {Row, Col, Radio, Button, Icon} from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
 import { services} from "../../../services"
 import { config } from '../../../utils/config'
@@ -17,6 +17,8 @@ const Intro = (props) => {
   const [dataPart1, setDataPart1] = useState([
   
 ]);
+
+  const [checked, setChecked] = useState(false);
 
   const [userAnswer, setUserAnswer] = useState([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
   
@@ -68,6 +70,7 @@ const Intro = (props) => {
           setUserAnswer(answer);
           setResultsPart1(answer);
           setDataPart1(part7);
+          setChecked(res.data.test.checked);
         })
   
   }, []);
@@ -108,15 +111,35 @@ const Intro = (props) => {
                 <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i)} defaultValue={userAnswer[4 * i]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[0].A}
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "a" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[0].B}
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "b" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[0].C}
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "c" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[0].D}
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "d" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                 </Radio.Group>
               </Row>
@@ -127,15 +150,35 @@ const Intro = (props) => {
                 <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 1)} defaultValue={userAnswer[4 * i + 1]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[1].A}
+                    {
+                      checked &&
+                      data.subQuestions[1].answer == "a" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[1].B}
+                    {
+                      checked &&
+                      data.subQuestions[1].answer == "b" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[1].C}
+                    {
+                      checked &&
+                      data.subQuestions[1].answer == "c" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[1].D}
+                    {
+                      checked &&
+                      data.subQuestions[1].answer == "d" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                 </Radio.Group>
               </Row>
@@ -146,15 +189,35 @@ const Intro = (props) => {
                 <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 2)} defaultValue={userAnswer[4 * i + 2]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[2].A}
+                    {
+                      checked &&
+                      data.subQuestions[2].answer == "a" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[2].B}
+                    {
+                      checked &&
+                      data.subQuestions[2].answer == "b" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[2].C}
+                    {
+                      checked &&
+                      data.subQuestions[2].answer == "c" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[2].D}
+                    {
+                      checked &&
+                      data.subQuestions[2].answer == "d" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                 </Radio.Group>
               </Row>
@@ -165,15 +228,35 @@ const Intro = (props) => {
                 <Radio.Group onChange={(e) => onChange(e.target.value, 4 * i + 3)} defaultValue={userAnswer[4 * i + 3]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[3].A}
+                    {
+                      checked &&
+                      data.subQuestions[3].answer == "a" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[3].B}
+                    {
+                      checked &&
+                      data.subQuestions[3].answer == "b" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[3].C}
+                    {
+                      checked &&
+                      data.subQuestions[3].answer == "c" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[3].D}
+                    {
+                      checked &&
+                      data.subQuestions[3].answer == "d" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                 </Radio.Group>
               </Row>
@@ -221,6 +304,7 @@ const Intro = (props) => {
                 })
 
             }}
+            style={{marginRight : "20px"}}
           >Return Part 6
           </Button>
           <Button className="ant-btn-primary ant-card-hoverable" 

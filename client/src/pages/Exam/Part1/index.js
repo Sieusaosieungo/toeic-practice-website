@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Row, Col, Radio, Button} from 'antd';
+import {Row, Col, Radio, Button, Icon} from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
 import { services} from "../../../services"
 import './style.scss'
@@ -19,8 +19,10 @@ const Intro = (props) => {
   const [dataPart1, setDataPart1] = useState([
   
 ]);
+
+  const [checked, setChecked] = useState(false);
   useEffect(() => {
-    if(props.exam.part1 == undefined) {
+    // if(props.exam.part1 == undefined) {
       services.getExamTestById({id : props.location.search.substring(4)})
         .then(res => {
           var data1 = [];
@@ -66,18 +68,20 @@ const Intro = (props) => {
             data.push({link : url});
           })
           setDataAudio(data);
+          console.log(res.data.test);
+          setChecked(res.data.test.checked);
         })
       
-    }
-    else {
-      setDataPart1(props.exam.part1);
-      var data =[];
-      props.exam.part1.map(function(part, i) {
-        var url = "http://202.191.56.159:2510/" + part.audio;
-        data.push({link : url});
-      })
-      setDataAudio(data);
-    }
+    // }
+    // else {
+    //   setDataPart1(props.exam.part1);
+    //   var data =[];
+    //   props.exam.part1.map(function(part, i) {
+    //     var url = "http://202.191.56.159:2510/" + part.audio;
+    //     data.push({link : url});
+    //   })
+    //   setDataAudio(data);
+    // }
   }, []);
   // code cua Manh
   const audioPlayer = React.createRef();
@@ -124,6 +128,8 @@ const Intro = (props) => {
           <b>Mark your answer on your answer sheet:</b>
         </Row>
         <Row style={{textAlign : "center"}}>
+        {
+          !checked &&
           <audio
             onEnded={onToggleAudio}
             ref={audioPlayer}
@@ -136,6 +142,7 @@ const Intro = (props) => {
             }
             <track kind="captions" />
           </audio>
+        }
         </Row>
         {
           dataPart1.length > 0 &&
@@ -144,6 +151,17 @@ const Intro = (props) => {
               <Row style={{textAlign : "center", margin : "2em 0"}}>
                 <img src={`http://202.191.56.159:2510/${data.image}`} style={{width : "70%"}}/>
               </Row>
+              <Row style={{textAlign : "center"}}>
+              {
+                checked &&
+                <audio
+                  controls
+                  style={{width : "50%"}}
+                >
+                    <source src={"http://202.191.56.159:2510/" + data.audio} />
+                </audio>
+              }
+              </Row>
               <Row>
                 <b>{i + 1}. Select the answer</b>
               </Row>
@@ -151,15 +169,35 @@ const Intro = (props) => {
                 <Radio.Group onChange={(e) => onChange(e.target.value, i)}>
                   <Radio style={radioStyle} value={"a"}>
                     Option A
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "a" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"b"}>
                     Option B
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "b" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"c"}>
                     Option C
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "c" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"d"}>
                     Option D
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "d" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                 </Radio.Group>
               </Row>

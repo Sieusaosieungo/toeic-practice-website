@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Row, Col, Radio, Button} from 'antd';
+import {Row, Col, Radio, Button, Icon} from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
 import { services} from "../../../services"
 import { config } from '../../../utils/config'
@@ -17,6 +17,8 @@ const Intro = (props) => {
   const [dataPart1, setDataPart1] = useState([
   
 ]);
+
+  const [checked, setChecked] = useState(false);
 
   const [userAnswer, setUserAnswer] = useState([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
 
@@ -64,6 +66,7 @@ const Intro = (props) => {
           setUserAnswer(answer);
           setResultsPart1(answer);
           setDataPart1(part5);
+          setChecked(res.data.test.checked);
         })
     
   }, []);
@@ -97,15 +100,35 @@ const Intro = (props) => {
                 <Radio.Group onChange={(e) => onChange(e.target.value, i)} defaultValue={userAnswer[i]}>
                   <Radio style={radioStyle} value={"a"}>
                     {data.subQuestions[0].A}
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "a" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"b"}>
                     {data.subQuestions[0].B}
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "b" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"c"}>
                     {data.subQuestions[0].C}
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "c" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                   <Radio style={radioStyle} value={"d"}>
                     {data.subQuestions[0].D}
+                    {
+                      checked &&
+                      data.subQuestions[0].answer == "d" &&
+                      <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    }
                   </Radio>
                 </Radio.Group>
               </Row>
