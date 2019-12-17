@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Radio, Button, Icon } from 'antd';
 // import ReactAudioPlayer from 'react-audio-player';
 import { services} from "../../../services"
+import BackwardTimer from '../../../utils/countdown'
 import { config } from '../../../utils/config'
 import { connect } from "react-redux"; 
 import './style.scss';
@@ -154,6 +155,7 @@ const Intro = (props) => {
 
   return (
     <div className={`${prefixCls}`}>
+    <BackwardTimer onchange={() => {props.history.push("/")}}/>
       <div className={`${prefixCls}-content`}>
         <div className="" style={{ marginTop: '4em', padding: '3em 8em' }}>
           <Row style={{ marginBottom: '1em' }}>

@@ -14,7 +14,7 @@ const Intro = (props) => {
   };
   return (
   <div className={`${prefixCls}`} style={{position : "relative"}}> 
-    <BackwardTimer onOk={() => {props.history.push("/")}}/>
+    <BackwardTimer onchange={() => {props.history.push("/")}} finishAll={() => {console.log("Finish")}}/>
     <div className={`${prefixCls}-content`}>
       <div className="" style={{marginTop : "4em", padding : "3em 8em"}}>
         <Row style={{marginBottom : "1em"}}>

@@ -2,6 +2,7 @@ import React from 'react';
 import {Row, Col, Radio, Button} from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
 import './style.scss'
+import BackwardTimer from '../../../utils/countdown'
 const prefixCls = 'home';
 
 const Intro = (props) => {
@@ -12,6 +13,7 @@ const Intro = (props) => {
   };
   return (
   <div className={`${prefixCls}`}> 
+    <BackwardTimer onchange={() => {props.history.push("/")}}/>
     <div className={`${prefixCls}-content`}>
       <div className="" style={{marginTop : "4em", padding : "3em 8em"}}>
         <Row style={{marginBottom : "1em"}}>
