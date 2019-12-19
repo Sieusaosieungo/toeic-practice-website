@@ -16,7 +16,9 @@ export const services = {
   getExamTest,
   getExamTestById,
   submitResults,
-  finish
+  finish,
+  randomPart,
+  submitRandomPart
 };
 
 function login(email, password) {
@@ -196,6 +198,32 @@ function finish(object) {
   return axios({
     method: 'POST',
     url: `${config.API_URL}/api/tests/finished/v1`,
+    headers: authHeader(),
+    data : object
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function randomPart(object) {
+  return axios({
+    method: 'GET',
+    url: `${config.API_URL}/api/tests/part`,
+    headers: authHeader(),
+    params : object
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
+}
+
+function submitRandomPart(object) {
+  return axios({
+    method: 'POST',
+    url: `${config.API_URL}/api/results/part`,
     headers: authHeader(),
     data : object
   })

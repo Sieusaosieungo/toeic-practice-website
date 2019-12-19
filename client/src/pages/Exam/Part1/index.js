@@ -23,7 +23,8 @@ const Intro = (props) => {
 
   const [checked, setChecked] = useState(false);
   useEffect(() => {
-    // if(props.exam.part1 == undefined) {
+    console.log(props)
+    if(props.location.search.split('&').length == 1) {
       services.getExamTestById({id : props.location.search.substring(4)})
         .then(res => {
           var data1 = [];
@@ -73,7 +74,57 @@ const Intro = (props) => {
           setChecked(res.data.test.checked);
         })
       
-    // }
+    }
+    else {
+      services.randomPart({part : 1, level : 3})
+        .then(res => {
+          var data1 = [];
+          res.data.questions.part1.map(function(part, i) {
+            data1.push(part.question)
+          })
+          setDataPart1(data1);
+          // var question = res.data.questions;
+          // var question = {};
+          // var data_part1 = [], data_part2 = [], data_part3 = [], data_part4 = [], data_part5 = [], data_part6 = [], data_part7 = [];
+          // res.data.questions.part1.map(function(part, i) {
+          //   data_part1.push(part.question);
+          // })
+          // res.data.questions.part2.map(function(part, i) {
+          //   data_part2.push(part.question);
+          // })
+          // res.data.questions.part3.map(function(part, i) {
+          //   data_part3.push(part.question);
+          // })
+          // res.data.questions.part4.map(function(part, i) {
+          //   data_part4.push(part.question);
+          // })
+          // res.data.questions.part5.map(function(part, i) {
+          //   data_part5.push(part.question);
+          // })
+          // res.data.questions.part6.map(function(part, i) {
+          //   data_part6.push(part.question);
+          // })
+          // res.data.questions.part7.map(function(part, i) {
+          //   data_part7.push(part.question);
+          // })
+          // question.part1 = data_part1;
+          // question.part2 = data_part2;
+          // question.part3 = data_part3;
+          // question.part4 = data_part4;
+          // question.part5 = data_part5;
+          // question.part6 = data_part6;
+          // question.part7 = data_part7;
+          // props.dispatch({type : "EXAM_TEST", data : question})
+          var data =[];
+          res.data.questions.part1.map(function(part, i) {
+            var url = "http://202.191.56.159:2510/" + part.question.audio;
+            data.push({link : url});
+          })
+          setDataAudio(data);
+          // console.log(res.data.test);
+          setChecked(res.data.test.checked);
+        })
+    }
     // else {
     //   setDataPart1(props.exam.part1);
     //   var data =[];
@@ -235,32 +286,79 @@ const Intro = (props) => {
         }
         
         <Row style={{textAlign : "center", margin : "2em 0"}}>
-          <Button 
-            className="ant-btn-primary ant-card-hoverable" 
-            onClick={() => {
-              var object = {};
-              object.idTest = props.location.search.substring(4);
-              object.part = 1;
-              var results = [];
-              dataPart1.map(function(data, i) {
-                var temp = {};
-                temp.idQuestion = data._id;
-                temp.userAnswer = [
-                  {
-                    idSubQuestion : data.subQuestions[0]._id,
-                    answer : resultsPart1[i]
-                  }
-                ]
-                results.push(temp);
-              })
-              object.results = results;
-              services.submitResults(object)
-                .then(res => {
-                  props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+          {
+            props.location.search.split('&').length == 1 &&
+            checked && 
+            <Button 
+              className="ant-btn-primary ant-card-hoverable" 
+              onClick={() => {
+                // services.randomPart({part : 1, level : 3})
+                  // .then(res => {
+                    props.history.push('/exam/part1?id=' + props.location.search.substring(4) + '&type=learn');
+                  // })
+                // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+              }}
+              style={{marginRight : "20px"}}
+            >Rèn luyện</Button>
+          }
+          {
+            props.location.search.split('&').length != 1 &&
+            <Button 
+              className="ant-btn-primary ant-card-hoverable" 
+              onClick={() => {
+                var object = {};
+                object.idTest = props.location.search.substring(4);
+                object.part = 1;
+                var results = [];
+                dataPart1.map(function(data, i) {
+                  var temp = {};
+                  temp.idQuestion = data._id;
+                  temp.userAnswer = [
+                    {
+                      idSubQuestion : data.subQuestions[0]._id,
+                      answer : resultsPart1[i]
+                    }
+                  ]
+                  results.push(temp);
                 })
-              // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
-            }}
-          >Tiếp tục</Button>
+                object.results = results;
+                services.submitRandomPart(object)
+                  .then(res => {
+                    props.history.push('/exam/part1?id=' + props.location.search.substring(4) + '&type=learn');
+                  })
+                // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+              }}
+            >Nộp bài luyện tập</Button>
+          }
+          {
+            props.location.search.split('&').length == 1 &&
+            <Button 
+              className="ant-btn-primary ant-card-hoverable" 
+              onClick={() => {
+                var object = {};
+                object.idTest = props.location.search.substring(4);
+                object.part = 1;
+                var results = [];
+                dataPart1.map(function(data, i) {
+                  var temp = {};
+                  temp.idQuestion = data._id;
+                  temp.userAnswer = [
+                    {
+                      idSubQuestion : data.subQuestions[0]._id,
+                      answer : resultsPart1[i]
+                    }
+                  ]
+                  results.push(temp);
+                })
+                object.results = results;
+                services.submitResults(object)
+                  .then(res => {
+                    props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+                  })
+                // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+              }}
+            >Tiếp tục</Button>
+          }
         </Row>
       </div>
     </div>
