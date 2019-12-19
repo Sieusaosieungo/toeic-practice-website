@@ -196,6 +196,7 @@ const Intro = (props) => {
               onEnded={onToggleAudio}
               ref={audioPlayer}
               controls
+              autoplay="autoplay"
               style={{ width: '50%' }}
             >
               {
@@ -207,7 +208,8 @@ const Intro = (props) => {
           }
           </Row>
           {
-            ['', '', '', '', '', '', '', '', '', ''].map(function(data, i) {
+            dataPart1.map(function(data, i) {
+              console.log(data)
             return (
               <div>
                 <Row style={{textAlign : "center"}}>
@@ -223,10 +225,10 @@ const Intro = (props) => {
                 </Row>
                 <Row style={{ marginTop: '1em' }}>
                   <Col span={8}>
-                    <b>{10 + 3 * i + 1}.</b>
+                    <b>{10 + i + 1}.</b>
                     <br />
                     <Radio.Group
-                      onChange={e => onChange(e.target.value, 3 * i)}
+                      onChange={e => onChange(e.target.value, i)}
                     >
                       <Radio style={radioStyle} value={"a"}>
                         A
@@ -254,70 +256,72 @@ const Intro = (props) => {
                       </Radio>
                     </Radio.Group>
                   </Col>
-                  <Col span={8}>
-                    <b>{10 + 3 * i + 2}.</b>
-                    <br />
-                    <Radio.Group
-                      onChange={e => onChange(e.target.value, 3 * i + 1)}
-                    >
-                      <Radio style={radioStyle} value={"a"}>
-                        A
-                        {
-                          checked &&
-                          data.subQuestions[1].answer == "a" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
-                      </Radio>
-                      <Radio style={radioStyle} value={"b"}>
-                        B
-                        {
-                          checked &&
-                          data.subQuestions[1].answer == "b" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
-                      </Radio>
-                      <Radio style={radioStyle} value={"c"}>
-                        C
-                        {
-                          checked &&
-                          data.subQuestions[1].answer == "c" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
-                      </Radio>
-                    </Radio.Group>
-                  </Col>
-                  <Col span={8}>
-                    <b>{10 + 3 * i + 3}.</b>
-                    <br />
-                    <Radio.Group
-                      onChange={e => onChange(e.target.value, 3 * i + 2)}
-                    >
-                      <Radio style={radioStyle} value={"a"}>
-                        A
-                        {
-                          checked &&
-                          data.subQuestions[2].answer == "a" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
-                      </Radio>
-                      <Radio style={radioStyle} value={"b"}>
-                        B
-                        {
-                          checked &&
-                          data.subQuestions[2].answer == "b" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
-                      </Radio>
-                      <Radio style={radioStyle} value={"c"}>
-                        C
-                        {
-                          checked &&
-                          data.subQuestions[2].answer == "c" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
-                      </Radio>
-                    </Radio.Group>
-                  </Col>
+                  {
+                    // <Col span={8}>
+                    //                   <b>{10 + 3 * i + 2}.</b>
+                    //                   <br />
+                    //                   <Radio.Group
+                    //                     onChange={e => onChange(e.target.value, 3 * i + 1)}
+                    //                   >
+                    //                     <Radio style={radioStyle} value={"a"}>
+                    //                       A
+                    //                       {
+                    //                         checked &&
+                    //                         data.subQuestions[1].answer == "a" &&
+                    //                         <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    //                       }
+                    //                     </Radio>
+                    //                     <Radio style={radioStyle} value={"b"}>
+                    //                       B
+                    //                       {
+                    //                         checked &&
+                    //                         data.subQuestions[1].answer == "b" &&
+                    //                         <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    //                       }
+                    //                     </Radio>
+                    //                     <Radio style={radioStyle} value={"c"}>
+                    //                       C
+                    //                       {
+                    //                         checked &&
+                    //                         data.subQuestions[1].answer == "c" &&
+                    //                         <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    //                       }
+                    //                     </Radio>
+                    //                   </Radio.Group>
+                    //                 </Col>
+                    //                 <Col span={8}>
+                    //                   <b>{10 + 3 * i + 3}.</b>
+                    //                   <br />
+                    //                   <Radio.Group
+                    //                     onChange={e => onChange(e.target.value, 3 * i + 2)}
+                    //                   >
+                    //                     <Radio style={radioStyle} value={"a"}>
+                    //                       A
+                    //                       {
+                    //                         checked &&
+                    //                         data.subQuestions[2].answer == "a" &&
+                    //                         <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    //                       }
+                    //                     </Radio>
+                    //                     <Radio style={radioStyle} value={"b"}>
+                    //                       B
+                    //                       {
+                    //                         checked &&
+                    //                         data.subQuestions[2].answer == "b" &&
+                    //                         <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    //                       }
+                    //                     </Radio>
+                    //                     <Radio style={radioStyle} value={"c"}>
+                    //                       C
+                    //                       {
+                    //                         checked &&
+                    //                         data.subQuestions[2].answer == "c" &&
+                    //                         <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
+                    //                       }
+                    //                     </Radio>
+                    //                   </Radio.Group>
+                    //                 </Col>
+                                  }
                 </Row>
               </div>
             );
