@@ -142,7 +142,10 @@ const Admin = ({}) => {
             className="menucon"
             style={{ background: '#fff', padding: 0 }}
           >
-            <div className="rightMenu" style={{ float: 'right' }}>
+            <div
+              className="rightMenu"
+              style={{ float: 'right', paddingTop: '1rem' }}
+            >
               <RightNav mode={mode} />
             </div>
           </Header>
