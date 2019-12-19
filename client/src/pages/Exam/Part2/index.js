@@ -223,6 +223,11 @@ const Intro = (props) => {
                   </audio>
                 }
                 </Row>
+                <Row>
+                    {checked && (
+                      <div>{data.scripts}</div>
+                    )}
+                  </Row>
                 <Row style={{ marginTop: '1em' }}>
                   <Col span={8}>
                     <b>{10 + i + 1}.</b>

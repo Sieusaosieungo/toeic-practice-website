@@ -260,6 +260,11 @@ const Intro = props => {
                     )}
                   </Row>
                   <Row>
+                    {checked && (
+                      <div>{data.scripts}</div>
+                    )}
+                  </Row>
+                  <Row>
                     <b>{i + 1}. Select the answer</b>
                   </Row>
                   <Row>
