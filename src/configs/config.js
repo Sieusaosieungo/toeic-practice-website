@@ -44,7 +44,7 @@ const questionLevel = {
 //   NQPart7: 12,
 //   NQPrefix: 'NQPart',
 // };
-Test
+// Test
 const numberQuestions = {
   NQPart1: 2,
   NQPart2: 2,
