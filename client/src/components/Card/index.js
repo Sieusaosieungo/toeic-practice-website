@@ -12,13 +12,27 @@ const Card = ({ newWord, meaning, image, example }) => {
   const handleClick = () => setIsFlipped(!isFlipped);
 
   return (
-    <div className={`${prefixCls}`}>
-      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-        <div onClick={handleClick} className={`${prefixCls}-front`}>
+    <div
+      className={`${prefixCls}`}
+      onMouseEnter={handleClick}
+      onMouseLeave={handleClick}
+    >
+      <ReactCardFlip
+        isFlipped={isFlipped}
+        flipDirection="horizontal"
+        infinite={true}
+      >
+        <div
+          // onClick={handleClick}
+          className={`${prefixCls}-front`}
+        >
           <img src={`${config.API_URL}/${image}`} alt={newWord} />
         </div>
 
-        <div onClick={handleClick} className={`${prefixCls}-back`}>
+        <div
+          // onClick={handleClick}
+          className={`${prefixCls}-back`}
+        >
           <p style={{ color: '' }} className={`${prefixCls}-new-word`}>
             Từ mới:&nbsp;{newWord}
           </p>

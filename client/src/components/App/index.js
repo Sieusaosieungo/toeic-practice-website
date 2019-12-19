@@ -80,7 +80,6 @@ function App({
     }
   }, [accessTokenCur]);
 
-  // console.log('accessToken: ', accessTokenCur);
 
   if (accessTokenCur && accessTokenCur !== '') {
     if (Object.keys(user).length > 0) {
