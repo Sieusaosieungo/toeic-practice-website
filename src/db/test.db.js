@@ -355,10 +355,33 @@ const finishTestDbV2 = async (body, user) => {
   return result;
 };
 
+const randomPartDb = async query => {
+  let { part, level } = query;
+  part = Number.parseInt(part, 10);
+  level = Number.parseInt(level, 10);
+  const numQues = numberQuestions[numberQuestions.NQPrefix + part] || 0;
+  const numSubQues = numSubQuestions[numSubQuestions.numSubQPrefix + part] || 0;
+
+  const ranQuestions = await Question.aggregate([
+    { $match: { part, level } },
+    {
+      $match: {
+        $expr: {
+          $eq: [{ $size: '$subQuestions' }, numSubQues],
+        },
+      },
+    },
+    { $sample: { size: numQues } },
+  ]);
+
+  return ranQuestions;
+};
+
 module.exports = {
   randomTestDb,
   submitResultPartDb,
   getTestByIdDb,
   finishTestDbV1,
   finishTestDbV2,
+  randomPartDb,
 };
