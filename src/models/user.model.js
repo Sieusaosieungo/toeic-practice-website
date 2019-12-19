@@ -31,7 +31,6 @@ const userSchema = new mongoose.Schema(
     },
     targetPoint: {
       type: Number,
-      required: true,
     },
     name: {
       type: String,
