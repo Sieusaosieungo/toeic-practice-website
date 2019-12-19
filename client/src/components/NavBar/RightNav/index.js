@@ -101,8 +101,6 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch, history }) => {
     document.getElementById('link').click();
     message.success('Đăng xuất thành công');
     // toastr.success("Đăng xuất thành công")
-    // dispatch(signOut());
-    // window.location.reload();
   };
 
   const onSignup = res => {
@@ -145,14 +143,9 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch, history }) => {
         });
         sessionStorage.grammar_topics = JSON.stringify(res.data);
       });
-      // services.getGrammarById()
-      //   .then(res => {
-      //     sessionStorage.grammar_topics = JSON.stringify(res.data)
-      //   })
-      // window.location.reload();
     }
   }, [accessToken]);
-  // console.log(user.data.results.user.avatar)
+
   return (
     <Spin spinning={loading} size="small">
       <Menu mode={mode} selectedKeys={[]}>

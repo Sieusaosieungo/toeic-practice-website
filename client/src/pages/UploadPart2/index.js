@@ -20,7 +20,7 @@ const UploadPart2 = ({
     part: 2,
     level: 0,
     audio: null,
-    scripts:''
+    scripts: '',
   });
   const [subQuesPart2Child, setSubQuesPart2Child] = useState({});
   const refInputFile = useRef(null);
@@ -55,7 +55,7 @@ const UploadPart2 = ({
     })
       .then(res => {
         message.success('Đăng bài thành công.');
-        setPart2({ part: 2, level: 0, audio: null });
+        setPart2({ part: 2, level: 0, audio: null, scripts: '' });
         refInputFile.current.value = null;
         setSubQuesPart2Child({});
       })

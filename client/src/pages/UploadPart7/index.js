@@ -62,7 +62,6 @@ const UploadPart7 = ({
       })
       .catch(err => {
         message.error('Đăng câu hỏi lỗi. Mời bạn đăng lại.');
-        window.location.reload();
         console.log(err);
       });
   };

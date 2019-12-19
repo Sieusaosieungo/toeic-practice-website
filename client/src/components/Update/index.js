@@ -137,7 +137,6 @@ class UpdateForm extends React.Component {
           avatar: res.data.results.user.avatar,
         });
         message.success('Cập nhật ảnh thành công');
-        // window.location.reload();
       })
       .catch(err => {
         this.setState({ loading: false });

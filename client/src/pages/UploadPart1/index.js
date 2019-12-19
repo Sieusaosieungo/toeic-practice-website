@@ -58,7 +58,7 @@ const UploadPart1 = ({
     })
       .then(res => {
         message.success('Đăng bài thành công.');
-        setPart1({ part: 1, level: 0, audio: '' });
+        setPart1({ part: 1, level: 0, audio: '', scripts: '' });
         refInputAudio.current.value = null;
         refInputImage.current.value = null;
         setSubQuesPart1Child({});

@@ -67,13 +67,12 @@ const UploadPart3 = ({
     })
       .then(res => {
         message.success('Bạn đã hoàn tất đăng câu hỏi.');
-        setPart3({ part: 3, level: 0, audio: '' });
+        setPart3({ part: 3, level: 0, audio: '', scripts: '' });
         refInputFile.current.value = null;
         setSubQuesPart3({});
       })
       .catch(err => {
         message.error('Đăng câu hỏi lỗi. Mời bạn đăng lại.');
-        window.location.reload();
         console.log(err.response);
       });
   };
