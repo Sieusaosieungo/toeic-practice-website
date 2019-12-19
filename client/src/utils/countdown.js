@@ -18,7 +18,7 @@ class BackwardTimer extends Component {
             }}><b>FINISH ALL</b></a></li>
 	          <li><a style={{fontSize: "25px", paddingLeft: "15px", paddingRight: "15px"}} href="#"><b><Countdown 
 	          	value={time + 1000 * 2 * 60 * 60} 
-	          	onFinish={()=>{}} 
+	          	onFinish={()=>{this.props.finishAll()}} 
 	          /></b></a></li>
 	          <li className="backpage">
 	              <a className="exit-exam" href="#" onClick={(e) => {

@@ -16,6 +16,7 @@ export const services = {
   getExamTest,
   getExamTestById,
   submitResults,
+  finish
 };
 
 function login(email, password) {
@@ -188,4 +189,18 @@ function submitResults(object) {
     .catch(err => {
       throw err;
     });
+}
+
+
+function finish(object) {
+  // return axios({
+  //   method: 'POST',
+  //   url: `${config.API_URL}/api/tests/results/part`,
+  //   headers: authHeader(),
+  //   data : object
+  // })
+  //   .then(res => res)
+  //   .catch(err => {
+  //     throw err;
+  //   });
 }
