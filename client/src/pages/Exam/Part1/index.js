@@ -261,7 +261,16 @@ const Intro = props => {
                   </Row>
                   <Row>
                     {checked && (
-                      <div>{data.scripts}</div>
+                      <div
+                        className="ck-post-display"
+                        style={{
+                          borderRadius: '3px',
+                          padding: '16px',
+                          margin: '10px 0',
+                          border: '1px solid #d1d5da',
+                        }}
+                        dangerouslySetInnerHTML={{ __html: data.scripts }}
+                      ></div>
                     )}
                   </Row>
                   <Row>

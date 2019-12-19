@@ -118,11 +118,12 @@ class Grammar extends React.Component {
                       </Row>
                       <Row>
                         {
-                          JSON.parse(sessionStorage.grammar).map(function(grammar, i) {
+                          JSON.parse(sessionStorage.grammar).map(function (grammar, i) {
                             if(grammar.id == data._id) {
                               return <div>
                                 {
-                                  grammar.data.grammars.map(function(gra, i) {
+                                  grammar.data.grammars.map(function (gra, i) {
+                    
                                     return <div>
                                       <Row>
                                         <Tag color="blue" style={{ marginBottom: '20px', fontSize : "120%" }}>

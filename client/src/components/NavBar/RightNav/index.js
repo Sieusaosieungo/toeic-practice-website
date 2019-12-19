@@ -132,7 +132,6 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch, history }) => {
         });
 
       services.getGrammarTopics().then(res => {
-        console.log(res.data);
         var grammar = [];
         res.data.results.topics.map(function(data, i) {
           services.getGrammarById({ idTopic: data._id }).then(res => {

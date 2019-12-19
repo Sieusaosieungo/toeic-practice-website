@@ -32,6 +32,7 @@ const PostGrammar = ({
   };
 
   const handlePostGrammar = () => {
+    // console.log(grammar.content);
     axios({
       method: 'POST',
       url: `${config.API_URL}/api/grammar`,
