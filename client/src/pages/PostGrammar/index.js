@@ -42,9 +42,9 @@ const PostGrammar = ({
     })
       .then(res => {
         message.success('Đăng bài thành công.');
-        setGrammarTopics({ title: '', content: '', idGrammarTopic: '' });
+        setGrammar({ title: '', content: '', idGrammarTopic: '' });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err.response));
   };
 
   useEffect(() => {
@@ -68,6 +68,7 @@ const PostGrammar = ({
         <div className="post-grammar-row">
           <div>Nhập tiêu đề ngữ pháp:</div>
           <Input
+            value={grammar.title}
             className="post-grammar-input"
             placeholder="Nhập tiêu đề ngữ pháp"
             name="title"
@@ -77,6 +78,7 @@ const PostGrammar = ({
         <div className="post-grammar-row">
           <div>Chọn topic: </div>
           <Select
+            value={grammar.idGrammarTopic}
             className="post-grammar-input"
             onChange={handleChangeIdTopic}
             placeholder="Chọn topic cho ngữ pháp bạn muốn đăng"

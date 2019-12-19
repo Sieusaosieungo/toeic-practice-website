@@ -19,13 +19,13 @@ const PostTopicGrammar = ({
     setTopic({ ...topic, [name]: value });
   };
 
-  console.log(topic);
   const checkHandle = () => {
     setSubmit(true);
     if (topic.title.length > 0 && topic.title.length <= 25) {
       handleUpload();
     }
   };
+
   const handleUpload = () => {
     setLoading(true);
     axios({
@@ -43,7 +43,7 @@ const PostTopicGrammar = ({
         message.success('Thêm tiêu đề ngữ pháp thành công');
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.response);
         setLoading(false);
         message.error('Thêm tiêu đề ngữ pháp thất bại');
       });

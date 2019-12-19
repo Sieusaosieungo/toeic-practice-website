@@ -68,9 +68,6 @@ const UploadPart1 = ({
 
   const handleChange = value => setPart1({ ...part1, level: value });
 
-  const handleChangeScripts = e =>
-    setPart1({ ...part1, scripts: e.target.value });
-
   const handleChangeAudio = ({ target: { files } }) =>
     setPart1({ ...part1, audio: files[0] });
 
