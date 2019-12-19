@@ -67,6 +67,7 @@ const numSubQuestions = {
   numSubQP5: 1,
   numSubQP6: 3,
   numSubQP7: 4,
+  numSubQPrefix: 'numSubQP',
 };
 
 module.exports = {

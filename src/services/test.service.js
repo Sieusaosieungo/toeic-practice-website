@@ -4,6 +4,7 @@ const {
   getTestByIdDb,
   finishTestDbV1,
   finishTestDbV2,
+  randomPartDb,
 } = require('../db/test.db');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
@@ -103,10 +104,22 @@ const finishTestV2 = async (body, user) => {
   return data;
 };
 
+const randomPart = async query => {
+  const data = await randomPartDb(query);
+  if (!data) {
+    throw new CustomError(
+      errorCode.INTERNAL_SERVER_ERROR,
+      'Không thể tạo đề mới',
+    );
+  }
+  return data;
+};
+
 module.exports = {
   randomTest,
   submitResultPart,
   getTestById,
   finishTestV1,
   finishTestV2,
+  randomPart,
 };
