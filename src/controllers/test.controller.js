@@ -91,10 +91,41 @@ const finishTestV2 = async (req, res) => {
   res.send(rs);
 };
 
+const randomPart = async (req, res) => {
+  const { query } = req;
+  const { level, part } = query;
+
+  if (!query || !part) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm part để tạo để');
+  }
+  if (!query || !level) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'Hãy thêm level để tạo để');
+  }
+  if (!validator.isNumeric(part)) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'part phải là một số');
+  }
+  if (part > 7 || part < 1) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'part phải thuộc đoạn [1; 7]');
+  }
+  if (!validator.isNumeric(level)) {
+    throw new CustomError(errorCode.BAD_REQUEST, 'level phải là một số');
+  }
+  if (level > 7 || level < 0) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      'level phải thuộc đoạn [0; 7]',
+    );
+  }
+
+  const rs = await testService.randomPart(query);
+  res.send(rs);
+};
+
 module.exports = {
   randomTest,
   submitResultPart,
   getTestById,
   finishTestV1,
   finishTestV2,
+  randomPart,
 };
