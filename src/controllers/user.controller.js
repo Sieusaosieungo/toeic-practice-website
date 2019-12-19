@@ -107,6 +107,16 @@ async function uploadAvatar(req, res) {
   });
 }
 
+async function getAllUser(req, res) {
+  const users = await userService.getAllUser();
+  res.send({
+    status: 1,
+    results: {
+      users,
+    }
+  })
+}
+
 module.exports = {
   signup,
   login,
@@ -115,4 +125,5 @@ module.exports = {
   getInfoUser,
   updateInfoUser,
   uploadAvatar,
+  getAllUser,
 };

@@ -86,24 +86,15 @@ async function updateInfoUser(user, infoUpdates) {
 async function uploadAvatar(user, avatar) {
   const avatarLink = await uploadImage(avatar, '/images/avatar');
 
-  // const bodyFormData = new FormData();
-  // bodyFormData.append('relativePath', 'images/avatar');
-  // bodyFormData.append('file', fs.createReadStream(avatarLink));
-
-  // const config = {
-  //   headers: bodyFormData.getHeaders(),
-  // };
-
-  // const res = await axios.post(
-  //   'http://123.30.235.196:5221/api/files',
-  //   bodyFormData,
-  //   config,
-  // );
-
   user.avatar = avatarLink;
   await user.save();
 
   return user;
+}
+
+async function getAllUser() {
+  const users = await User.find({});
+  return users;
 }
 
 module.exports = {
@@ -113,4 +104,5 @@ module.exports = {
   logoutAllDevice,
   updateInfoUser,
   uploadAvatar,
+  getAllUser,
 };
