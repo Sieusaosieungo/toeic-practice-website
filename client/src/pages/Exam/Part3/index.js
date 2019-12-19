@@ -190,6 +190,11 @@ const Intro = (props) => {
               }
               </Row>
               <Row>
+                    {checked && (
+                      <div>{data.scripts}</div>
+                    )}
+                  </Row>
+              <Row>
                 <b>{41 + 3 * i}. {data.subQuestions[0].question}</b>
               </Row>
               <Row>
