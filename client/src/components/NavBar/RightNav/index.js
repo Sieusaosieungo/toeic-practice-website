@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { withCookies, useCookies } from 'react-cookie';
-import { Menu, Avatar, Icon, Dropdown, Modal, message } from 'antd';
+import { Menu, Avatar, Icon, Dropdown, Modal, message, Spin } from 'antd';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Register from '../../Register';
 import Login from '../../Login';
+import {services} from '../../../services'
 import { DELETE_USER, SIGN_IN } from '../../../constants/ActionTypes';
 // import toastr from '../../../common/toastr'
 
@@ -26,7 +27,7 @@ const Submenu = logOut => {
   );
 };
 
-const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
+const RightMenu = ({ mode, user, accessTokenStore, dispatch }) => {
   console.log('mode: ', mode);
   // console.log(history)
   const [cookies, setCookie, removeCookie] = useCookies('cookies');
@@ -35,6 +36,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
 
   const [visibleRegForm, setVisibleRegForm] = useState(false);
   const [visibleLoginForm, setVisibleLoginForm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const showModalRegister = () => {
     setVisibleRegForm(true);
@@ -52,57 +54,66 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
     setVisibleLoginForm(false);
   };
 
-  const onLogin = (res) => {
+  const onLogin = res => {
     // console.log(data)
     setCookie('accessToken', res.data.results.token);
     setCookie('isAuth', true);
     message.success('Đăng nhập thành công !');
-  }
+  };
 
   const logOut = () => {
     removeCookie('accessToken');
-    removeCookie('isAuth')
-    dispatch({type : DELETE_USER});
+    removeCookie('isAuth');
+    dispatch({ type: DELETE_USER });
     setVisibleLoginForm(false);
-    message.success("Đăng xuất thành công");
+    message.success('Đăng xuất thành công');
     // toastr.success("Đăng xuất thành công")
     // dispatch(signOut());
     // window.location.reload();
   };
 
+  const onSignup = res => {
+    // console.log(data)
+    setCookie('accessToken', res.data.results.token);
+    setCookie('isAuth', true);
+    message.success('Đăng kí thành công !');
+  };
+
   useEffect(() => {
     if (accessToken && Object.keys(user).length === 0) {
-      axios({
-        method: 'GET',
-        url: `${config.API_URL}/users/`,
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+      setLoading(true);
+      services.getUser(accessToken)
         .then(res => {
+          console.log(res)
           if (res.data.results.user) {
             // console.log('user info after call axios: ', res.data.results.user);
-            dispatch(storeUser(res.data.results.user));
+            dispatch({type : SIGN_IN, data : res});
+            setLoading(false);
             // dispatch(signIn(accessToken));
           }
         })
         .catch(() => {
+          setLoading(false);
           logOut();
         });
 
       // window.location.reload();
     }
   }, [accessToken]);
+  // console.log(user.data.results.user.avatar)
   return (
+      <Spin spinning={loading} size="small">
     <Menu mode={mode} selectedKeys={[]}>
       {Object.keys(user).length > 0 && (
         <Menu.Item key="sign-out" className="avatar">
           <Avatar
             src={
-              user.images ||
+              (user.data.results.user.avatar &&
+                'https://toeic-practice.herokuapp.com' +
+                  user.data.results.user.avatar) ||
               'https://cdn.eva.vn/upload/4-2019/images/2019-11-06/sinh-ra-trong-gia-dinh-viet-nhung-co-be-nay-lai-mang-ve-dep-tay-la-ky-untitled-19-1573053449-116-width600height750.jpg'
             }
-            style={{marginRight : "10px"}}
+            style={{ marginRight: '10px' }}
           />
           {user.data.results.user.name}
           <Dropdown overlay={() => Submenu(logOut)}>
@@ -114,15 +125,7 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="log-in">
-          <Link
-            // to={location => ({
-            //   ...location,
-            //   pathname: '/login',
-            //   state: { prevPath: location.pathname },
-            // })}
-            className="auth-button"
-            onClick={showModalLogin}
-          >
+          <Link to="" className="auth-button" onClick={showModalLogin}>
             Đăng nhập
           </Link>
           <Modal
@@ -131,13 +134,13 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
             footer={null}
             onCancel={handleCancelLoginForm}
           >
-            <Login login={onLogin}/>
+            <Login login={onLogin} />
           </Modal>
         </Menu.Item>
       )}
       {!(Object.keys(user).length > 0) && (
         <Menu.Item key="sign-up">
-          <Link className="auth-button" onClick={showModalRegister}>
+          <Link to="" className="auth-button" onClick={showModalRegister}>
             Đăng ký
           </Link>
           <Modal
@@ -147,11 +150,12 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch}) => {
             onCancel={handleCancelRegForm}
             width={'50vw'}
           >
-            <Register />
+            <Register signup={onSignup} />
           </Modal>
         </Menu.Item>
       )}
     </Menu>
+    </Spin>
   );
 };
 
