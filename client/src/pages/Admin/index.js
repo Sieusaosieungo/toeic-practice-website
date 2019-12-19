@@ -35,12 +35,10 @@ const Admin = ({}) => {
           <div className="logoAdmin" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="0">
-              <Icon type="user" />
-              <span>
-                <Link to="/" style={{ color: '#fff' }}>
-                  User
-                </Link>
-              </span>
+              <Link to="/" style={{ color: '#fff' }}>
+                <Icon type="user" />
+                <span style={{ color: 'white' }}>User</span>
+              </Link>
             </Menu.Item>
             <SubMenu
               key="sub1"
