@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Select, message, Input } from 'antd';
 import axios from 'axios';
 import config from '../../utils/config';
@@ -16,6 +16,7 @@ const UploadNewword = ({
 }) => {
   const [newword, setNewword] = useState({});
   const [newwordTopics, setNewwordTopics] = useState([]);
+  const refUploadNewword = useRef(null);
 
   const handleChangeIdTopic = value => {
     setNewword({ ...newword, idNewWordTopic: value });
@@ -36,11 +37,6 @@ const UploadNewword = ({
     formData.set('image', newword.image);
     formData.set('example', newword.example);
 
-    console.log('form data before upload des:');
-    for (const [x, y] of formData.entries()) {
-      console.log(x, y);
-    }
-
     axios({
       method: 'POST',
       url: `${config.API_URL}/api/new-words`,
@@ -53,7 +49,7 @@ const UploadNewword = ({
       .then(res => {
         message.success('Đăng từ mới thành công.');
         setNewword({});
-        console.log('newword after uploaded: ', res.data);
+        refUploadNewword.current.value = null;
       })
       .catch(err => console.log(err.response));
   };
@@ -83,6 +79,7 @@ const UploadNewword = ({
           style={{ gridColumn: '3/11' }}
           onChange={handleChangeIdTopic}
           placeholder="Chọn topic cho từ mới bạn muốn đăng"
+          value={newword.idNewWordTopic}
         >
           {newwordTopics.map(({ _id, title }, index) => (
             <Option key={index} value={_id}>
@@ -99,6 +96,7 @@ const UploadNewword = ({
               required
               onChange={handleSubmitImage}
               name="image"
+              ref={refUploadNewword}
             />
             <span>Chọn ảnh</span>
           </label>

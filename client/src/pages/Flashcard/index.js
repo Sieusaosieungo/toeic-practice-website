@@ -27,9 +27,6 @@ const Flashcard = ({
     state: { topicId },
   },
 }) => {
-  // console.log('Flashcard match:', match);
-  // console.log('Flashcard location:', location);
-
   const [newWords, setNewWords] = useState([]);
 
   const carouselRef = useRef(null);
@@ -47,7 +44,6 @@ const Flashcard = ({
     })
       .then(res => {
         setNewWords(res.data.results.newWords);
-        // console.log(res.data);
       })
       .catch(err => console.log(err));
   }, []);

@@ -1,4 +1,7 @@
 import React from 'react';
+import { services } from '../../services';
+import { SIGN_IN } from '../../constants/ActionTypes';
+import { connect } from 'react-redux';
 import {
   Form,
   Input,
@@ -12,12 +15,10 @@ import {
   Button,
   AutoComplete,
   Spin,
-  message
+  message,
 } from 'antd';
-import {services} from '../../services'
-import {SIGN_IN} from '../../constants/ActionTypes'
-import { connect } from 'react-redux';
-import './index.scss'
+
+import './index.scss';
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -26,30 +27,29 @@ class RegistrationForm extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
-    loading : false
+    loading: false,
   };
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.setState({loading : true})
-        services.signUp(values)
-          .then(
-            res => { 
-              const {dispatch} = this.props;
-              dispatch({type : SIGN_IN, data : res})
-              this.props.signup(res)
-              this.setState({loading : false})
-              // toastr.success("Đăng nhập thành công")
-            }
-          )
-          .catch(err => {
-            this.setState({loading : false})
-            // toastr.error("Đăng nhập thất bại")
-            message.error("Đăng kí thất bại")
-            throw err;
+        this.setState({ loading: true });
+        services
+          .signUp(values)
+          .then(res => {
+            const { dispatch } = this.props;
+            dispatch({ type: SIGN_IN, data: res });
+            this.props.signup(res);
+            this.setState({ loading: false });
+            // toastr.success("Đăng nhập thành công")
           })
+          .catch(err => {
+            this.setState({ loading: false });
+            // toastr.error("Đăng nhập thất bại")
+            message.error('Đăng kí thất bại');
+            throw err;
+          });
       }
     });
   };
@@ -121,112 +121,138 @@ class RegistrationForm extends React.Component {
 
     return (
       <Spin spinning={this.state.loading} tip="Loading...">
-      <Form
-        {...formItemLayout}
-        onSubmit={this.handleSubmit}
-        style={{ margin: '0 auto' }}
-      >
-        <Form.Item label="E-mail">
-          {getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                required: true,
-                message: 'Please input your E-mail!',
-              },
-            ],
-          })(
-            <Col xs={24} sm={24} md={24} lg={20} xl={20}>
-              <Input />
-            </Col>,
-          )}
-        </Form.Item>
-        <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-              {
-                validator: this.validateToNextPassword,
-              },
-            ],
-          })(
-            <Col xs={24} sm={24} md={24} lg={20} xl={20}>
-              <Input.Password className="abcdef" />
-            </Col>,
-          )}
-        </Form.Item>
-        <Form.Item label="Confirm" hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!',
-              },
-              {
-                validator: this.compareToFirstPassword,
-              },
-            ],
-          })(
-            <Col xs={24} sm={24} md={24} xl={20} lg={20}>
-              <Input.Password onBlur={this.handleConfirmBlur} />
-            </Col>,
-          )}
-        </Form.Item>
-        <Form.Item
-          label={
-            <span>
-              Name&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          }
+        <Form
+          {...formItemLayout}
+          onSubmit={this.handleSubmit}
+          style={{ margin: '0 auto' }}
         >
-          {getFieldDecorator('name', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your name!',
-                whitespace: true,
-              },
-            ],
-          })(
-            <Col xs={24} sm={24} md={24} xl={20} lg={20}>
-              <Input />
-            </Col>,
-          )}
-        </Form.Item>
-        <Form.Item label="Gender">
-          {getFieldDecorator('gender', {
-            rules: [{ required: true, message: 'Please select your country!' }],
-          })(
-            <Select className="ant-col" style={{width : "83.33%"}} placeholder="Please select gender...">
-              <Option value="male">Nam</Option>
-              <Option value="female">Nữ</Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
-            valuePropName: 'checked',
-          })(
-            <Checkbox>
-              Tôi đồng ý với chính sách của nhóm 07.
-            </Checkbox>,
-          )}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            Đăng ký
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item label="E-mail">
+            {getFieldDecorator('email', {
+              rules: [
+                {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+                },
+                {
+                  required: true,
+                  message: 'Please input your E-mail!',
+                },
+              ],
+            })(
+              <Col xs={24} sm={24} md={24} lg={20} xl={20}>
+                <Input />
+              </Col>,
+            )}
+          </Form.Item>
+          <Form.Item label="Password" hasFeedback>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your password!',
+                },
+                {
+                  validator: this.validateToNextPassword,
+                },
+              ],
+            })(
+              <Col xs={24} sm={24} md={24} lg={20} xl={20}>
+                <Input.Password className="abcdef" />
+              </Col>,
+            )}
+          </Form.Item>
+          <Form.Item label="Confirm" hasFeedback>
+            {getFieldDecorator('confirm', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please confirm your password!',
+                },
+                {
+                  validator: this.compareToFirstPassword,
+                },
+              ],
+            })(
+              <Col xs={24} sm={24} md={24} xl={20} lg={20}>
+                <Input.Password onBlur={this.handleConfirmBlur} />
+              </Col>,
+            )}
+          </Form.Item>
+          <Form.Item
+            label={
+              <span>
+                Name&nbsp;
+                <Tooltip title="What do you want others to call you?">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
+              </span>
+            }
+          >
+            {getFieldDecorator('name', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your name!',
+                  whitespace: true,
+                },
+              ],
+            })(
+              <Col xs={24} sm={24} md={24} xl={20} lg={20}>
+                <Input />
+              </Col>,
+            )}
+          </Form.Item>
+          <Form.Item label="Gender">
+            {getFieldDecorator('gender', {
+              rules: [
+                { required: true, message: 'Please select your country!' },
+              ],
+            })(
+              <Select
+                className="ant-col"
+                style={{ width: '83.33%' }}
+                placeholder="Please select gender..."
+              >
+                <Option value="male">Nam</Option>
+                <Option value="female">Nữ</Option>
+              </Select>,
+            )}
+          </Form.Item>
+          <Form.Item label="Target point">
+            {getFieldDecorator('targetPoint ', {
+              rules: [
+                { required: true, message: 'Please select your target point!' },
+              ],
+            })(
+              <Select
+                className="ant-col"
+                style={{ width: '83.33%' }}
+                placeholder="Please select target point..."
+              >
+                <Option value="100">100</Option>
+                <Option value="200">200</Option>
+                <Option value="300">300</Option>
+                <Option value="400">400</Option>
+                <Option value="500">500</Option>
+                <Option value="600">600</Option>
+                <Option value="700">700</Option>
+                <Option value="800">800</Option>
+                <Option value="900">900</Option>
+                <Option value="990">990</Option>
+              </Select>,
+            )}
+          </Form.Item>
+          <Form.Item {...tailFormItemLayout}>
+            {getFieldDecorator('agreement', {
+              valuePropName: 'checked',
+            })(<Checkbox>Tôi đồng ý với chính sách của nhóm 07.</Checkbox>)}
+          </Form.Item>
+          <Form.Item {...tailFormItemLayout}>
+            <Button type="primary" htmlType="submit">
+              Đăng ký
+            </Button>
+          </Form.Item>
+        </Form>
       </Spin>
     );
   }
@@ -245,4 +271,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'register' })(RegistrationForm));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Form.create({ name: 'register' })(RegistrationForm));
