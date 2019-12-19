@@ -110,7 +110,7 @@ const Result = props => {
                 <Button 
                   className="ant-btn-primary ant-card-hoverable" 
                   onClick={() => props.history.push('/')}
-                >Exit
+                >Thoát
                 </Button>
               </div>
             </div>
