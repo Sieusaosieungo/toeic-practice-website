@@ -26,6 +26,10 @@ const testSchema = new mongoose.Schema({
       partPoint: {
         type: Number,
       },
+      targetPart: {
+        type: Number,
+        default: 0,
+      },
     },
   ],
   // Check if test finished
