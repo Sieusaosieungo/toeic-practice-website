@@ -62,19 +62,18 @@ const UploadPart4 = ({
     })
       .then(res => {
         message.success('Bạn đã hoàn tất đăng câu hỏi.');
-        setPart4({ part: 4, level: 0, audio: null });
+        setPart4({ part: 4, level: 0, audio: null, scripts: '' });
         refInputFile.current.value = null;
         setSubQuesPart4({});
       })
       .catch(err => {
-        window.location.reload();
         message.error('Đăng câu hỏi lỗi. Mời bạn đăng lại.');
         console.log(err.response);
       });
   };
 
   const handleChange = value => setPart4({ ...part4, level: value });
-  
+
   const handleChangeAudio = e =>
     setPart4({ ...part4, audio: e.target.files[0] });
 

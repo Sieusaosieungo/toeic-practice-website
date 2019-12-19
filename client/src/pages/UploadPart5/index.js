@@ -52,7 +52,6 @@ const UploadPart5 = ({
           setPart5({ part: 5, level: 0 });
         })
         .catch(err => {
-          window.location.reload();
           message.error('Đăng câu hỏi lỗi. Mời bạn đăng lại.');
           console.log(err);
         });

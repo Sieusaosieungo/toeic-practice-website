@@ -63,7 +63,6 @@ const UploadPart6 = ({
         setSubQuesPart6({});
       })
       .catch(err => {
-        window.location.reload();
         message.error('Đăng câu hỏi lỗi. Mời bạn đăng lại.');
         console.log(err);
       });
