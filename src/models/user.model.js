@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema(
         default: 'user',
       },
     },
+    targetPoint: {
+      type: Number,
+      required: true,
+    },
     name: {
       type: String,
       trim: true,

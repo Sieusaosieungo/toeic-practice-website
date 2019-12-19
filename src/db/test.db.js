@@ -4,6 +4,7 @@ const Question = require('../models/question.model');
 const { numberQuestions, numSubQuestions } = require('../configs/config');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
+const mapTarget = require('../configs/configTarget');
 
 const randomTestDb = async (user, query) => {
   let { level } = query;
@@ -325,9 +326,39 @@ const finishTestDbV1 = async body => {
   return result;
 };
 
+const finishTestDbV2 = async (body, user) => {
+  const { id } = body;
+  const { targetPoint } = user;
+  const test = await Test.findById(id);
+
+  if (!test) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      `Không thể tìm thấy bài test có id: ${id}`,
+    );
+  }
+  if (!targetPoint) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      `Không thể tìm thấy user.targetPoint`,
+    );
+  }
+  test.checked = true;
+
+  test.partResults.forEach(partResult => {
+    partResult.targetPart = mapTarget.get(targetPoint).target[
+      partResult.part - 1
+    ];
+  });
+
+  const result = await test.save();
+  return result;
+};
+
 module.exports = {
   randomTestDb,
   submitResultPartDb,
   getTestByIdDb,
   finishTestDbV1,
+  finishTestDbV2,
 };
