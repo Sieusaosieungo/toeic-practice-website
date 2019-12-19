@@ -4,10 +4,32 @@ const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
 
 async function signup(req, res) {
-  const { email } = req.body;
+  const { email, targetPoint } = req.body;
 
   if (!validator.isEmail(email)) {
     throw new Error('Email không hợp lệ');
+  }
+  if (!targetPoint) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      'Hãy thêm mục tiêu targetPoint',
+    );
+  }
+  if (!validator.isNumeric(targetPoint.toString())) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      'Mục tiêu targetPoint phải là một số',
+    );
+  }
+  if (
+    targetPoint % 100 !== 0 ||
+    Number.parseInt(targetPoint / 100, 10) > 9 ||
+    Number.parseInt(targetPoint / 100, 10) < 1
+  ) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      'Mục tiêu targetPoint phải là một số chia hết cho 100 và thuộc đoạn [100, 900]',
+    );
   }
 
   const { user, token } = await userService.signup(req.body);
