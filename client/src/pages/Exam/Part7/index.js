@@ -332,44 +332,55 @@ const Intro = (props) => {
             style={{marginRight : "20px"}}
           >Quay lại part 6
           </Button>
-          <Button className="ant-btn-primary ant-card-hoverable" 
-          onClick={()=> {
-            var object = {};
-            object.idTest = props.location.search.substring(4);
-            object.part = 7;
-            var results = [];
-            dataPart1.map(function(data, i) {
-              var temp = {};
-              console.log(data)
-              temp.idQuestion = data._id;
-              temp.userAnswer = [
-                {
-                  idSubQuestion : data.subQuestions[0]._id,
-                  answer : resultsPart1[4 * i]
-                },
-                {
-                  idSubQuestion : data.subQuestions[1]._id,
-                  answer : resultsPart1[4 * i + 1]
-                },
-                {
-                  idSubQuestion : data.subQuestions[2]._id,
-                  answer : resultsPart1[4 * i + 2]
-                },
-                {
-                  idSubQuestion : data.subQuestions[3]._id,
-                  answer : resultsPart1[4 * i + 3]
-                },
-              ]
-              results.push(temp);
-            })
-            object.results = results;
-            services.submitResults(object)
-              .then(res => {
-                console.log(res)
-                props.history.push('/exam/finish?id=' + props.location.search.substring(4));
+          {
+            checked &&
+            <Button 
+              className="ant-btn-primary ant-card-hoverable" 
+              onClick={() => props.history.push('/')}
+            >Thoát
+            </Button>
+          }
+          {
+            !checked &&
+            <Button className="ant-btn-primary ant-card-hoverable" 
+            onClick={()=> {
+              var object = {};
+              object.idTest = props.location.search.substring(4);
+              object.part = 7;
+              var results = [];
+              dataPart1.map(function(data, i) {
+                var temp = {};
+                console.log(data)
+                temp.idQuestion = data._id;
+                temp.userAnswer = [
+                  {
+                    idSubQuestion : data.subQuestions[0]._id,
+                    answer : resultsPart1[4 * i]
+                  },
+                  {
+                    idSubQuestion : data.subQuestions[1]._id,
+                    answer : resultsPart1[4 * i + 1]
+                  },
+                  {
+                    idSubQuestion : data.subQuestions[2]._id,
+                    answer : resultsPart1[4 * i + 2]
+                  },
+                  {
+                    idSubQuestion : data.subQuestions[3]._id,
+                    answer : resultsPart1[4 * i + 3]
+                  },
+                ]
+                results.push(temp);
               })
-            // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
-          }}>Tiếp tục</Button>
+              object.results = results;
+              services.submitResults(object)
+                .then(res => {
+                  console.log(res)
+                  props.history.push('/exam/finish?id=' + props.location.search.substring(4));
+                })
+              // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+            }}>Tiếp tục</Button>
+          }
         </Row>
       </div>
     </div>
