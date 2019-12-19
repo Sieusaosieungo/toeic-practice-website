@@ -82,7 +82,30 @@ const Intro = (props) => {
 
   return (
   <div className={`${prefixCls}`}> 
-    <BackwardTimer onchange={() => {props.history.push("/")}}/>
+    <BackwardTimer onchange={() => {props.history.push("/")}}
+    finishAll={() => {
+        var object = {};
+        object.idTest = props.location.search.substring(4);
+        object.part = 1;
+        var results = [];
+        dataPart1.map(function(data, i) {
+          var temp = {};
+          temp.idQuestion = data._id;
+          temp.userAnswer = [
+            {
+              idSubQuestion : data.subQuestions[0]._id,
+              answer : resultsPart1[i]
+            }
+          ]
+          results.push(temp);
+        })
+        object.results = results;
+        services.submitResults(object)
+          .then(res => {
+            props.history.push('/exam/finish?id=' + props.location.search.substring(4));
+          })
+        // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+      }}/>
     <div className={`${prefixCls}-content`}>
       <div className="" style={{marginTop : "4em", padding : "3em 8em"}}>
         <Row style={{marginBottom : "1em"}}>
@@ -164,7 +187,7 @@ const Intro = (props) => {
                   props.history.push('/exam/part6intro?id=' + props.location.search.substring(4));
                 })
               // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
-          }}>Next</Button>
+          }}>Tiếp tục</Button>
         </Row>
       </div>
     </div>

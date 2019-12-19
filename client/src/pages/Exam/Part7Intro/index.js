@@ -13,7 +13,10 @@ const Intro = (props) => {
   };
   return (
   <div className={`${prefixCls}`}> 
-    <BackwardTimer onchange={() => {props.history.push("/")}}/>
+    <BackwardTimer onchange={() => {props.history.push("/")}}
+    finishAll={() => {
+      props.history.push('/exam/finish?id=' + props.location.search.substring(4));
+    }}/>
     <div className={`${prefixCls}-content`}>
       <div className="" style={{marginTop : "4em", padding : "3em 8em"}}>
         <Row style={{marginBottom : "1em"}}>
