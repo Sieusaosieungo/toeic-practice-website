@@ -1,82 +1,77 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Divider, Tag } from 'antd';
+import axios from 'axios';
+import config from '../../utils/config';
+import { withCookies } from 'react-cookie';
 
 const columns = [
   {
     title: 'Name',
     dataIndex: 'name',
-    key: 'name',
-    render: text => <a>{text}</a>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Email',
+    dataIndex: 'email',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Giới tính',
+    dataIndex: 'gender',
+    render: (gender) => {
+      return gender === 'male' ? <span>Nam</span> : <span>Nữ</span>;
+    }
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: tags => (
-      <span>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </span>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (text, record) => (
-      <span>
-        <a>Invite {record.name}</a>
-        <Divider type="vertical" />
-        <a>Delete</a>
-      </span>
-    ),
+    title: 'Thời điểm tạo',
+    dataIndex: 'createdAt',
+    align: 'center',
+    render: dateString => {
+      const date = new Date(dateString);
+      return (
+        <span style={{ textAlign: 'center', display: 'block' }}>
+          {date.getDate() +
+            ' - ' +
+            (date.getMonth() + 1) +
+            ' - ' +
+            date.getFullYear()}
+        </span>
+      );
+    },
   },
 ];
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
+const UserManager = ({
+  cookies: {
+    cookies: { accessToken },
   },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
+}) => {
+  const [users, setUsers] = useState('');
+  useEffect(() => {
+    console.log('abc');
+    axios({
+      method: 'GET',
+      url: `${config.API_URL}/api/users/get-list`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then(res => {
+        setUsers(res.data.results.users.filter(user => user.role.id === 0));
+      })
+      .catch(err => {
+        console.log(err.response.data.message);
+      });
+  }, []);
 
-const UserManager = () => {
-  return <Table columns={columns} dataSource={data} />;
+  return (
+    <Table
+      columns={columns}
+      rowKey="_id"
+      bordered
+      className="table"
+      dataSource={users}
+      pagination={{ pageSize: 6 }}
+    />
+  );
 };
 
-export default UserManager;
+export default withCookies(UserManager);
