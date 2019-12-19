@@ -3,6 +3,8 @@ import { Button, Select, message, Input } from 'antd';
 import axios from 'axios';
 import config from '../../utils/config';
 import { withCookies } from 'react-cookie';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import CKEditorCustom from '../../components/CKEditorCustom';
 
 import './style.scss';
 import TextArea from 'antd/lib/input/TextArea';
@@ -48,15 +50,12 @@ const UploadPart3 = ({
         message.success(
           `Đăng bài thành công. Bạn cần phải upload thêm 3 câu hỏi nhỏ.`,
         );
-        console.log('question after uploaded: ', res.data);
         setSubQuesPart3({ ...subQuesPart3, idQuestion: res.data.results._id });
       })
       .catch(err => console.log(err.response));
   };
 
   const handleUploadPart3Content = () => {
-    console.log('Data before upload content:', subQuesPart3);
-
     axios({
       method: 'POST',
       url: `${config.API_URL}/api/questions/sub-questions`,
@@ -67,7 +66,6 @@ const UploadPart3 = ({
     })
       .then(res => {
         message.success('Bạn đã hoàn tất đăng câu hỏi.');
-        console.log('Subquestion after uploaded: ', res.data);
         setPart3({ part: 3, level: 0, audio: '' });
         refInputFile.current.value = null;
         setSubQuesPart3({});
@@ -80,10 +78,8 @@ const UploadPart3 = ({
   };
 
   const handleChange = value => setPart3({ ...part3, level: value });
-  const handleChangeScripts = e =>
-    setPart3({ ...part3, scripts: e.target.value });
+
   const handleChangeAudio = e => {
-    console.log('audio: ', e.target.files[0]);
     setPart3({ ...part3, audio: e.target.files[0] });
   };
 
@@ -130,14 +126,16 @@ const UploadPart3 = ({
         <div
           style={{ marginTop: '1rem', display: 'flex', alignItems: 'center' }}
         >
-          <span style={{ marginRight: '1rem' }}>Scripts: </span>
-          <TextArea
-            onChange={handleChangeScripts}
-            name="scripts"
-            style={{ flexGrow: '1' }}
+          <span style={{ marginRight: '6rem' }}>Scripts: </span>
+          <CKEditor
+            editor={CKEditorCustom}
+            data={part3.scripts}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setPart3({ ...part3, scripts: data });
+            }}
             disabled={!(subQuesPart3.idQuestion === undefined)}
-            value={part3.scripts}
-          ></TextArea>
+          />
         </div>
         <div className="upload-part3-btn">
           <Button

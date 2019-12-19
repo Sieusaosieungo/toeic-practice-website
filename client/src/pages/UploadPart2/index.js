@@ -3,6 +3,8 @@ import { Button, Select, message, Input } from 'antd';
 import axios from 'axios';
 import config from '../../utils/config';
 import { withCookies } from 'react-cookie';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import CKEditorCustom from '../../components/CKEditorCustom';
 
 import './style.scss';
 import TextArea from 'antd/lib/input/TextArea';
@@ -106,11 +108,14 @@ const UploadPart2 = ({
         </div>
         <div className="upload-part2-raw">
           <div>Scripts:</div>
-          <TextArea
-            onChange={handleChangeScripts}
-            name="scripts"
-            value={part2.scripts}
-          ></TextArea>
+          <CKEditor
+            editor={CKEditorCustom}
+            data={part2.scripts}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setPart2({ ...part2, scripts: data });
+            }}
+          />
         </div>
         <div className="upload-part2-raw">
           <div className="question-title">Answer:</div>

@@ -3,6 +3,8 @@ import { Button, Select, message, Input } from 'antd';
 import axios from 'axios';
 import config from '../../utils/config';
 import { withCookies } from 'react-cookie';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import CKEditorCustom from '../../components/CKEditorCustom';
 
 import TextArea from 'antd/lib/input/TextArea';
 import './style.scss';
@@ -54,8 +56,6 @@ const UploadPart1 = ({
       },
     })
       .then(res => {
-        console.log('res part 1: ', res.data);
-
         message.success('Đăng bài thành công.');
         setPart1({ part: 1, level: 0, audio: '' });
         refInputAudio.current.value = null;
@@ -126,11 +126,14 @@ const UploadPart1 = ({
         </div>
         <div className="upload-part1-raw">
           <div>Scripts:</div>
-          <TextArea
-            onChange={handleChangeScripts}
-            name="scripts"
-            value={part1.scripts}
-          ></TextArea>
+          <CKEditor
+            editor={CKEditorCustom}
+            data={part1.scripts}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setPart1({ ...part1, scripts: data });
+            }}
+          />
         </div>
         <div className="upload-part1-raw">
           <div className="question-title">Answer:</div>

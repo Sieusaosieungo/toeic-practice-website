@@ -9,6 +9,10 @@
         width: 17%;
       }
 
+      > .ck-editor {
+        flex: 1 !important;
+      }
+
       > .upload-part1-level {
         width: 20%;
         margin-bottom: 2rem;

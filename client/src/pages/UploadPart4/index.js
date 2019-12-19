@@ -3,6 +3,8 @@ import { Button, Select, message, Input } from 'antd';
 import axios from 'axios';
 import config from '../../utils/config';
 import { withCookies } from 'react-cookie';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import CKEditorCustom from '../../components/CKEditorCustom';
 
 import './style.scss';
 import TextArea from 'antd/lib/input/TextArea';
@@ -72,8 +74,7 @@ const UploadPart4 = ({
   };
 
   const handleChange = value => setPart4({ ...part4, level: value });
-  const handleChangeScripts = e =>
-    setPart4({ ...part4, scripts: e.target.value });
+  
   const handleChangeAudio = e =>
     setPart4({ ...part4, audio: e.target.files[0] });
 
@@ -120,14 +121,16 @@ const UploadPart4 = ({
         <div
           style={{ marginTop: '1rem', display: 'flex', alignItems: 'center' }}
         >
-          <span style={{ marginRight: '1rem' }}>Scripts: </span>
-          <TextArea
-            onChange={handleChangeScripts}
-            name="scripts"
-            style={{ flexGrow: '1' }}
+          <span style={{ marginRight: '6rem' }}>Scripts: </span>
+          <CKEditor
+            editor={CKEditorCustom}
+            data={part4.scripts}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setPart4({ ...part4, scripts: data });
+            }}
             disabled={!(subQuesPart4.idQuestion === undefined)}
-            value={part4.scripts}
-          ></TextArea>
+          />
         </div>
         <div className="upload-part4-btn">
           <Button
