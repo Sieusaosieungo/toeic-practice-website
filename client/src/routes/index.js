@@ -101,6 +101,10 @@ const PracticePart1 = Loadable({
   loader: () => import('../pages/PracticePart1'),
   loading: Loading,
 });
+const PracticePart2 = Loadable({
+  loader: () => import('../pages/PracticePart2'),
+  loading: Loading,
+});
 
 const routes = [
   {
@@ -194,6 +198,10 @@ const routes = [
   {
     path: '/practice/part1',
     component: PracticePart1,
+  },
+  {
+    path: '/practice/part2',
+    component: PracticePart2,
   },
   {
     path: '*',

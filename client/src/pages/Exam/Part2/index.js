@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Radio, Button, Icon } from 'antd';
 // import ReactAudioPlayer from 'react-audio-player';
-import { services} from "../../../services"
-import BackwardTimer from '../../../utils/countdown'
-import { config } from '../../../utils/config'
-import { connect } from "react-redux"; 
+import { services } from '../../../services';
+import BackwardTimer from '../../../utils/countdown';
+import { config } from '../../../utils/config';
+import { connect } from 'react-redux';
 import './style.scss';
 // import data from './config.json';
 const prefixCls = 'home';
 
-const Intro = (props) => {
+const Intro = props => {
   const radioStyle = {
     display: 'block',
     height: '30px',
     lineHeight: '30px',
   };
 
-  const [dataAudio, setDataAudio] = useState([
-  
-]);
-  const [dataPart1, setDataPart1] = useState([
-  
-]);
+  const [dataAudio, setDataAudio] = useState([]);
+  const [dataPart1, setDataPart1] = useState([]);
 
   const [checked, setChecked] = useState(false);
 
@@ -29,53 +25,60 @@ const Intro = (props) => {
     // console.log(props.exam)
     // console.log(props.exam.part1)
     // if(props.exam.part1 == undefined) {
-      services.getExamTestById({id : props.location.search.substring(4)})
-        .then(res => {
-          var data2 = [];
-          res.data.questions.part2.map(function(part, i) {
-            data2.push(part.question)
-          })
-          setDataPart1(data2);
-          var question = {};
-          var data_part1 = [], data_part2 = [], data_part3 = [], data_part4 = [], data_part5 = [], data_part6 = [], data_part7 = [];
-          res.data.questions.part1.map(function(part, i) {
-            data_part1.push(part.question);
-          })
-          res.data.questions.part2.map(function(part, i) {
-            data_part2.push(part.question);
-          })
-          res.data.questions.part3.map(function(part, i) {
-            data_part3.push(part.question);
-          })
-          res.data.questions.part4.map(function(part, i) {
-            data_part4.push(part.question);
-          })
-          res.data.questions.part5.map(function(part, i) {
-            data_part5.push(part.question);
-          })
-          res.data.questions.part6.map(function(part, i) {
-            data_part6.push(part.question);
-          })
-          res.data.questions.part7.map(function(part, i) {
-            data_part7.push(part.question);
-          })
-          question.part1 = data_part1;
-          question.part2 = data_part2;
-          question.part3 = data_part3;
-          question.part4 = data_part4;
-          question.part5 = data_part5;
-          question.part6 = data_part6;
-          question.part7 = data_part7;
-          props.dispatch({type : "EXAM_TEST", data : question})
-          var data =[];
-          res.data.questions.part2.map(function(part, i) {
-            var url = "http://202.191.56.159:2510/" + part.question.audio;
-            data.push({link : url});
-          })
-          setDataAudio(data);
-          setChecked(res.data.test.checked);
-        })
-      
+    services
+      .getExamTestById({ id: props.location.search.substring(4) })
+      .then(res => {
+        var data2 = [];
+        res.data.questions.part2.map(function(part, i) {
+          data2.push(part.question);
+        });
+        setDataPart1(data2);
+        var question = {};
+        var data_part1 = [],
+          data_part2 = [],
+          data_part3 = [],
+          data_part4 = [],
+          data_part5 = [],
+          data_part6 = [],
+          data_part7 = [];
+        res.data.questions.part1.map(function(part, i) {
+          data_part1.push(part.question);
+        });
+        res.data.questions.part2.map(function(part, i) {
+          data_part2.push(part.question);
+        });
+        res.data.questions.part3.map(function(part, i) {
+          data_part3.push(part.question);
+        });
+        res.data.questions.part4.map(function(part, i) {
+          data_part4.push(part.question);
+        });
+        res.data.questions.part5.map(function(part, i) {
+          data_part5.push(part.question);
+        });
+        res.data.questions.part6.map(function(part, i) {
+          data_part6.push(part.question);
+        });
+        res.data.questions.part7.map(function(part, i) {
+          data_part7.push(part.question);
+        });
+        question.part1 = data_part1;
+        question.part2 = data_part2;
+        question.part3 = data_part3;
+        question.part4 = data_part4;
+        question.part5 = data_part5;
+        question.part6 = data_part6;
+        question.part7 = data_part7;
+        props.dispatch({ type: 'EXAM_TEST', data: question });
+        var data = [];
+        res.data.questions.part2.map(function(part, i) {
+          var url = 'http://202.191.56.159:2510/' + part.question.audio;
+          data.push({ link: url });
+        });
+        setDataAudio(data);
+        setChecked(res.data.test.checked);
+      });
+
     // }
     // else {
     //   setDataPart1(props.exam.part2);
@@ -135,50 +138,55 @@ const Intro = (props) => {
 
   // code cua Manh
   const onToggleAudio = () => {
-    if(dataAudio.length > 0) {
-    setIndexAudio(indexAudio + 1);
+    if (dataAudio.length > 0) {
+      setIndexAudio(indexAudio + 1);
 
-    if (indexAudio < dataAudio.length - 1) {
-      audioPlayer.current.src = dataAudio[indexAudio + 1].link;
-      console.log(audioPlayer);
-      audioPlayer.current.play();
-    }
+      if (indexAudio < dataAudio.length - 1) {
+        audioPlayer.current.src = dataAudio[indexAudio + 1].link;
+        console.log(audioPlayer);
+        audioPlayer.current.play();
+      }
 
-    if (indexAudio === dataAudio.length - 1) {
-      setIndexAudio(0);
-      audioPlayer.current.src = dataAudio[0].link;
-      audioPlayer.current.pause();
+      if (indexAudio === dataAudio.length - 1) {
+        setIndexAudio(0);
+        audioPlayer.current.src = dataAudio[0].link;
+        audioPlayer.current.pause();
+      }
     }
-  }
   };
   //end Manh
 
   return (
     <div className={`${prefixCls}`}>
-    <BackwardTimer onchange={() => {props.history.push("/")}}
-    finishAll={() => {
-        var object = {};
-        object.idTest = props.location.search.substring(4);
-        object.part = 1;
-        var results = [];
-        dataPart1.map(function(data, i) {
-          var temp = {};
-          temp.idQuestion = data._id;
-          temp.userAnswer = [
-            {
-              idSubQuestion : data.subQuestions[0]._id,
-              answer : resultsPart1[i]
-            }
-          ]
-          results.push(temp);
-        })
-        object.results = results;
-        services.submitResults(object)
-          .then(res => {
-            props.history.push('/exam/finish?id=' + props.location.search.substring(4));
-          })
-        // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
-      }}/>
+      <BackwardTimer
+        onchange={() => {
+          props.history.push('/');
+        }}
+        finishAll={() => {
+          var object = {};
+          object.idTest = props.location.search.substring(4);
+          object.part = 1;
+          var results = [];
+          dataPart1.map(function(data, i) {
+            var temp = {};
+            temp.idQuestion = data._id;
+            temp.userAnswer = [
+              {
+                idSubQuestion: data.subQuestions[0]._id,
+                answer: resultsPart1[i],
+              },
+            ];
+            results.push(temp);
+          });
+          object.results = results;
+          services.submitResults(object).then(res => {
+            props.history.push(
+              '/exam/finish?id=' + props.location.search.substring(4),
+            );
+          });
+          // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
+        }}
+      />
       <div className={`${prefixCls}-content`}>
         <div className="" style={{ marginTop: '4em', padding: '3em 8em' }}>
           <Row style={{ marginBottom: '1em' }}>
@@ -190,69 +198,63 @@ const Intro = (props) => {
             <b>Mark your answer on your answer sheet:</b>
           </Row>
           <Row style={{ textAlign: 'center' }}>
-          {
-            !checked &&
-            <audio
-              onEnded={onToggleAudio}
-              ref={audioPlayer}
-              controls
-              autoplay="autoplay"
-              style={{ width: '50%' }}
-            >
-              {
-                dataAudio.length > 0 &&
-                <source src={dataAudio[0].link} />
-              }
-              <track kind="captions" />
-            </audio>
-          }
+            {!checked && (
+              <audio
+                onEnded={onToggleAudio}
+                ref={audioPlayer}
+                controls
+                autoplay="autoplay"
+                style={{ width: '50%' }}
+              >
+                {dataAudio.length > 0 && <source src={dataAudio[0].link} />}
+                <track kind="captions" />
+              </audio>
+            )}
           </Row>
-          {
-            dataPart1.map(function(data, i) {
-              console.log(data)
+          {dataPart1.map(function(data, i) {
+            console.log(data);
             return (
               <div>
-                <Row style={{textAlign : "center"}}>
-                {
-                  checked &&
-                  <audio
-                    controls
-                    style={{width : "50%"}}
-                  >
-                      <source src={"http://202.191.56.159:2510/" + data.audio} />
-                  </audio>
-                }
+                <Row style={{ textAlign: 'center' }}>
+                  {checked && (
+                    <audio controls style={{ width: '50%' }}>
+                      <source
+                        src={'http://202.191.56.159:2510/' + data.audio}
+                      />
+                    </audio>
+                  )}
                 </Row>
                 <Row style={{ marginTop: '1em' }}>
                   <Col span={8}>
                     <b>{10 + i + 1}.</b>
                     <br />
-                    <Radio.Group
-                      onChange={e => onChange(e.target.value, i)}
-                    >
-                      <Radio style={radioStyle} value={"a"}>
+                    <Radio.Group onChange={e => onChange(e.target.value, i)}>
+                      <Radio style={radioStyle} value={'a'}>
                         A
-                        {
-                          checked &&
-                          data.subQuestions[0].answer == "a" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
+                        {checked && data.subQuestions[0].answer == 'a' && (
+                          <Icon
+                            style={{ marginLeft: '8px', color: 'red' }}
+                            type="check"
+                          />
+                        )}
                       </Radio>
-                      <Radio style={radioStyle} value={"b"}>
+                      <Radio style={radioStyle} value={'b'}>
                         B
-                        {
-                          checked &&
-                          data.subQuestions[0].answer == "b" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
+                        {checked && data.subQuestions[0].answer == 'b' && (
+                          <Icon
+                            style={{ marginLeft: '8px', color: 'red' }}
+                            type="check"
+                          />
+                        )}
                       </Radio>
-                      <Radio style={radioStyle} value={"c"}>
+                      <Radio style={radioStyle} value={'c'}>
                         C
-                        {
-                          checked &&
-                          data.subQuestions[0].answer == "c" &&
-                          <Icon style={{marginLeft : "8px", color : "red"}} type="check" />
-                        }
+                        {checked && data.subQuestions[0].answer == 'c' && (
+                          <Icon
+                            style={{ marginLeft: '8px', color: 'red' }}
+                            type="check"
+                          />
+                        )}
                       </Radio>
                     </Radio.Group>
                   </Col>
@@ -321,7 +323,7 @@ const Intro = (props) => {
                     //                     </Radio>
                     //                   </Radio.Group>
                     //                 </Col>
-                                  }
+                  }
                 </Row>
               </div>
             );
@@ -337,22 +339,23 @@ const Intro = (props) => {
                 var results = [];
                 dataPart1.map(function(data, i) {
                   var temp = {};
-                  console.log(data)
+                  console.log(data);
                   temp.idQuestion = data._id;
                   temp.userAnswer = [
                     {
-                      idSubQuestion : data.subQuestions[0]._id,
-                      answer : resultsPart1[i]
-                    }
-                  ]
+                      idSubQuestion: data.subQuestions[0]._id,
+                      answer: resultsPart1[i],
+                    },
+                  ];
                   results.push(temp);
-                })
+                });
                 object.results = results;
-                services.submitResults(object)
-                  .then(res => {
-                    console.log(res)
-                    props.history.push('/exam/part3intro?id=' + props.location.search.substring(4));
-                  })
+                services.submitResults(object).then(res => {
+                  console.log(res);
+                  props.history.push(
+                    '/exam/part3intro?id=' + props.location.search.substring(4),
+                  );
+                });
                 // props.history.push('/exam/part3intro?id=' + props.location.search.substring(4));
               }}
             >
@@ -366,9 +369,9 @@ const Intro = (props) => {
 };
 
 const mapStateToProps = ({ exam }) => {
-  console.log(exam)
+  console.log(exam);
   return {
-    exam
+    exam,
   };
 };
 
