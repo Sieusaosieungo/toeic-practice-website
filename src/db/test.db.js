@@ -309,8 +309,25 @@ const getTestByIdDb = async query => {
   return data;
 };
 
+const finishTestDbV1 = async body => {
+  const { id } = body;
+
+  const test = await Test.findById(id);
+  if (!test) {
+    throw new CustomError(
+      errorCode.BAD_REQUEST,
+      `Không thể tìm thấy bài test có id: ${id}`,
+    );
+  }
+
+  test.checked = true;
+  const result = await test.save();
+  return result;
+};
+
 module.exports = {
   randomTestDb,
   submitResultPartDb,
   getTestByIdDb,
+  finishTestDbV1,
 };

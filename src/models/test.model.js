@@ -28,6 +28,11 @@ const testSchema = new mongoose.Schema({
       },
     },
   ],
+  // Check if test finished
+  checked: {
+    type: Boolean,
+    default: false,
+  },
   grammarResults: [
     {
       idGrammarTopic: {

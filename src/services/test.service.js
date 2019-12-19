@@ -2,6 +2,7 @@ const {
   randomTestDb,
   submitResultPartDb,
   getTestByIdDb,
+  finishTestDbV1,
 } = require('../db/test.db');
 const CustomError = require('../errors/CustomError');
 const errorCode = require('../errors/errorCode');
@@ -77,8 +78,21 @@ const getTestById = async query => {
   return data;
 };
 
+const finishTestV1 = async body => {
+  const data = await finishTestDbV1(body);
+
+  if (!data) {
+    throw new CustomError(
+      errorCode.INTERNAL_SERVER_ERROR,
+      `Không thể finish test`,
+    );
+  }
+  return data;
+};
+
 module.exports = {
   randomTest,
   submitResultPart,
   getTestById,
+  finishTestV1,
 };
