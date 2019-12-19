@@ -17,7 +17,7 @@ const Result = props => {
         console.log(res)
         var array = Object.assign([], result);
         res.data.test.partResults.map(function(data, i) {
-          array[i] = data.partPoint;
+          array[data.part - 1] = data.partPoint;
         })
         setResult(array);
 
@@ -25,6 +25,8 @@ const Result = props => {
     }, [])
 
   const [result, setResult] = useState([0,0,0,0,0,0,0])
+  console.log(result[0] + result[1] + result[2] + result[3]);
+  console.log(result[4] + result[5] + result[6])
   return (
     <div className={`${prefixCls}`}>
       <div className={`${prefixCls}-content`}>
