@@ -20,6 +20,7 @@ const UploadPart2 = ({
     part: 2,
     level: 0,
     audio: null,
+    scripts:''
   });
   const [subQuesPart2Child, setSubQuesPart2Child] = useState({});
   const refInputFile = useRef(null);

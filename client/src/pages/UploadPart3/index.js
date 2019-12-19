@@ -20,6 +20,7 @@ const UploadPart3 = ({
     part: 3,
     level: 0,
     audio: null,
+    scripts: '',
   });
   const [subQuesPart3, setSubQuesPart3] = useState({});
   const [subQuesPart3Child, setSubQuesPart3Child] = useState({});
