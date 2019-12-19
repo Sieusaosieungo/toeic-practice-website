@@ -53,7 +53,7 @@ const Result = props => {
                 <Button 
                   className="ant-btn-danger ant-card-hoverable" 
                   onClick={() => {
-                    services.finish()
+                    services.finish({id : props.location.search.substring(4)})
                       .then(res => {
                         console.log(res);
                         props.history.push('/exam/result?id=' + props.location.search.substring(4))

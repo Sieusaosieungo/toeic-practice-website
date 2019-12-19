@@ -161,6 +161,8 @@ const Intro = (props) => {
             onEnded={onToggleAudio}
             ref={audioPlayer}
             controls
+            autoplay="autoplay"
+            autobuffer
             style={{width : "50%"}}
           >
             {

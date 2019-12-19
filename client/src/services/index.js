@@ -193,14 +193,14 @@ function submitResults(object) {
 
 
 function finish(object) {
-  // return axios({
-  //   method: 'POST',
-  //   url: `${config.API_URL}/api/tests/results/part`,
-  //   headers: authHeader(),
-  //   data : object
-  // })
-  //   .then(res => res)
-  //   .catch(err => {
-  //     throw err;
-  //   });
+  return axios({
+    method: 'POST',
+    url: `${config.API_URL}/api/tests/finished/v1`,
+    headers: authHeader(),
+    data : object
+  })
+    .then(res => res)
+    .catch(err => {
+      throw err;
+    });
 }

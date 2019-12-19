@@ -366,7 +366,7 @@ const Intro = (props) => {
             services.submitResults(object)
               .then(res => {
                 console.log(res)
-                props.history.push('/exam/result?id=' + props.location.search.substring(4));
+                props.history.push('/exam/finish?id=' + props.location.search.substring(4));
               })
             // props.history.push('/exam/part2intro?id=' + props.location.search.substring(4));
           }}>Tiếp tục</Button>
