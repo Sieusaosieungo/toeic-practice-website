@@ -97,6 +97,10 @@ const PostGrammar = Loadable({
   loader: () => import('../pages/PostGrammar'),
   loading: Loading,
 });
+const PracticePart1 = Loadable({
+  loader: () => import('../pages/PracticePart1'),
+  loading: Loading,
+});
 
 const routes = [
   {
@@ -186,6 +190,10 @@ const routes = [
   {
     path: '/new-word/:topic',
     component: Flashcard,
+  },
+  {
+    path: '/practice/part1',
+    component: PracticePart1,
   },
   {
     path: '*',

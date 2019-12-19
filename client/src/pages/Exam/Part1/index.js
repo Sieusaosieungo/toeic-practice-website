@@ -5,6 +5,7 @@ import { services } from '../../../services';
 import BackwardTimer from '../../../utils/countdown';
 import './style.scss';
 import { connect } from 'react-redux';
+
 const prefixCls = 'home';
 
 const Intro = props => {
@@ -19,9 +20,10 @@ const Intro = props => {
   const [submit, setSubmit] = useState(false);
 
   const [checked, setChecked] = useState(false);
+
   useEffect(() => {
     console.log(props);
-    if (props.location.search.split('&').length == 1) {
+    if (props.location.search.split('&').length === 1) {
       services
         .getExamTestById({ id: props.location.search.substring(4) })
         .then(res => {
@@ -348,7 +350,7 @@ const Intro = props => {
                 Rèn luyện
               </Button>
             )}
-            {props.location.search.split('&').length != 1 && (
+            {props.location.search.split('&').length !== 1 && (
               <Button
                 className="ant-btn-primary ant-card-hoverable"
                 onClick={() => {
@@ -382,7 +384,7 @@ const Intro = props => {
                 Nộp bài luyện tập
               </Button>
             )}
-            {props.location.search.split('&').length == 1 && (
+            {props.location.search.split('&').length === 1 && (
               <Button
                 className="ant-btn-primary ant-card-hoverable"
                 onClick={() => {
