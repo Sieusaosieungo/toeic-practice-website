@@ -37,11 +37,12 @@ const RightMenu = ({ mode, user, accessTokenStore, dispatch, history }) => {
         <Menu.Item key="1">
           <div onClick={showModalUpdate}>Cập nhật thông tin</div>
         </Menu.Item>
-        {user.role != null && user.role.id == 0 && (
-          <Menu.Item key="2">
-            <div onClick={showRecentWord}>Từ gần đây</div>
-          </Menu.Item>
-        )}
+        {user.data.results.user.role !== null &&
+          user.data.results.user.role.id === 0 && (
+            <Menu.Item key="2">
+              <div onClick={showRecentWord}>Từ gần đây</div>
+            </Menu.Item>
+          )}
         <Menu.Item key="4">
           <div onClick={logOut}>Đăng xuất</div>
         </Menu.Item>
